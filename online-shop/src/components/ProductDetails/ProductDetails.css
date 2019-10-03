@@ -1,0 +1,60 @@
+.h1Details {
+    margin-top: 10%;
+    margin-left: 22%;
+}
+
+.flexContainer {
+    display: flex;
+}
+
+.productDetails {
+    margin-left: 20%;
+    border: solid;
+    width: 60%;
+    border-radius: 20px;
+    background-color: #89C4E1;
+}
+
+.informativeLabel {
+    color: grey;
+    text-align: end;
+    width: 11%;
+}
+
+.detailedInfo {
+    margin-left: 4.5%;
+}
+
+.productImage {
+    alt: "Product image";
+    width: 15%;
+    height: 15%;
+    float: right;
+    margin-right: 5%;
+    margin-top: 2%;
+    border: groove;
+}
+
+.productOperationsButton {
+    margin-top: 9.5%;
+    display: flex;
+    width: 90pt;
+    height: 40pt;
+    border-radius: 15pt;
+    border: groove;
+    font-weight: bold;
+    font-size: 18pt;;
+}
+
+.editButton {
+    margin-left: 21%;
+    background-color: #219EDA;
+    color: white;
+    padding-left: 1.75%;
+}
+
+.deleteButton {
+    margin-left: 1%;
+    background-color: #CD0000;
+    color: white;
+}

@@ -1,0 +1,15 @@
+.productData {
+    background-color: #0694D9;
+    font-weight: bold;
+    border: groove;
+}
+
+.textData {
+    text-align: left;
+    width: 30%;
+    padding-left: 2%;
+}
+
+.imageData {
+    padding-left: 3%;
+}

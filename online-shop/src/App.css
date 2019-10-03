@@ -1,0 +1,34 @@
+.h1List {
+    margin-left: 22%;
+    margin-top: 7%;
+    display: inline-block;
+}
+
+.listOperationsButton {
+    display: inline-block;
+    background-color: #219EDA;
+    width: 90pt;
+    height: 45pt;
+    border-radius: 15pt;
+    border: groove;
+    vertical-align: bottom;
+    margin-bottom: 1%;
+}
+
+.shoppingCartButton {
+    margin-left: 33%;
+}
+
+.shoppingCartImage {
+    width: 50%;
+    height: 100%;
+    alt: "Some placeholder";
+}
+
+.addButton {
+    margin-left: 2%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20pt;
+    color: white;
+}
