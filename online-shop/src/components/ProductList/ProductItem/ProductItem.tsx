@@ -1,15 +1,15 @@
 import React from 'react';
 import { Product } from '../../../model/model';
 import './ProductItem.css'
+export { ProductItem }
 
-export default class ProductItem extends React.Component<Product> {
-    render() {
-        return <tr className="">
-            <td className="productData textData">{this.props.category}</td>
-            <td className="productData textData">{this.props.name}</td>
-            <td className="productData textData">{this.props.price} RON</td>
-            <td className="productData imageData"><img src={this.props.image} width="50%" height="5%"
-              alt="Some placeholder"/> </td>
-        </tr>
-    }
+const ProductItem: React.FC<Product> = (product: Product) => {
+    return (<tr className="">
+        <td className="productData textData">{product.category}</td>
+        <td className="productData textData">{product.name}</td>
+        <td className="productData textData">{product.price} RON</td>
+        <td className="productData imageData"><img src={product.image} width="50%" height="5%"
+            alt="Some placeholder"/> </td>
+    </tr>
+    )
 }
