@@ -1,0 +1,22 @@
+$margin-top: 7%;
+
+.h1List {
+    margin-left: 22%;
+    margin-top: $margin-top;
+    display: inline-block;
+}
+
+.listOperationsButton {
+    display: inline-block;
+    margin-top: $margin-top;
+    vertical-align: bottom;
+    width: 6%;
+}
+
+.shoppingCartButton {
+    margin-left: 33%;
+}
+
+.addButton {
+    margin-left: 2%;
+}

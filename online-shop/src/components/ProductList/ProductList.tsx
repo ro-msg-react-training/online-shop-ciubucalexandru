@@ -1,7 +1,7 @@
 import React from 'react';
 import { ProductArray, Product } from '../../model/model'
 import { ProductItem } from "./ProductItem/ProductItem";
-import './ProductList.css'
+import './ProductList.scss'
 export { ProductList };
 
 const ProductList: React.FC<ProductArray> = (productArray: ProductArray) => {
@@ -11,15 +11,16 @@ const ProductList: React.FC<ProductArray> = (productArray: ProductArray) => {
             id={product.id} description={product.description} image={product.image}/>
     );
 
-    const tableHeader = <tr>
-        <td className="headerItem">Category</td>
-        <td className="headerItem">Product Name</td>
-        <td className="headerItem">Price</td>
-        <td className="headerItem"></td>
-    </tr>
+    const tableHeader = <a className="list-item columns box is-selected has-text-bold header">
+        <div className="column headerItem">Category</div>
+        <div className="column headerItem">Product Name</div>
+        <div className="column headerItem">Price</div>
+        <div className="column"></div>
+        <div className="column headerItem">Quantity</div>
+    </a>
 
-    return <table className="productsList">
-        <thead>{tableHeader}</thead>
-        <tbody>{productItems}</tbody>
-    </table>
+    return <div className="list is-hoverable productsList">
+        {tableHeader}
+        {productItems}
+    </div>
 }
