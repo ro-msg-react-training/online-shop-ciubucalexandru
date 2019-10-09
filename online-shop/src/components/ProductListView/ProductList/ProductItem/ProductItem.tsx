@@ -1,11 +1,16 @@
 import React from 'react';
-import { Product } from '../../../model/model';
+import { Product } from '../../../../model/model';
 import './ProductItem.scss'
+import { Link } from 'react-router-dom';
+import RightArrow from '../../../../images/right-arrow.png';
 export { ProductItem }
 
 const ProductItem: React.FC<Product> = (product: Product) => {
+
+    let url: string = "/products/" + product.id;
+
     return (
-        <a className="list-item box columns is-vcentered">
+        <div className="list-item box columns is-vcentered">
             <div className="column listItem">{product.category}</div>
             <div className="column listItem">{product.name}</div>
             <div className="column listItem">{product.price} RON</div>
@@ -15,10 +20,18 @@ const ProductItem: React.FC<Product> = (product: Product) => {
                 </figure>
             </div>
             <div className="column listItem">
-                <div className="control">
-                    <input className="input has-text-centered" type="number" placeholder="0" min="0"/>
-                </div>
+                <Link to={url} className="button is-large is-info detailsButton">
+                    
+                        <figure className="image detailsImage">
+                            <img src={RightArrow}/>
+                        </figure>
+                    
+                </Link>
             </div>
-        </a>
+        </div>
     )
+}
+
+function onClickRouting(product: Product) {
+
 }

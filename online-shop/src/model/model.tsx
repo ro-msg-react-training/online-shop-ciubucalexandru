@@ -1,5 +1,6 @@
 export {Product};
 export {ProductArray};
+export {CartItem};
 
 class Product {
     id: number;
@@ -24,5 +25,23 @@ class ProductArray {
 
     constructor(products: Product[]) {
         this.products = products;
+    }
+
+    public updateArray(newProducts: Product[]) {
+        this.products = newProducts;
+    }
+}
+
+class CartItem {
+    product: Product;
+    quantity: number;
+
+    constructor(prod: Product, quant: number) {
+        this.product = prod;
+        this.quantity = quant;
+    }
+
+    public updateQuantity(newQuantity: number) {
+        this.quantity = newQuantity;
     }
 }
