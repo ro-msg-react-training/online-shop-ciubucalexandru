@@ -33,7 +33,7 @@ $fifteen-percent: 15%;
 }
 
 .productOperationsButton {
-    margin-top: 9.5%;
+    margin-top: 10%;
     display: flex;
     width: 90pt;
 }
@@ -43,6 +43,10 @@ $fifteen-percent: 15%;
 }
 
 .addButton {
+    margin-left: 3%;
+}
+
+.deleteButton {
     margin-left: 3%;
     margin-right: $fifteen-percent;
 }

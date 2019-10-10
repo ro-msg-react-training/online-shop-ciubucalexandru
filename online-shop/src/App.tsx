@@ -1,11 +1,11 @@
-import React, { Props } from 'react';
-import { Product, ProductArray } from './model/model';
+import React from 'react';
+import { Product, ProductArray, ProductDTO, ProductDTOArray } from './model/model';
 import { ProductListView } from './components/ProductListView/ProductListView';
 import './App.scss';
-import Phone from './images/phone.jpg';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { ProductDetails } from './components/ProductDetails/ProductDetails';
 import { ShoppingCartView } from './components/ShoppingCartView/ShoppingCartView';
+import { API_PRODUCTS } from './util/API';
 
 const loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. " + 
     "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type " +
@@ -13,17 +13,26 @@ const loremIpsum = "Lorem Ipsum is simply dummy text of the printing and typeset
     "remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, " +
     "and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
 
-var shoppingCart: ProductArray = new ProductArray([]);
-var initializedArray: ProductArray = initializeProducts();
+class App extends React.Component<{}, { productArray: ProductDTOArray, shoppingCartCurrent: ProductArray }> {
 
-class App extends React.Component<{}, { productArray: ProductArray, shoppingCartCurrent: ProductArray }> {
-    
     constructor(props: any) {
         super(props);
         this.state = ({
-            productArray: initializedArray,
-            shoppingCartCurrent: shoppingCart
+            productArray: new ProductDTOArray([new ProductDTO(1, "NAME", "CAT", 105.5), new ProductDTO(2, "NAME", "CAT", 105.5)]),
+            shoppingCartCurrent: new ProductArray([]),
         })
+
+        this.deleteItem = this.deleteItem.bind(this);
+    }
+
+    async componentDidMount() {
+        await fetch(API_PRODUCTS)
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    productArray: new ProductDTOArray(data)
+                });
+            });
     }
 
     private updateShoppingCart(newShoppingCart: ProductArray) {
@@ -32,21 +41,33 @@ class App extends React.Component<{}, { productArray: ProductArray, shoppingCart
         });
     }
 
-    private renderProductDetails(props: any, initializedArray: ProductArray) {
-        let idValue: number = props.match.params.id;
-        let product: Product = this.getProductById(idValue, initializedArray);
-    
-        return <ProductDetails product={product} shoppingCart={this.state.shoppingCartCurrent} />
-    }
-    
-    private getProductById(idVal: number, productArray: ProductArray): Product {
-        let foundProduct: Product = new Product(0, '', '', 0, Phone, '');
-    
-        productArray.products.forEach((product) => {
-            if (product.id == idVal) foundProduct = product;
+    private deleteItem(product: Product) {
+
+        let temporalCart: ProductArray = new ProductArray([]);
+        let temporalProducts: ProductDTOArray = new ProductDTOArray([]);
+
+        this.state.productArray.products.forEach((item, index) => {
+            if (item.id != product.id) {
+                temporalProducts.products.push(item);
+            }
+        });
+
+        this.state.shoppingCartCurrent.products.forEach((item, index) => {
+            if (item.id != product.id) {
+                temporalCart.products.push(item);
+            }
         })
-    
-        return foundProduct;
+
+        this.setState({
+            productArray: temporalProducts,
+            shoppingCartCurrent: temporalCart
+        });
+    }
+
+    private renderProductDetails(props: any, shoppingCart: ProductArray) {
+        let idValue: number = props.match.params.id;
+
+        return <ProductDetails productId={idValue} shoppingCart={this.state.shoppingCartCurrent} deleteItem={(e: Product) => this.deleteItem(e)} />
     }
 
     render() {
@@ -60,10 +81,10 @@ class App extends React.Component<{}, { productArray: ProductArray, shoppingCart
                             } }/>
                         </Route>
                         <Route path="/products/:id" render = {(props) => (
-                                this.renderProductDetails(props, this.state.productArray)
+                                this.renderProductDetails(props, this.state.shoppingCartCurrent)
                         )}/>
                         <Route path="/products">
-                            <ProductListView products={this.state.productArray.products} updateArray = {(e) => this.state.productArray.updateArray(e)}/>
+                            <ProductListView {...this.state.productArray}/>
                         </Route>
                         <Route exact path="/">
                             <Redirect to="/products"/>
@@ -77,13 +98,3 @@ class App extends React.Component<{}, { productArray: ProductArray, shoppingCart
 }
 
 export default App;
-
-function initializeProducts(): ProductArray {
-    let product1 = new Product(1, 'First product', 'Best category', 100, Phone, loremIpsum);
-    let product2 = new Product(2, 'Second product', 'Worst category', 200, Phone, loremIpsum);
-    let product3 = new Product(3, 'Third product', 'Worst category', 300, Phone, loremIpsum);
-    let product4 = new Product(4, 'Fourth product', 'Worst category', 400, Phone, loremIpsum);
-    let product5 = new Product(5, 'Fifth product', 'Worst category', 500, Phone, loremIpsum);
-    let product6 = new Product(6, 'Sixth product', 'Worst category', 600, Phone, loremIpsum);
-    return new ProductArray([product1, product2, product3, product4, product5, product6]);
-}

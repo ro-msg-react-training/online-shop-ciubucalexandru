@@ -1,11 +1,11 @@
 import React from 'react';
 import ShoppingCart from '../../images/shopping-cart.png';
 import { ProductList } from './ProductList/ProductList';
-import { ProductArray } from '../../model/model';
-import { BrowserRouter, Switch, Route, Redirect, Link } from 'react-router-dom';
+import { ProductDTOArray } from '../../model/model';
+import { Link } from 'react-router-dom';
 import './ProductListView.scss';
 
-const ProductListView: React.FC<ProductArray> = (productArray: ProductArray) => {
+const ProductListView: React.FC<ProductDTOArray> = (productArray: ProductDTOArray) => {
     return (
         <div>
              <div className="flexContainer">
@@ -19,7 +19,7 @@ const ProductListView: React.FC<ProductArray> = (productArray: ProductArray) => 
                     ADD
             </a>
             </div>
-            <ProductList products = {productArray.products} updateArray={(e) => productArray.updateArray(e)}/>
+            <ProductList products={productArray.products}/>
         </div>
     );
 };

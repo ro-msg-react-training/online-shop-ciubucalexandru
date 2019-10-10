@@ -1,9 +1,22 @@
+$margin-top: 5%;
+
 .shoppingCartTitle {
     margin-left: 22%;
-    margin-top: 5%;
+    margin-top: $margin-top;
 }
 
 .shoppingCart {
     width: 60%;
     margin-left: 20%;
+    margin-top: 1%;
+}
+
+.flexContainer {
+    display: flex;
+}
+
+.orderButton {
+    margin-left: 35%;
+    margin-right: 15%;
+    margin-top: $margin-top;
 }

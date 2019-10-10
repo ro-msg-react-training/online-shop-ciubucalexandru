@@ -1,5 +1,5 @@
 import React from 'react';
-import { Product, CartItem } from '../../../model/model';
+import { CartItem } from '../../../model/model';
 import './ShoppingCartItem.scss';
 
 export { ShoppingCartItem };
