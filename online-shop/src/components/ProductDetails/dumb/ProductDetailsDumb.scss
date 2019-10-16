@@ -1,7 +1,10 @@
 $fifteen-percent: 15%;
+$margin-top: 3%;
+
+@import '../../../../node_modules/bulma/bulma.sass';
 
 .titleDetails {
-    margin-top: 10%;
+    margin-top: $margin-top;
     margin-left: 17%;
 }
 
@@ -16,24 +19,12 @@ $fifteen-percent: 15%;
     overflow: auto;
 }
 
-.informativeLabel {
-    color: #5A5F5E;
-    text-align: end;
-    width: 11%;
-}
-
-.detailedInfo {
-    margin-left: 4.5%;
-    margin-bottom: 4%;
-}
-
 .productImage {
-    alt: "Product image";
-    width: 40%;
+    width: 20%;
 }
 
 .productOperationsButton {
-    margin-top: 10%;
+    margin-top: $margin-top + 2;
     display: flex;
     width: 90pt;
 }

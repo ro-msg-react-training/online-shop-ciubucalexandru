@@ -1,6 +1,4 @@
-export {Product, ProductArray, CartItem, ProductDTO, ProductDTOArray, OrderItem, OrderDTO};
-
-class Product {
+export class Product {
     id: number;
     name: string;
     category: string;
@@ -18,7 +16,7 @@ class Product {
     }
 }
 
-class ProductArray {
+export class ProductArray {
     products: Product[];
 
     constructor(products: Product[]) {
@@ -30,7 +28,7 @@ class ProductArray {
     }
 }
 
-class CartItem {
+export class CartItem {
     product: Product;
     quantity: number;
 
@@ -44,7 +42,7 @@ class CartItem {
     }
 }
 
-class ProductDTO {
+export class ProductDTO {
     id: number;
     name: string;
     category: string;
@@ -58,7 +56,7 @@ class ProductDTO {
     }
 }
 
-class ProductDTOArray {
+export class ProductDTOArray {
     products: ProductDTO[];
 
     constructor(products: ProductDTO[]) {
@@ -66,7 +64,7 @@ class ProductDTOArray {
     }
 }
 
-class OrderItem {
+export class OrderItem {
     productId: number;
     quantity: number;
 
@@ -76,7 +74,7 @@ class OrderItem {
     }
 }
 
-class OrderDTO {
+export class OrderDTO {
     customer: string;
     products: OrderItem[];
 

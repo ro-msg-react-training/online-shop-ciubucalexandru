@@ -18,7 +18,7 @@ const ProductItem: React.FC<ProductDTO> = (product: ProductDTO) => {
                 <Link to={url} className="button is-large is-info detailsButton">
                     
                         <figure className="image detailsImage">
-                            <img src={RightArrow}/>
+                            <img src={RightArrow} alt={product.name}/>
                         </figure>
                     
                 </Link>

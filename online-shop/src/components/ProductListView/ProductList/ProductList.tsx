@@ -7,17 +7,15 @@ export { ProductList };
 const ProductList: React.FC<ProductDTOArray> = (productArray: ProductDTOArray) => {
 
     const productItems = productArray.products.map((product) => {
-        var url = "/products/" + product.id;
-        return <ProductItem key={product.id} category={product.category} name={product.name} price={product.price} 
-                id={product.id}/>
+        return <ProductItem key={product.id} {...product}/>
     });
 
-    const tableHeader = <a className="list-item columns box is-selected has-text-bold header">
+    const tableHeader = <div className="list-item columns box is-selected has-text-bold header">
         <div className="column headerItem">Category</div>
         <div className="column headerItem">Product Name</div>
         <div className="column headerItem">Price</div>
         <div className="column headerItem"></div>
-    </a>
+    </div>
 
     return <div className="list is-hoverable productsList">
         {tableHeader}
