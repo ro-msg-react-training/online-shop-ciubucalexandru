@@ -16,7 +16,7 @@ const initialState: ProductDetailsState = {
     product: new Product(DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY,
         DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION),
     isLoading: true,
-    showModal: false
+    showModal: false,
 }
 
 export const ProductDetailsReducer = (

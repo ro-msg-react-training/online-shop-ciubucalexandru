@@ -59,7 +59,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 const InitializedListView = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 ) (ProductListViewSmart);
 
 export default InitializedListView;

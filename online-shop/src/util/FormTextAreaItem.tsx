@@ -2,25 +2,27 @@ import React from 'react';
 
 interface IFormTextAreaItemProps {
     text: string;
-    onChange: (e: any) => void;
+    onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
     disabledStatus: boolean;
 }
 
 export const FormTextAreaItem: React.FC<IFormTextAreaItemProps> = (props: IFormTextAreaItemProps) => {
 
     let textArea;
-    let classes: string = 'textarea';
+    let classes = "textarea";
 
-    if (props.text === '' && !props.disabledStatus) {
-        classes += ' is-danger';
-    } else if (props.text !== '' && !props.disabledStatus ) {
-        classes += ' is-success';
+    if (props.text === "" && !props.disabledStatus) {
+        classes += " is-danger";
+    } else if (props.text !== "" && !props.disabledStatus ) {
+        classes += " is-success";
     }
 
     if (props.disabledStatus) {
-        textArea = <textarea className={classes} value={props.text} onChange={(e) => props.onChange(e)} disabled ></textarea>
+        textArea = <textarea className={classes} value={props.text} 
+                    onChange={(e) => props.onChange(e)} disabled ></textarea>
     } else {
-        textArea = <textarea className={classes} value={props.text} onChange={(e) => props.onChange(e)}></textarea>
+        textArea = <textarea className={classes} value={props.text} 
+                    onChange={(e) => props.onChange(e)}></textarea>
     }
 
     return (

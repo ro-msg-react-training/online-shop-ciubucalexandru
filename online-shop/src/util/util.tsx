@@ -1,6 +1,6 @@
-export const DEFAULT_NAME: string = "Product Name";
-export const DEFAULT_CATEGORY: string = "Category";
-export const DEFAULT_PRICE: number = 0;
-export const DEFAULT_IMAGE: string = "Image Link";
-export const DEFAULT_DESCRIPTION: string = "Product Description";
-export const DEFAULT_ID: number = -1;
+export const DEFAULT_NAME = "Product Name";
+export const DEFAULT_CATEGORY = "Category";
+export const DEFAULT_PRICE = 0;
+export const DEFAULT_IMAGE = "Image Link";
+export const DEFAULT_DESCRIPTION = "Product Description";
+export const DEFAULT_ID = -1;

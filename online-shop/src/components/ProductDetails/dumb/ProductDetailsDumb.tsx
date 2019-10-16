@@ -20,7 +20,7 @@ export const ProductDetailsDumb: React.FC<IProductDetailsProps> = (props: IProdu
 
         return (
         <div>
-            <CustomModal title={title} children="" status={props.modalStatus} 
+            <CustomModal title={title} status={props.modalStatus} 
                         closeModal={() => props.closeModal()} confirmModal={() => props.confirmModal()}
                         redirectOnSuccess="/products"/>
                         

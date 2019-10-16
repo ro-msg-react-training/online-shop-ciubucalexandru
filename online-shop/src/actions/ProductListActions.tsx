@@ -23,7 +23,8 @@ export interface AddItemToListAction extends Action<string> {
     productDTO: ProductDTO;
 }
 
-export type ProductListAction = SetProductListAction | DeleteProductFromListAction | SetLoadingListAction | AddItemToListAction
+export type ProductListAction = SetProductListAction | DeleteProductFromListAction | SetLoadingListAction | 
+            AddItemToListAction;
 
 export const setProductsList = (productDTOArray: ProductDTOArray): SetProductListAction => {
     return { 

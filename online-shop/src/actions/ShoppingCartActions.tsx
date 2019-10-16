@@ -54,7 +54,7 @@ export const deleteProductShoppingCart = (product: Product): DeleteProductFromCa
 export const modifyProductQuantiy = (
         product: Product, 
         newQuantity: number, 
-        oldQuantity: number
+        oldQuantity: number,
     ): ModifyProductQuantityAction => {
         
     return { 

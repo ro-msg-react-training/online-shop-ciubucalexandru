@@ -17,7 +17,7 @@ interface IShoppingCartViewProps {
 
 class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
 
-    componentDidMount() {
+    public componentDidMount() {
         this.props.setLoadingStatus(false);
     }
 
@@ -27,7 +27,7 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
         const arrayLength: number = this.props.shoppingCartArray.products.length;
 
         for (let i = 0; i < arrayLength; i++) {
-            let currentId = this.props.shoppingCartArray.products[i].id;
+            const currentId = this.props.shoppingCartArray.products[i].id;
             if (cartItems[currentId] === undefined) {
                 cartItems[currentId] = 1;
             } else {
@@ -97,7 +97,7 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
     }
 }
 
-const ZERO: number = 0;
+const ZERO = 0;
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -115,7 +115,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 const ShoppingCart = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 ) (ShoppingCartViewSmart);
 
 export default ShoppingCart;

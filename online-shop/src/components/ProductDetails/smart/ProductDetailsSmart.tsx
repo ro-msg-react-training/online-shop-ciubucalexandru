@@ -83,7 +83,7 @@ const mapStateToProps = (state: AppState, ownProps: IIdProp) => {
         loadingStatus: state.productDetails.isLoading,
         product: state.productDetails.product,
         shoppingCart: state.shoppingCart.productArray,
-        showModal: state.productDetails.showModal
+        showModal: state.productDetails.showModal,
     }
 }
 
@@ -97,13 +97,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         },
         addItemToCart: (product: Product) => dispatch(addProductToCart(product)),
         openModal: () => dispatch(openModalDetails()),
-        closeModal: () => dispatch(closeModalDetails())
+        closeModal: () => dispatch(closeModalDetails()),
     }
 }
 
 const ProductDetails = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 ) (ProductDetailsSmart);
 
 export default ProductDetails;

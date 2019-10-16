@@ -117,7 +117,7 @@ const mapStateToProps = (state: AppState, ownProps: IOwnProp) => {
         initialProduct: ownProps.productId,
         editableProduct: state.editableProduct.product,
         operationName: ownProps.operationName,
-        isLoading: state.editableProduct.isLoading
+        isLoading: state.editableProduct.isLoading,
     });
 }
 
@@ -138,7 +138,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 const EditableProductView = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 ) (EditableProductViewSmart);
 
 export default EditableProductView;

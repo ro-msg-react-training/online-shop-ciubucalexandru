@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 
 const ShoppingCartItem = connect(
     mapStateToProps,
-    mapDispatchToProps
+    mapDispatchToProps,
 ) (ShoppingCartItemSmart);
 
 export default ShoppingCartItem;

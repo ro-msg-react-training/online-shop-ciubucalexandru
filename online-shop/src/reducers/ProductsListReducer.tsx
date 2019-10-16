@@ -11,12 +11,12 @@ export interface ProductsListState {
 
 const initialState: ProductsListState = {
     productArray: new ProductDTOArray([]),
-    isLoading: true
+    isLoading: true,
 }
 
 export const ProductsListReducer = (
             state: ProductsListState = initialState, 
-            action: ProductListAction
+            action: ProductListAction,
         ): ProductsListState => {
 
     switch(action.type) {

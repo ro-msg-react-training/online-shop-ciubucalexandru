@@ -1,6 +1,9 @@
 import { ProductArray, Product } from '../model/model';
-import { DELETE_PRODUCT_FROM_CART, ADD_PRODUCT_TO_CART, MODIFY_PRODUCT_QUANTITY, CLEAR_CART, SET_LOADING_STATUS_CART, UPDATE_PRODUCT_CART } from '../util/ActionTypes';
-import { ShoppingCartAction, AddProductToCartAction, DeleteProductFromCartAction, ModifyProductQuantityAction, SetLoadingCartAction, UpdateProductCartAction } from '../actions/ShoppingCartActions';
+import { DELETE_PRODUCT_FROM_CART, ADD_PRODUCT_TO_CART, MODIFY_PRODUCT_QUANTITY, 
+    CLEAR_CART, SET_LOADING_STATUS_CART, UPDATE_PRODUCT_CART } from '../util/ActionTypes';
+import { ShoppingCartAction, AddProductToCartAction, DeleteProductFromCartAction, 
+    ModifyProductQuantityAction, SetLoadingCartAction, 
+    UpdateProductCartAction } from '../actions/ShoppingCartActions';
 
 export interface ShoppingCartState {
     productArray: ProductArray;
@@ -14,7 +17,7 @@ const initialState: ShoppingCartState = {
 
 export const ShoppingCartReducer = (
             state: ShoppingCartState = initialState, 
-            action: ShoppingCartAction
+            action: ShoppingCartAction,
         ): ShoppingCartState => {
 
     switch(action.type) {
@@ -86,7 +89,7 @@ export const ShoppingCartReducer = (
 const updateQuantity = (oldArray: ProductArray, product: Product, quantity: number): ProductArray => {
     const newProductArray: ProductArray = deleteProduct(oldArray, product);
 
-    for (let i: number = 0; i < quantity; i++) {
+    for (let i = 0; i < quantity; i++) {
         newProductArray.products.push(product);
     }
 

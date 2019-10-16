@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 
 interface IModalProps {
     title: string;
-    children: any;
     status: boolean;
     redirectOnSuccess: string;
     closeModal: () => void;
@@ -12,10 +11,10 @@ interface IModalProps {
 
 export const CustomModal: React.FC<IModalProps> = (props: IModalProps) => {
 
-    let classes: string = 'modal';
+    let classes = "modal";
 
     if (props.status) {
-        classes += ' is-active';
+        classes += " is-active";
     }
 
     return (
@@ -26,11 +25,9 @@ export const CustomModal: React.FC<IModalProps> = (props: IModalProps) => {
                     <p className="modal-card-title">{props.title}</p>
                     <button className="delete" aria-label="close" onClick={() => props.closeModal()}></button>
                 </header>
-                <section className="modal-card-body">
-                    {props.children}
-                </section>
                 <footer className="modal-card-foot">
-                    <Link to={props.redirectOnSuccess} className="button is-success is-white" onClick={() => props.confirmModal()}>
+                    <Link to={props.redirectOnSuccess} className="button is-success is-white" 
+                        onClick={() => props.confirmModal()}>
                         Confirm
                     </Link>
                     <button className="button" onClick={() => props.closeModal()}>

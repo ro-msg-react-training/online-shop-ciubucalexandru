@@ -5,17 +5,17 @@ import { ShoppingCartState, ShoppingCartReducer } from '../reducers/ShoppingCart
 import { EditableProductState, EditableProductReducer } from '../reducers/EditableProductReducer';
 
 const rootReducer = combineReducers({
+    editableProduct: EditableProductReducer,
     productDetails: ProductDetailsReducer,
     productsList: ProductsListReducer,
-    shoppingCart: ShoppingCartReducer,
-    editableProduct: EditableProductReducer
+    shoppingCart: ShoppingCartReducer,  
 });
 
 export const store = createStore(rootReducer);
 
 export interface AppState {
+    editableProduct: EditableProductState;
     productDetails: ProductDetailsState;
     productsList: ProductsListState;
     shoppingCart: ShoppingCartState;
-    editableProduct: EditableProductState;
 }

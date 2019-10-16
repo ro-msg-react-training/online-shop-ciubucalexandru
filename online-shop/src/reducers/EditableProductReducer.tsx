@@ -9,8 +9,8 @@ import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE,
     DEFAULT_IMAGE, DEFAULT_DESCRIPTION } from "../util/util";
 
 export interface EditableProductState {
-    product: Product,
-    isLoading: boolean
+    isLoading: boolean;
+    product: Product;
 };
 
 const initialState: EditableProductState = {
@@ -21,7 +21,7 @@ const initialState: EditableProductState = {
 
 export const EditableProductReducer = (
             state: EditableProductState = initialState,
-            action: EditableProductAction
+            action: EditableProductAction,
         ): EditableProductState => {
 
     switch(action.type) {
@@ -97,6 +97,6 @@ const generateNewProduct = (product: Product): Product => {
         product.category,
         product.price,
         product.image,
-        product.description
+        product.description,
     );
 }
