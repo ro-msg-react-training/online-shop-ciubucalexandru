@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductListView from './components/ProductListView/smart/ProductListViewSmart';
 import './App.scss';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect, RouteComponentProps } from 'react-router-dom';
 import ShoppingCartView from './components/ShoppingCartView/smart/ShoppingCartViewSmart';
 import { NavbarCustom } from './util/NavbarCustom';
 import ProductDetails from './components/ProductDetails/smart/ProductDetailsSmart';
@@ -9,17 +9,22 @@ import EditableProductView from './components/EditableProductView/smart/Editable
 
 class App extends React.Component {
 
-    private renderProductDetails(props: any) {
-        let idValue: number = props.match.params.id;
+    private renderProductDetails(props: RouteComponentProps<{id: string}>) {
+        const idValue: number = Number(props.match.params.id);
         return <ProductDetails {... {id: idValue}}/>
     }
 
-    private renderEditableProduct(props: any, operationName: string, operationMethod: string) {
-        let idValue: number = props.match.params.id;
-        return <EditableProductView productId={idValue} operationName={operationName} operationMethod={operationMethod} />
+    private renderEditableProduct(
+        props: RouteComponentProps<{id: string}>, 
+        operationName: string, 
+        operationMethod: string) {
+            
+        const idValue: number = Number(props.match.params.id);
+        return <EditableProductView productId={idValue} 
+            operationName={operationName} operationMethod={operationMethod} />
     }
 
-    render() {
+    public render() {
         return (
             <div>
                 <BrowserRouter>

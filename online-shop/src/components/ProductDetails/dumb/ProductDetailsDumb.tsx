@@ -16,7 +16,7 @@ interface IProductDetailsProps {
 
 export const ProductDetailsDumb: React.FC<IProductDetailsProps> = (props: IProductDetailsProps) => {
 
-        const title: string = "Are you sure you want to delete this item?";
+        const title = "Are you sure you want to delete this item?";
 
         return (
         <div>
@@ -26,7 +26,8 @@ export const ProductDetailsDumb: React.FC<IProductDetailsProps> = (props: IProdu
                         
             <div className="flexContainer">
                 <h1 className="title is-3 titleDetails">Product: {props.product.name}</h1>
-                <Link to={"/products/" + props.product.id + "/edit"} className="button is-primary is-large productOperationsButton editButton">
+                <Link to={"/products/" + props.product.id + "/edit"} 
+                        className="button is-primary is-large productOperationsButton editButton">
                         EDIT</Link>
                 <Link to="/shopping-cart" className="button is-info is-large productOperationsButton addButton" 
                         onClick={(e) => props.addOnClick(props.product)}>ADD</Link>

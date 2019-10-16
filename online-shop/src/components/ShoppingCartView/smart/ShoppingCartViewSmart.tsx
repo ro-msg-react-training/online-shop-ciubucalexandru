@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { API_ORDERS } from '../../../util/API';
 import { clearShoppingCart, setLoadingCart } from '../../../actions/ShoppingCartActions';
 import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicator';
+import { Dispatch } from 'redux';
 
 interface IShoppingCartViewProps {
     shoppingCartArray: ProductArray;
@@ -21,10 +22,10 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
     }
 
     private mapArrayToCartItems(): CartItem[] {
-        let cartItems: number[] = [];
-        let cartQuantities: CartItem[] = [];
-        let arrayLength: number = this.props.shoppingCartArray.products.length;
-    
+        const cartItems: number[] = [];
+        const cartQuantities: CartItem[] = [];
+        const arrayLength: number = this.props.shoppingCartArray.products.length;
+
         for (let i = 0; i < arrayLength; i++) {
             let currentId = this.props.shoppingCartArray.products[i].id;
             if (cartItems[currentId] === undefined) {
@@ -35,8 +36,9 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
         }
     
         for (let i = 0; i < cartItems.length; i++) {
-            if (cartItems[i] !== 0 && cartItems[i] !== undefined) {
-                let cartItem: CartItem = new CartItem(this.findProductById(this.props.shoppingCartArray, i), cartItems[i]);
+            if (cartItems[i] !== ZERO && cartItems[i] !== undefined) {
+                const cartItem: CartItem = 
+                    new CartItem(this.findProductById(this.props.shoppingCartArray, i), cartItems[i]);
                 cartQuantities.push(cartItem);
             }
         }
@@ -45,9 +47,9 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
     }
 
     private findProductById(productArray: ProductArray, id: number): Product {
-        let finalProduct: Product = productArray.products[0];
+        let finalProduct: Product = productArray.products[ZERO];
     
-        for (let product of productArray.products) {
+        for (const product of productArray.products) {
             if (product.id === id) finalProduct = product;
         }
     
@@ -55,7 +57,7 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
     }
 
     private generateOrder(cartItems: CartItem[]): OrderDTO {
-        let orderItems: OrderItem[] = [];
+        const orderItems: OrderItem[] = [];
 
         cartItems.forEach((item) => {
             orderItems.push(new OrderItem(item.product.id, item.quantity));
@@ -64,15 +66,15 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
         return new OrderDTO("doej", orderItems);
     }
 
-    private async createOrder(cartItems: CartItem[]) {
+    private async createOrder(cartItems: CartItem[]): Promise<void> {
 
         this.props.setLoadingStatus(true);
 
-        if (this.props.shoppingCartArray.products.length > 0) {
+        if (this.props.shoppingCartArray.products.length > ZERO) {
             await fetch(API_ORDERS, { 
                     method: 'post',
                     headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify(this.generateOrder(cartItems))
+                    body: JSON.stringify(this.generateOrder(cartItems)),
                 });
         }
 
@@ -80,7 +82,7 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
         this.props.setLoadingStatus(false);
     }
 
-    render() {
+    public render() {
 
         if (this.props.isLoading) {
             return (
@@ -89,22 +91,25 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
         }
 
         return (
-            <ShoppingCartViewDumb cartItems={this.mapArrayToCartItems()} generateOrder={(e: CartItem[]) => this.createOrder(e)}/>
+            <ShoppingCartViewDumb cartItems={this.mapArrayToCartItems()} 
+                        generateOrder={(e: CartItem[]) => this.createOrder(e)}/>
         );
     }
 }
 
+const ZERO: number = 0;
+
 const mapStateToProps = (state: AppState) => {
     return {
         shoppingCartArray: state.shoppingCart.productArray,
-        isLoading: state.shoppingCart.isLoading
+        isLoading: state.shoppingCart.isLoading,
     }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         clearShoppingCart: () => dispatch(clearShoppingCart()),
-        setLoadingStatus: (loadingStatus: boolean) => dispatch(setLoadingCart(loadingStatus))
+        setLoadingStatus: (loadingStatus: boolean) => dispatch(setLoadingCart(loadingStatus)),
     }
 }
 

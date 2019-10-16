@@ -1,7 +1,9 @@
 import React from 'react';
 import { Product, ProductDTO } from '../../../model/model';
 import { AppState } from '../../../store/store';
-import { changeProductName, changeProductCategory, setEditableProduct, changeProductPrice, changeProductImage, changeProductDescription, setLoadingEditable } from '../../../actions/EditableProductActions';
+import { changeProductName, changeProductCategory, setEditableProduct, 
+    changeProductPrice, changeProductImage, changeProductDescription, 
+    setLoadingEditable } from '../../../actions/EditableProductActions';
 import { connect } from 'react-redux';
 import { EditableProductViewDumb } from '../dumb/EditableProductViewDumb';
 import { API_PRODUCTS } from '../../../util/API';
@@ -9,6 +11,9 @@ import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicato
 import { addItemToList } from '../../../actions/ProductListActions';
 import { updateProductCart } from '../../../actions/ShoppingCartActions';
 import { setProduct } from '../../../actions/ProductDetailsActions';
+import { Dispatch } from 'redux';
+import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
+    DEFAULT_IMAGE, DEFAULT_DESCRIPTION } from '../../../util/util';
 
 interface IEditableProductViewSmartProps {
     productId: number;
@@ -30,21 +35,22 @@ interface IEditableProductViewSmartProps {
 
 class EditableProductViewSmart extends React.Component<IEditableProductViewSmartProps> {
 
-    async componentDidMount () {
+    public async componentDidMount () {
 
         if (this.props.operationMethod.toLowerCase() === 'put') {
-            let response = await fetch(API_PRODUCTS + "/" + this.props.productId)
-            let data = await response.json();
+            const response = await fetch(API_PRODUCTS + "/" + this.props.productId)
+            const data = await response.json();
 
             this.props.setEditableProduct(data)
         } else {
-            this.props.setEditableProduct(new Product(-1, "Product Name", "Category", 0, "Image link", "Product Description"));
+            this.props.setEditableProduct(new Product(DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY,
+                    DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION));
         }
 
         this.props.setLoadingStatus(false);
     }
 
-    private async onSubmitAction(product: Product) {
+    private async onSubmitAction(product: Product): Promise<void> {
 
         this.props.setLoadingStatus(true);
         let requestPath: string = API_PRODUCTS;
@@ -66,9 +72,9 @@ class EditableProductViewSmart extends React.Component<IEditableProductViewSmart
     }
 
     private generateFormStatus(): boolean {
-        let product: Product = this.props.editableProduct;
+        const product: Product = this.props.editableProduct;
 
-        if (product.name === '' || product.price <= 0 || product.image === '' || product.category === '' ||
+        if (product.name === '' || product.price <= ZERO || product.image === '' || product.category === '' ||
             product.price.toString() === '' || product.description === '') {
             return false;
         }
@@ -76,7 +82,7 @@ class EditableProductViewSmart extends React.Component<IEditableProductViewSmart
         return true;
     }
 
-    render() {
+    public render() {
 
         if (this.props.isLoading) {
             return (
@@ -104,6 +110,8 @@ interface IOwnProp {
     operationName: string;
 }
 
+const ZERO = 0;
+
 const mapStateToProps = (state: AppState, ownProps: IOwnProp) => {
     return ({
         initialProduct: ownProps.productId,
@@ -113,7 +121,7 @@ const mapStateToProps = (state: AppState, ownProps: IOwnProp) => {
     });
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return ({
         setEditableProduct: (product: Product) => dispatch(setEditableProduct(product)),
         changeName: (name: string) => dispatch(changeProductName(name)),
@@ -124,7 +132,7 @@ const mapDispatchToProps = (dispatch: any) => {
         setLoadingStatus: (loadingStatus: boolean) => dispatch(setLoadingEditable(loadingStatus)),
         addItemToProductsList: (productDTO: ProductDTO) => dispatch(addItemToList(productDTO)),
         updateItemInCart: (product: Product) => dispatch(updateProductCart(product)),
-        setDetailsProduct: (product: Product) => dispatch(setProduct(product))
+        setDetailsProduct: (product: Product) => dispatch(setProduct(product)),
     });
 }
 

@@ -5,9 +5,11 @@ import { ProductDetailsDumb } from '../dumb/ProductDetailsDumb';
 import { AppState } from '../../../store/store';
 import { addProductToCart, deleteProductShoppingCart } from '../../../actions/ShoppingCartActions';
 import { connect } from 'react-redux';
-import { setProduct, setLoadingDetails, openModalDetails, closeModalDetails } from '../../../actions/ProductDetailsActions';
+import { setProduct, setLoadingDetails, openModalDetails, 
+        closeModalDetails } from '../../../actions/ProductDetailsActions';
 import { deleteProductList } from '../../../actions/ProductListActions';
 import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicator';
+import { Dispatch } from 'redux';
 
 interface IProductDetailsPropsSmart {
     productId: number;
@@ -17,7 +19,7 @@ interface IProductDetailsPropsSmart {
     showModal: boolean;
     setProduct: (product: Product) => void;
     setLoadingStatus: (loadingState: boolean) => void;
-    deleteItem:  (product: Product) => void;
+    deleteItem: (product: Product) => void;
     addItemToCart: (product: Product) => void;
     openModal: () => void;
     closeModal: () => void;
@@ -25,9 +27,9 @@ interface IProductDetailsPropsSmart {
 
 class ProductDetailsSmart extends React.Component<IProductDetailsPropsSmart> {
 
-    async componentDidMount() {
-        let response = await fetch(API_PRODUCTS + "/" + this.props.productId);
-        let data = await response.json();
+    public async componentDidMount() {
+        const response = await fetch(API_PRODUCTS + "/" + this.props.productId);
+        const data = await response.json();
 
         this.props.setProduct(data);
         this.props.setLoadingStatus(false);
@@ -35,11 +37,11 @@ class ProductDetailsSmart extends React.Component<IProductDetailsPropsSmart> {
         this.deleteOnClick = this.deleteOnClick.bind(this);
     }
 
-    private async deleteOnClick() {
+    private deleteOnClick(): void {
         this.props.openModal();
     }
 
-    private async confirmModal() {
+    private async confirmModal(): Promise<void> {
         await fetch(API_PRODUCTS + "/" + this.props.productId, {
             method: 'delete'});
 
@@ -47,11 +49,11 @@ class ProductDetailsSmart extends React.Component<IProductDetailsPropsSmart> {
         this.props.closeModal();
     }
 
-    private closeModal() {
+    private closeModal(): void {
         this.props.closeModal();
     }
 
-    render() {
+    public render() {
 
         if (this.props.loadingStatus) {
             return (
@@ -85,7 +87,7 @@ const mapStateToProps = (state: AppState, ownProps: IIdProp) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         setProduct: (product: Product) => dispatch(setProduct(product)),
         setLoadingStatus: (loadingStatus: boolean) => dispatch(setLoadingDetails(loadingStatus)),

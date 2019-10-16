@@ -38,7 +38,8 @@ export const ShoppingCartItemDumb: React.FC<IShoppingCartItemDumb> = (props: ISh
                     </div>
                 </div>
                 <div className="column is-one-fifth">
-                    <div className="button is-primary is-small is-pulled-right" onClick={(e) => props.deleteItemFromCart()}>X</div>
+                    <div className="button is-primary is-small is-pulled-right" 
+                                onClick={(e) => props.deleteItemFromCart()}>X</div>
                 </div>
             </div>
             
@@ -46,11 +47,13 @@ export const ShoppingCartItemDumb: React.FC<IShoppingCartItemDumb> = (props: ISh
     );
 }
 
-function initializeOptions() {
+const MAX_QUANTITY = 30;
 
-    let populateOptionsArray: number[] = [];
+const initializeOptions = () => {
 
-    for(let i:number = 1; i <= 30; i++) {
+    const populateOptionsArray: number[] = [];
+
+    for(let i = 1; i <= MAX_QUANTITY; i++) {
         populateOptionsArray[populateOptionsArray.length] = i;
     }
 

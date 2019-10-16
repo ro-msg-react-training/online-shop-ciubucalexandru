@@ -10,7 +10,8 @@ export const ProductListViewDumb: React.FC<ProductDTOArray> = (productDTOArray: 
         <div>
             <div className="flexContainer">
                 <h1 className="title is-1 h1List">Products</h1>
-                <Link to="/shopping-cart" className="button is-primary is-large listOperationsButton shoppingCartButton">
+                <Link to="/shopping-cart" 
+                    className="button is-primary is-large listOperationsButton shoppingCartButton">
                     <figure className="image is-48x48">
                         <img src={ShoppingCart} alt="Shopping Cart"/>
                     </figure>

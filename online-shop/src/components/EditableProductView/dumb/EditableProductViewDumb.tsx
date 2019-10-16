@@ -24,12 +24,17 @@ export const EditableProductViewDumb: React.FC<IEditableProductViewProps> = (pro
                 {props.operationName}: {props.product.name}
             </h1>
 
-            <FormBasicItem labelName="Name" value={props.product.name} type="text" onChange={(e) => props.changeName(e.target.value)} disabledStatus={false}/>
-            <FormBasicItem labelName="Category" value={props.product.category} type="text" onChange={(e) => props.changeCategory(e.target.value)} disabledStatus={false} />
-            <FormBasicItem labelName="Price" value={String(props.product.price)} type="number" onChange={(e) => props.changePrice(e.target.value)} disabledStatus={false} />
-            <FormBasicItem labelName="Image" value={props.product.image} type="text" onChange={(e) => props.changeImage(e.target.value)} disabledStatus={false} />
+            <FormBasicItem labelName="Name" value={props.product.name} type="text" 
+                            onChange={(e) => props.changeName(e.target.value)} disabledStatus={false}/>
+            <FormBasicItem labelName="Category" value={props.product.category} type="text" 
+                            onChange={(e) => props.changeCategory(e.target.value)} disabledStatus={false} />
+            <FormBasicItem labelName="Price" value={String(props.product.price)} type="number" 
+                            onChange={(e) => props.changePrice(e.target.value)} disabledStatus={false} />
+            <FormBasicItem labelName="Image" value={props.product.image} type="text" 
+                            onChange={(e) => props.changeImage(e.target.value)} disabledStatus={false} />
 
-            <FormTextAreaItem text={props.product.description} onChange={(e) => props.changeDescription(e.target.value)} disabledStatus={false} />
+            <FormTextAreaItem text={props.product.description} 
+                            onChange={(e) => props.changeDescription(e.target.value)} disabledStatus={false} />
             
             <FormButtons operationName={props.operationName} onSubmitAction={() => props.onSubmitAction(props.product)} 
                             productId={props.product.id} formStatus={props.formStatus}/>

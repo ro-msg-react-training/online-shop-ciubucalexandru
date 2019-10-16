@@ -1,6 +1,8 @@
 import { ProductDTOArray, ProductDTO, Product } from '../model/model';
-import { SET_PRODUCT_LIST, DELETE_PRODUCT_FROM_LIST, SET_LOADING_STATUS_LIST, ADD_ITEM_TO_LIST } from '../util/ActionTypes';
-import { ProductListAction, SetProductListAction, DeleteProductFromListAction, SetLoadingListAction, AddItemToListAction } from '../actions/ProductListActions';
+import { SET_PRODUCT_LIST, DELETE_PRODUCT_FROM_LIST, SET_LOADING_STATUS_LIST, 
+    ADD_ITEM_TO_LIST } from '../util/ActionTypes';
+import { ProductListAction, SetProductListAction, DeleteProductFromListAction, 
+    SetLoadingListAction, AddItemToListAction } from '../actions/ProductListActions';
 
 export interface ProductsListState {
     productArray: ProductDTOArray;
@@ -12,35 +14,39 @@ const initialState: ProductsListState = {
     isLoading: true
 }
 
-export function ProductsListReducer(state: ProductsListState = initialState, action: ProductListAction): ProductsListState {
+export const ProductsListReducer = (
+            state: ProductsListState = initialState, 
+            action: ProductListAction
+        ): ProductsListState => {
+
     switch(action.type) {
         case SET_PRODUCT_LIST: {
-            let actualAction: SetProductListAction = action as SetProductListAction;
+            const actualAction: SetProductListAction = action as SetProductListAction;
             return ({
                 productArray: actualAction.products,
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             });
         }
         case DELETE_PRODUCT_FROM_LIST: {
-            let actualAction: DeleteProductFromListAction = action as DeleteProductFromListAction;
-            let newArray: ProductDTOArray = deleteProduct(state.productArray, actualAction.product);
+            const actualAction: DeleteProductFromListAction = action as DeleteProductFromListAction;
+            const newArray: ProductDTOArray = deleteProduct(state.productArray, actualAction.product);
             return ({
                 productArray: newArray,
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             });
         }
         case SET_LOADING_STATUS_LIST: {
-            let actualAction: SetLoadingListAction = action as SetLoadingListAction;
+            const actualAction: SetLoadingListAction = action as SetLoadingListAction;
             return ({
                 productArray: state.productArray,
-                isLoading: actualAction.loadingStatus
+                isLoading: actualAction.loadingStatus,
             })
         }
         case ADD_ITEM_TO_LIST: {
-            let actualAction: AddItemToListAction = action as AddItemToListAction;
+            const actualAction: AddItemToListAction = action as AddItemToListAction;
             return ({
                 productArray: putProduct(state.productArray, actualAction.productDTO),
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             })
         }
         default: {
@@ -49,18 +55,20 @@ export function ProductsListReducer(state: ProductsListState = initialState, act
     }
 }
 
-function deleteProduct(oldArray: ProductDTOArray, product: Product) {
-    let newProductArray: ProductDTOArray = new ProductDTOArray([]);
+const deleteProduct = (oldArray: ProductDTOArray, product: Product): ProductDTOArray => {
+    const newProductArray: ProductDTOArray = new ProductDTOArray([]);
 
-    oldArray.products.filter((item: ProductDTO) => item.id !== product.id).forEach((filteredProduct: ProductDTO) => {
-        newProductArray.products.push(filteredProduct)
+    oldArray.products
+        .filter((item: ProductDTO) => item.id !== product.id)
+            .forEach((filteredProduct: ProductDTO) => {
+            newProductArray.products.push(filteredProduct)
     });
 
     return newProductArray;
 }
 
-function putProduct(productArray: ProductDTOArray, productDTO: ProductDTO): ProductDTOArray {
-    let newArray: ProductDTOArray = new ProductDTOArray([]);
+const putProduct = (productArray: ProductDTOArray, productDTO: ProductDTO): ProductDTOArray => {
+    const newArray: ProductDTOArray = new ProductDTOArray([]);
 
     productArray.products.forEach((item) => {
         if (item.id === productDTO.id) {

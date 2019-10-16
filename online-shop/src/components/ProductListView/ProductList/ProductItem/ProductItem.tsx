@@ -7,7 +7,7 @@ export { ProductItem }
 
 const ProductItem: React.FC<ProductDTO> = (product: ProductDTO) => {
 
-    let url: string = "/products/" + product.id;
+    const url: string = "/products/" + product.id;
 
     return (
         <div className="list-item box columns is-vcentered">

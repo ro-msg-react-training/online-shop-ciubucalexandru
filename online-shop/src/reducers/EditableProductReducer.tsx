@@ -1,7 +1,12 @@
 import { Product } from "../model/model";
-import LoadingGif from '../images/loading.gif';
-import { EditableProductAction, SetEditableProductAction, ChangeProductNameAction, ChangeProductCategoryAction, ChangeProductPriceAction, ChangeProductImageAction, ChangeProductDescriptionAction, SetLoadingStatusEditable } from "../actions/EditableProductActions";
-import { SET_EDITABLE_PRODUCT, CHANGE_PRODUCT_NAME, CHANGE_PRODUCT_CATEGORY, CHANGE_PRODUCT_PRICE, CHANGE_PRODUCT_IMAGE, CHANGE_PRODUCT_DESCRIPTION, SET_LOADING_STATUS_EDITABLE } from "../util/ActionTypes";
+import { EditableProductAction, SetEditableProductAction, ChangeProductNameAction, 
+    ChangeProductCategoryAction, ChangeProductPriceAction, ChangeProductImageAction, 
+    ChangeProductDescriptionAction, SetLoadingStatusEditable } from "../actions/EditableProductActions";
+import { SET_EDITABLE_PRODUCT, CHANGE_PRODUCT_NAME, CHANGE_PRODUCT_CATEGORY, 
+    CHANGE_PRODUCT_PRICE, CHANGE_PRODUCT_IMAGE, CHANGE_PRODUCT_DESCRIPTION, 
+    SET_LOADING_STATUS_EDITABLE } from "../util/ActionTypes";
+import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
+    DEFAULT_IMAGE, DEFAULT_DESCRIPTION } from "../util/util";
 
 export interface EditableProductState {
     product: Product,
@@ -9,69 +14,74 @@ export interface EditableProductState {
 };
 
 const initialState: EditableProductState = {
-    product: new Product(-1, "", "", 0, LoadingGif, ""),
-    isLoading: true
+    product: new Product(DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY,
+        DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION),
+    isLoading: true,
 };
 
-export function EditableProductReducer(state: EditableProductState = initialState, action: EditableProductAction): EditableProductState {
+export const EditableProductReducer = (
+            state: EditableProductState = initialState,
+            action: EditableProductAction
+        ): EditableProductState => {
+
     switch(action.type) {
         case SET_EDITABLE_PRODUCT: {
-            let actualAction: SetEditableProductAction = action as SetEditableProductAction;
+            const actualAction: SetEditableProductAction = action as SetEditableProductAction;
             return ({
                 product: actualAction.product,
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             });
         }
         case CHANGE_PRODUCT_NAME: {
-            let actualAction: ChangeProductNameAction = action as ChangeProductNameAction;
-            let newProduct: Product = generateNewProduct(state.product);
+            const actualAction: ChangeProductNameAction = action as ChangeProductNameAction;
+            const newProduct: Product = generateNewProduct(state.product);
             newProduct.name = actualAction.name;
             return ({
                 product: newProduct,
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             })
         }
         case CHANGE_PRODUCT_CATEGORY: {
-            let actualAction: ChangeProductCategoryAction = action as ChangeProductCategoryAction;
-            let newProduct: Product = generateNewProduct(state.product);
+            const actualAction: ChangeProductCategoryAction = action as ChangeProductCategoryAction;
+            const newProduct: Product = generateNewProduct(state.product);
             newProduct.category = actualAction.category;
             return ({
                 product: newProduct,
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             })
         }
         case CHANGE_PRODUCT_PRICE: {
-            let actualAction: ChangeProductPriceAction = action as ChangeProductPriceAction;
-            let newProduct: Product = generateNewProduct(state.product);
+            const actualAction: ChangeProductPriceAction = action as ChangeProductPriceAction;
+            const newProduct: Product = generateNewProduct(state.product);
             newProduct.price = actualAction.price;
             return ({
                 product: newProduct,
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             })
         }
         case CHANGE_PRODUCT_IMAGE: {
-            let actualAction: ChangeProductImageAction = action as ChangeProductImageAction;
-            let newProduct: Product = generateNewProduct(state.product);
+            const actualAction: ChangeProductImageAction = action as ChangeProductImageAction;
+            const newProduct: Product = generateNewProduct(state.product);
             newProduct.image = actualAction.image;
             return ({
                 product: newProduct,
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             })
         }
         case CHANGE_PRODUCT_DESCRIPTION: {
-            let actualAction: ChangeProductDescriptionAction = action as ChangeProductDescriptionAction;
-            let newProduct: Product = generateNewProduct(state.product);
+            const actualAction: ChangeProductDescriptionAction = action as ChangeProductDescriptionAction;
+            const newProduct: Product = generateNewProduct(state.product);
             newProduct.description = actualAction.description;
             return ({
                 product: newProduct,
-                isLoading: state.isLoading
+                isLoading: state.isLoading,
             })
         }
         case SET_LOADING_STATUS_EDITABLE: {
-            let actualAction: SetLoadingStatusEditable = action as SetLoadingStatusEditable;
+            const actualAction: SetLoadingStatusEditable = action as SetLoadingStatusEditable;
             return ({
                 product: state.product,
-                isLoading: actualAction.loadingStatus
+                isLoading: actualAction.loadingStatus,
             });
         }
         default: {
@@ -80,7 +90,7 @@ export function EditableProductReducer(state: EditableProductState = initialStat
     }
 }
 
-function generateNewProduct(product: Product): Product {
+const generateNewProduct = (product: Product): Product => {
     return new Product(
         product.id,
         product.name,

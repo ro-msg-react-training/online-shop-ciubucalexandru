@@ -1,10 +1,10 @@
 export class Product {
-    id: number;
-    name: string;
-    category: string;
-    price: number;
-    image: string;
-    description: string;
+    public id: number;
+    public name: string;
+    public category: string;
+    public price: number;
+    public image: string;
+    public description: string;
 
     constructor(id: number, name: string, category: string, price: number, image: string, description: string) {
         this.id = id;
@@ -17,36 +17,36 @@ export class Product {
 }
 
 export class ProductArray {
-    products: Product[];
+    public products: Product[];
 
     constructor(products: Product[]) {
         this.products = products;
     }
 
-    public updateArray(newProducts: Product[]) {
+    public updateArray(newProducts: Product[]): void {
         this.products = newProducts;
     }
 }
 
 export class CartItem {
-    product: Product;
-    quantity: number;
+    public product: Product;
+    public quantity: number;
 
     constructor(prod: Product, quant: number) {
         this.product = prod;
         this.quantity = quant;
     }
 
-    public updateQuantity(newQuantity: number) {
+    public updateQuantity(newQuantity: number): void {
         this.quantity = newQuantity;
     }
 }
 
 export class ProductDTO {
-    id: number;
-    name: string;
-    category: string;
-    price: number;
+    public id: number;
+    public name: string;
+    public category: string;
+    public price: number;
 
     constructor(id: number, name: string, category: string, price: number) {
         this.id = id;
@@ -57,7 +57,7 @@ export class ProductDTO {
 }
 
 export class ProductDTOArray {
-    products: ProductDTO[];
+    public products: ProductDTO[];
 
     constructor(products: ProductDTO[]) {
         this.products = products;
@@ -65,8 +65,8 @@ export class ProductDTOArray {
 }
 
 export class OrderItem {
-    productId: number;
-    quantity: number;
+    public productId: number;
+    public quantity: number;
 
     constructor(productId: number, quantity: number) {
         this.productId = productId;
@@ -75,8 +75,8 @@ export class OrderItem {
 }
 
 export class OrderDTO {
-    customer: string;
-    products: OrderItem[];
+    public customer: string;
+    public products: OrderItem[];
 
     constructor(customerName: string, orderItems: OrderItem[]) {
         this.customer = customerName;

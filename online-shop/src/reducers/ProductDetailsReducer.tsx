@@ -1,7 +1,10 @@
 import { Product } from '../model/model';
 import LoadingGif from '../images/loading.gif';
-import { SET_PRODUCT, SET_LOADING_STATUS_DETAILS, OPEN_MODAL_DETAILS, CLOSE_MODAL_DETAILS } from '../util/ActionTypes';
+import { SET_PRODUCT, SET_LOADING_STATUS_DETAILS, OPEN_MODAL_DETAILS, 
+    CLOSE_MODAL_DETAILS } from '../util/ActionTypes';
 import { ProductDetailsAction, SetProductAction, SetLoadingDetailsAction } from '../actions/ProductDetailsActions';
+import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
+    DEFAULT_IMAGE, DEFAULT_DESCRIPTION } from "../util/util";
 
 export interface ProductDetailsState {
     product: Product,
@@ -10,43 +13,48 @@ export interface ProductDetailsState {
 };
 
 const initialState: ProductDetailsState = {
-    product: new Product(0, "", "", 0.0, LoadingGif, ""),
+    product: new Product(DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY,
+        DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION),
     isLoading: true,
     showModal: false
 }
 
-export function ProductDetailsReducer(state: ProductDetailsState = initialState, action: ProductDetailsAction): ProductDetailsState {
+export const ProductDetailsReducer = (
+            state: ProductDetailsState = initialState, 
+            action: ProductDetailsAction
+        ): ProductDetailsState => {
+            
     switch (action.type) {
         case SET_PRODUCT: {
-            let actualAction: SetProductAction = action as SetProductAction;
+            const actualAction: SetProductAction = action as SetProductAction;
             return {
                 product: actualAction.product,
                 isLoading: state.isLoading,
-                showModal: state.showModal
+                showModal: state.showModal,
             }
         }
         case SET_LOADING_STATUS_DETAILS: {
-            let actualAction: SetLoadingDetailsAction = action as SetLoadingDetailsAction;
+            const actualAction: SetLoadingDetailsAction = action as SetLoadingDetailsAction;
             return {
                 product: state.product,
                 isLoading: actualAction.loadingStatus,
-                showModal: state.showModal
+                showModal: state.showModal,
             }
         }
         case OPEN_MODAL_DETAILS: {
-            let newState: boolean = true;
+            const newState = true;
             return {
                 product: state.product,
                 isLoading: state.isLoading,
-                showModal: newState
+                showModal: newState,
             }
         }
         case CLOSE_MODAL_DETAILS: {
-            let newState: boolean = false;
+            const newState = false;
             return {
                 product: state.product,
                 isLoading: state.isLoading,
-                showModal: newState
+                showModal: newState,
             }
         }
         default: {

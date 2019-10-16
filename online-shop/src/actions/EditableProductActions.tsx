@@ -1,6 +1,8 @@
 import { Action } from 'redux';
 import { Product } from '../model/model';
-import { SET_EDITABLE_PRODUCT, CHANGE_PRODUCT_NAME, CHANGE_PRODUCT_CATEGORY, CHANGE_PRODUCT_PRICE, CHANGE_PRODUCT_IMAGE, CHANGE_PRODUCT_DESCRIPTION, SET_LOADING_STATUS_EDITABLE } from '../util/ActionTypes';
+import { SET_EDITABLE_PRODUCT, CHANGE_PRODUCT_NAME, CHANGE_PRODUCT_CATEGORY, 
+    CHANGE_PRODUCT_PRICE, CHANGE_PRODUCT_IMAGE, CHANGE_PRODUCT_DESCRIPTION, 
+    SET_LOADING_STATUS_EDITABLE } from '../util/ActionTypes';
 
 export interface SetEditableProductAction extends Action<string> {
     type: string;
@@ -37,54 +39,55 @@ export interface SetLoadingStatusEditable extends Action<string> {
     loadingStatus: boolean;
 }
 
-export type EditableProductAction = SetEditableProductAction | ChangeProductNameAction | ChangeProductCategoryAction | SetLoadingStatusEditable |
-                        ChangeProductPriceAction | ChangeProductImageAction | ChangeProductDescriptionAction;
+export type EditableProductAction = SetEditableProductAction | ChangeProductNameAction | 
+        ChangeProductCategoryAction | SetLoadingStatusEditable |ChangeProductPriceAction | 
+        ChangeProductImageAction | ChangeProductDescriptionAction;
 
-export function setEditableProduct(product: Product): SetEditableProductAction {
+export const setEditableProduct = (product: Product): SetEditableProductAction => {
     return ({
         type: SET_EDITABLE_PRODUCT,
-        product: product
+        product: product,
     });
 }
 
-export function changeProductName(name: string): ChangeProductNameAction {
+export const changeProductName = (name: string): ChangeProductNameAction => {
     return ({
         type: CHANGE_PRODUCT_NAME,
-        name: name
+        name: name,
     });
 }
 
-export function changeProductCategory(category: string): ChangeProductCategoryAction {
+export const changeProductCategory = (category: string): ChangeProductCategoryAction => {
     return ({
         type: CHANGE_PRODUCT_CATEGORY,
-        category: category
+        category: category,
     });
 }
 
-export function changeProductPrice(price: number): ChangeProductPriceAction {
+export const changeProductPrice = (price: number): ChangeProductPriceAction => {
     return ({
         type: CHANGE_PRODUCT_PRICE,
-        price: price
+        price: price,
     });
 }
 
-export function changeProductImage(image: string): ChangeProductImageAction {
+export const changeProductImage = (image: string): ChangeProductImageAction => {
     return ({
         type: CHANGE_PRODUCT_IMAGE,
-        image: image
+        image: image,
     });
 }
 
-export function changeProductDescription(description: string): ChangeProductDescriptionAction {
+export const changeProductDescription = (description: string): ChangeProductDescriptionAction => {
     return ({
         type: CHANGE_PRODUCT_DESCRIPTION,
-        description: description
+        description: description,
     });
 }
 
-export function setLoadingEditable(loadingStatus: boolean): SetLoadingStatusEditable {
+export const setLoadingEditable = (loadingStatus: boolean): SetLoadingStatusEditable => {
     return ({
         type: SET_LOADING_STATUS_EDITABLE,
-        loadingStatus: loadingStatus
+        loadingStatus: loadingStatus,
     });
 }

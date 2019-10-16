@@ -5,13 +5,12 @@ interface IFormBasicItemProps {
     value: string;
     type: string;
     disabledStatus: boolean;
-    additionalOptions?: any;
     onChange: (e: any) => void;
 }
 
 export const FormBasicItem: React.FC<IFormBasicItemProps> = (props: IFormBasicItemProps) => {
 
-    let classes: string = 'input';
+    let classes = 'input';
 
     if (props.value === '' && !props.disabledStatus) {
         classes += ' is-danger';
@@ -21,9 +20,11 @@ export const FormBasicItem: React.FC<IFormBasicItemProps> = (props: IFormBasicIt
 
     let inputJsx;
     if (props.disabledStatus) {
-        inputJsx = <input className={classes} type={props.type} value={props.value} onChange={(e) => props.onChange(e)} disabled/>;
+        inputJsx = <input className={classes} type={props.type} value={props.value} 
+                onChange={(e) => props.onChange(e)} disabled/>;
     } else {
-        inputJsx = <input className={classes} type={props.type} value={props.value} onChange={(e) => props.onChange(e)}/>;
+        inputJsx = <input className={classes} type={props.type} value={props.value} 
+                onChange={(e) => props.onChange(e)}/>;
     }
 
     return (

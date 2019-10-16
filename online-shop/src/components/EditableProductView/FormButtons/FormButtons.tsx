@@ -11,8 +11,10 @@ interface IFormButtonsProps {
 
 export const FormButtons: React.FC<IFormButtonsProps> = (props: IFormButtonsProps) => {
 
-    const redirectLink: string = props.operationName.toLowerCase() === 'edit' ? '/products/' + props.productId : '/products';
-    const formStatusText: string = props.formStatus ? ' ' : 'Please don\'t leave any empty fields and make the price higher than 0!';
+    const redirectLink: string = props.operationName.toLowerCase() === 'edit' ? 
+                '/products/' + props.productId : '/products';
+    const formStatusText: string = props.formStatus ? 
+                ' ' : 'Please don\'t leave any empty fields and make the price higher than 0!';
 
     return (
         <div>
