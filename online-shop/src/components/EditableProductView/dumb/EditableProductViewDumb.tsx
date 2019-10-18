@@ -9,6 +9,7 @@ interface IEditableProductViewProps {
     product: Product;
     operationName: string;
     formStatus: boolean;
+    redirectLink: string;
     onSubmitAction: (product: Product) => void;
     changeName: (name: string) => void;
     changeCategory: (category: string) => void;
@@ -36,8 +37,9 @@ export const EditableProductViewDumb: React.FC<IEditableProductViewProps> = (pro
             <FormTextAreaItem text={props.product.description} 
                             onChange={(e) => props.changeDescription(e.target.value)} disabledStatus={false} />
             
-            <FormButtons operationName={props.operationName} onSubmitAction={() => props.onSubmitAction(props.product)} 
-                            productId={props.product.id} formStatus={props.formStatus}/>
+            <FormButtons onSubmitAction={() => props.onSubmitAction(props.product)} 
+                           operationName={props.operationName}  productId={props.product.id} 
+                           formStatus={props.formStatus} redirectLink={props.redirectLink}/>
         </div>
     );
 }

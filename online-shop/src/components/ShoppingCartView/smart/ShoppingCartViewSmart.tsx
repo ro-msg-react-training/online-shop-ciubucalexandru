@@ -3,57 +3,49 @@ import { ProductArray, CartItem, Product, OrderDTO, OrderItem } from '../../../m
 import { AppState } from '../../../store/store';
 import { ShoppingCartViewDumb } from '../dumb/ShoppingCartViewDumb';
 import { connect } from 'react-redux';
-import { API_ORDERS } from '../../../util/API';
-import { clearShoppingCart, setLoadingCart } from '../../../actions/ShoppingCartActions';
+import { setLoadingCart, createOrderRequest, clearCreateOrderStatus } from '../../../actions/ShoppingCartActions';
 import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicator';
 import { Dispatch } from 'redux';
+import { ZERO, STATUS_FAIL, STATUS_SUCCESS } from '../../../util/util';
+import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
+import { Redirect } from 'react-router';
 
 interface IShoppingCartViewProps {
     shoppingCartArray: ProductArray;
     isLoading: boolean;
-    clearShoppingCart: () => void;
+    createOrderStatus: string;
+    createOrder: (orderDTO: OrderDTO) => void;
     setLoadingStatus: (loadingStatus: boolean) => void;
+    clearCreateOrderStatus: () => void;
 }
 
 class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
 
     public componentDidMount() {
         this.props.setLoadingStatus(false);
+        this.props.clearCreateOrderStatus();
     }
 
     private mapArrayToCartItems(): CartItem[] {
-        const cartItems: number[] = [];
-        const cartQuantities: CartItem[] = [];
-        const arrayLength: number = this.props.shoppingCartArray.products.length;
 
-        for (let i = 0; i < arrayLength; i++) {
-            const currentId = this.props.shoppingCartArray.products[i].id;
-            if (cartItems[currentId] === undefined) {
-                cartItems[currentId] = 1;
+        const itemsMap: Map<Product, number> = new Map();
+        const cartItems2: CartItem[] = [];
+
+        this.props.shoppingCartArray.products.forEach((product) => {
+            const currentNumber: number | undefined = itemsMap.get(product);
+
+            if (currentNumber === undefined) {
+                itemsMap.set(product, 1);
             } else {
-                cartItems[currentId]++;
+                itemsMap.set(product, currentNumber + 1);
             }
-        }
-    
-        for (let i = 0; i < cartItems.length; i++) {
-            if (cartItems[i] !== ZERO && cartItems[i] !== undefined) {
-                const cartItem: CartItem = 
-                    new CartItem(this.findProductById(this.props.shoppingCartArray, i), cartItems[i]);
-                cartQuantities.push(cartItem);
-            }
-        }
-    
-        return cartQuantities;
-    }
+        });
 
-    private findProductById(productArray: ProductArray, id: number): Product {
-        let finalProduct: Product = productArray.products[ZERO];
-    
-        for (const product of productArray.products) {
-            if (product.id === id) finalProduct = product;
-        }
-    
-        return finalProduct;
+        itemsMap.forEach((value: number, key: Product) => {
+            cartItems2.push(new CartItem(key, value));
+        });
+
+        return cartItems2;
     }
 
     private generateOrder(cartItems: CartItem[]): OrderDTO {
@@ -66,20 +58,11 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
         return new OrderDTO("doej", orderItems);
     }
 
-    private async createOrder(cartItems: CartItem[]): Promise<void> {
+    private createOrder(cartItems: CartItem[]): void {
 
-        this.props.setLoadingStatus(true);
-
-        if (this.props.shoppingCartArray.products.length > ZERO) {
-            await fetch(API_ORDERS, { 
-                    method: 'post',
-                    headers: {'Content-Type':'application/json'},
-                    body: JSON.stringify(this.generateOrder(cartItems)),
-                });
+        if (cartItems.length > ZERO) {
+            this.props.createOrder(this.generateOrder(cartItems));
         }
-
-        this.props.clearShoppingCart();
-        this.props.setLoadingStatus(false);
     }
 
     public render() {
@@ -87,6 +70,15 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
         if (this.props.isLoading) {
             return (
                 <LoadingIndicator />
+            );
+        } else if (this.props.createOrderStatus === STATUS_FAIL) { 
+            return (
+                <ErrrorMessageLabel errorMessage={CREATE_ORDER_ERROR} />
+            );
+        } else if (this.props.createOrderStatus === STATUS_SUCCESS) {
+            this.props.clearCreateOrderStatus();
+            return (
+                <Redirect to="/products"></Redirect>
             );
         }
 
@@ -97,19 +89,21 @@ class ShoppingCartViewSmart extends React.Component<IShoppingCartViewProps> {
     }
 }
 
-const ZERO = 0;
+const CREATE_ORDER_ERROR = "Failed to create order.";
 
 const mapStateToProps = (state: AppState) => {
     return {
         shoppingCartArray: state.shoppingCart.productArray,
         isLoading: state.shoppingCart.isLoading,
+        createOrderStatus: state.shoppingCart.createOrderStatus,
     }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        clearShoppingCart: () => dispatch(clearShoppingCart()),
+        createOrder: (orderDTO: OrderDTO) => dispatch(createOrderRequest(orderDTO)),
         setLoadingStatus: (loadingStatus: boolean) => dispatch(setLoadingCart(loadingStatus)),
+        clearCreateOrderStatus: () => dispatch(clearCreateOrderStatus()),
     }
 }
 

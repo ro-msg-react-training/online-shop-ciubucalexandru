@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 interface IModalProps {
     title: string;
     status: boolean;
-    redirectOnSuccess: string;
     closeModal: () => void;
     confirmModal: () => void;
 }
@@ -26,10 +24,10 @@ export const CustomModal: React.FC<IModalProps> = (props: IModalProps) => {
                     <button className="delete" aria-label="close" onClick={() => props.closeModal()}></button>
                 </header>
                 <footer className="modal-card-foot">
-                    <Link to={props.redirectOnSuccess} className="button is-success is-white" 
+                    <button className="button is-success is-white" 
                         onClick={() => props.confirmModal()}>
                         Confirm
-                    </Link>
+                    </button>
                     <button className="button" onClick={() => props.closeModal()}>
                         Cancel
                     </button>

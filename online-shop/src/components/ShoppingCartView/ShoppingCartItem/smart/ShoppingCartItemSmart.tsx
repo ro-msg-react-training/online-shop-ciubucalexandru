@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         modifyProductQuantity: (product: Product, newQuantity: number, oldQuantity: number) =>  
                         dispatch(modifyProductQuantiy(product, newQuantity, oldQuantity)),
-        deleteItemFromCart: (product: Product) => dispatch(deleteProductShoppingCart(product)),
+        deleteItemFromCart: (product: Product) => dispatch(deleteProductShoppingCart(product.id)),
     };
 }
 

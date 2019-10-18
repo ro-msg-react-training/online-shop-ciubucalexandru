@@ -1,22 +1,35 @@
 import { Product } from "../model/model";
-import { EditableProductAction, SetEditableProductAction, ChangeProductNameAction, 
+import { EditableProductAction, ChangeProductNameAction, 
     ChangeProductCategoryAction, ChangeProductPriceAction, ChangeProductImageAction, 
-    ChangeProductDescriptionAction, SetLoadingStatusEditable } from "../actions/EditableProductActions";
-import { SET_EDITABLE_PRODUCT, CHANGE_PRODUCT_NAME, CHANGE_PRODUCT_CATEGORY, 
+    ChangeProductDescriptionAction, SetLoadingStatusEditableAction, GetEditableProductSuccessAction,
+    SetEditableProductAction } from "../actions/EditableProductActions";
+import { CHANGE_PRODUCT_NAME, CHANGE_PRODUCT_CATEGORY, 
     CHANGE_PRODUCT_PRICE, CHANGE_PRODUCT_IMAGE, CHANGE_PRODUCT_DESCRIPTION, 
-    SET_LOADING_STATUS_EDITABLE } from "../util/ActionTypes";
+    SET_LOADING_STATUS_EDITABLE, 
+    GET_EDITABLE_PRODUCT_REQUEST,
+    GET_EDITABLE_PRODUCT_SUCCESS,
+    GET_EDITABLE_PRODUCT_FAIL,
+    SET_EDITABLE_PRODUCT,
+    UPDATE_PRODUCT_REQUEST,
+    UPDATE_PRODUCT_SUCCESS,
+    UPDATE_PRODUCT_FAIL,
+    CLEAR_UPDATE_STATUS} from "../util/ActionTypes";
 import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
-    DEFAULT_IMAGE, DEFAULT_DESCRIPTION } from "../util/util";
+    DEFAULT_IMAGE, DEFAULT_DESCRIPTION, STATUS_NONE, STATUS_SUCCESS, STATUS_FAIL } from "../util/util";
 
 export interface EditableProductState {
+    hasFetchError: boolean;
     isLoading: boolean;
     product: Product;
+    updateStatus: string;
 };
 
 const initialState: EditableProductState = {
     product: new Product(DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY,
         DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION),
     isLoading: true,
+    hasFetchError: false,
+    updateStatus: STATUS_NONE,
 };
 
 export const EditableProductReducer = (
@@ -30,7 +43,29 @@ export const EditableProductReducer = (
             return ({
                 product: actualAction.product,
                 isLoading: state.isLoading,
+                hasFetchError: state.hasFetchError,
+                updateStatus: state.updateStatus,
             });
+        }
+        case GET_EDITABLE_PRODUCT_REQUEST: {
+            return state;
+        }
+        case GET_EDITABLE_PRODUCT_SUCCESS: {
+            const actualAction: GetEditableProductSuccessAction = action as GetEditableProductSuccessAction;
+            return ({
+                product: actualAction.product,
+                isLoading: false,
+                hasFetchError: false,
+                updateStatus: state.updateStatus,
+            });
+        }
+        case GET_EDITABLE_PRODUCT_FAIL: {
+            return ({
+                product: state.product,
+                isLoading: false,
+                hasFetchError: true,
+                updateStatus: state.updateStatus,
+            })
         }
         case CHANGE_PRODUCT_NAME: {
             const actualAction: ChangeProductNameAction = action as ChangeProductNameAction;
@@ -39,6 +74,8 @@ export const EditableProductReducer = (
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
+                hasFetchError: state.hasFetchError,
+                updateStatus: state.updateStatus,
             })
         }
         case CHANGE_PRODUCT_CATEGORY: {
@@ -48,6 +85,8 @@ export const EditableProductReducer = (
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
+                hasFetchError: state.hasFetchError,
+                updateStatus: state.updateStatus,
             })
         }
         case CHANGE_PRODUCT_PRICE: {
@@ -57,6 +96,8 @@ export const EditableProductReducer = (
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
+                hasFetchError: state.hasFetchError,
+                updateStatus: state.updateStatus,
             })
         }
         case CHANGE_PRODUCT_IMAGE: {
@@ -66,6 +107,8 @@ export const EditableProductReducer = (
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
+                hasFetchError: state.hasFetchError,
+                updateStatus: state.updateStatus,
             })
         }
         case CHANGE_PRODUCT_DESCRIPTION: {
@@ -75,13 +118,44 @@ export const EditableProductReducer = (
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
+                hasFetchError: state.hasFetchError,
+                updateStatus: state.updateStatus,
             })
         }
         case SET_LOADING_STATUS_EDITABLE: {
-            const actualAction: SetLoadingStatusEditable = action as SetLoadingStatusEditable;
+            const actualAction: SetLoadingStatusEditableAction = action as SetLoadingStatusEditableAction;
             return ({
                 product: state.product,
                 isLoading: actualAction.loadingStatus,
+                hasFetchError: state.hasFetchError,
+                updateStatus: state.updateStatus,
+            });
+        }
+        case UPDATE_PRODUCT_REQUEST: {
+            return state;
+        }
+        case UPDATE_PRODUCT_SUCCESS: {
+            return ({
+                product: state.product,
+                isLoading: false,
+                hasFetchError: state.hasFetchError,
+                updateStatus: STATUS_SUCCESS,
+            });
+        }
+        case UPDATE_PRODUCT_FAIL: {
+            return ({
+                product: state.product,
+                isLoading: false,
+                hasFetchError: state.hasFetchError,
+                updateStatus: STATUS_FAIL,
+            });
+        }
+        case CLEAR_UPDATE_STATUS: {
+            return ({
+                product: state.product,
+                isLoading: state.isLoading,
+                hasFetchError: state.hasFetchError,
+                updateStatus: STATUS_NONE,
             });
         }
         default: {

@@ -6,13 +6,12 @@ interface IFormButtonsProps {
     operationName: string;
     formStatus: boolean;
     productId: number;
+    redirectLink: string;
     onSubmitAction: () => void;
 }
 
 export const FormButtons: React.FC<IFormButtonsProps> = (props: IFormButtonsProps) => {
 
-    const redirectLink: string = props.operationName.toLowerCase() === 'edit' ? 
-                '/products/' + props.productId : '/products';
     const formStatusText: string = props.formStatus ? 
                 ' ' : 'Please don\'t leave any empty fields and make the price higher than 0!';
 
@@ -25,18 +24,14 @@ export const FormButtons: React.FC<IFormButtonsProps> = (props: IFormButtonsProp
             </div>
             <div className="field is-grouped is-grouped-centered buttonsContainer">
                 <p className="control">
-                    <Link to={redirectLink} className="button is-primary linkCustom" onClick={(e) => {
-                        if (props.formStatus === false) {
-                            e.preventDefault();
-                        } else {
+                    <button className="button is-primary linkCustom" onClick={(e) => {
                             props.onSubmitAction();
-                        }
                     }}>
                         Submit
-                    </Link>
+                    </button>
                 </p>
                 <p className="control">
-                    <Link to={redirectLink} className="button is-light" >
+                    <Link to={props.redirectLink} className="button is-light" >
                         Cancel
                     </Link>
                 </p>

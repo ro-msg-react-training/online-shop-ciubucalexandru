@@ -1,11 +1,11 @@
-import { Product } from "../model/model";
+import { Product, OrderDTO } from "../model/model";
 import { ADD_PRODUCT_TO_CART, DELETE_PRODUCT_FROM_CART, MODIFY_PRODUCT_QUANTITY, 
-    CLEAR_CART, SET_LOADING_STATUS_CART, UPDATE_PRODUCT_CART } from "../util/ActionTypes";
+    CLEAR_CART, SET_LOADING_STATUS_CART, UPDATE_PRODUCT_CART, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAIL, CLEAR_CREATE_ORDER_STATUTS } from "../util/ActionTypes";
 import { Action } from "redux";
 
 export interface DeleteProductFromCartAction extends Action<string> {
     type: string;
-    product: Product;
+    productId: number;
 }
 
 export interface AddProductToCartAction extends Action<string> {
@@ -34,8 +34,27 @@ export interface UpdateProductCartAction extends Action<string> {
     product: Product;
 }
 
+export interface CreateOrderRequestAction extends Action<string> {
+    type: string;
+    orderDTO: OrderDTO;
+}
+
+export interface CreateOrderSuccessAction extends Action<string> {
+    type: string;
+}
+
+export interface CreateOrderFailAction extends Action<string> {
+    type: string;
+}
+
+export interface ClearCreateOrderStatusAction extends Action<string> {
+    type: string;
+}
+
 export type ShoppingCartAction = AddProductToCartAction | DeleteProductFromCartAction | 
-    ModifyProductQuantityAction | SetLoadingCartAction | UpdateProductCartAction;
+    ModifyProductQuantityAction | SetLoadingCartAction | UpdateProductCartAction |
+    CreateOrderRequestAction | CreateOrderSuccessAction | CreateOrderFailAction |
+    ClearCreateOrderStatusAction;
 
 export const addProductToCart = (product: Product): AddProductToCartAction => {
     return { 
@@ -44,10 +63,10 @@ export const addProductToCart = (product: Product): AddProductToCartAction => {
     };
 }
 
-export const deleteProductShoppingCart = (product: Product): DeleteProductFromCartAction => {
+export const deleteProductShoppingCart = (productId: number): DeleteProductFromCartAction => {
     return { 
         type: DELETE_PRODUCT_FROM_CART, 
-        product: product,
+        productId: productId,
     };
 }
 
@@ -82,5 +101,30 @@ export const updateProductCart = (product: Product): UpdateProductCartAction => 
     return { 
         type: UPDATE_PRODUCT_CART,
         product: product,
+    };
+}
+
+export const createOrderRequest = (orderDTO: OrderDTO): CreateOrderRequestAction => {
+    return {
+        type: CREATE_ORDER_REQUEST,
+        orderDTO: orderDTO,
+    };
+}
+
+export const createOrderSuccess = (): CreateOrderSuccessAction => {
+    return {
+        type: CREATE_ORDER_SUCCESS,
+    };
+}
+
+export const createOrderFail = (): CreateOrderFailAction => {
+    return {
+        type: CREATE_ORDER_FAIL,
+    };
+}
+
+export const clearCreateOrderStatus = (): ClearCreateOrderStatusAction => {
+    return {
+        type: CLEAR_CREATE_ORDER_STATUTS,
     };
 }

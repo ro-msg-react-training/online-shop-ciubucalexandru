@@ -21,19 +21,18 @@ export const ProductDetailsDumb: React.FC<IProductDetailsProps> = (props: IProdu
         return (
         <div>
             <CustomModal title={title} status={props.modalStatus} 
-                        closeModal={() => props.closeModal()} confirmModal={() => props.confirmModal()}
-                        redirectOnSuccess="/products"/>
+                        closeModal={() => props.closeModal()} confirmModal={() => props.confirmModal()} />
                         
             <div className="flexContainer">
                 <h1 className="title is-3 titleDetails">Product: {props.product.name}</h1>
                 <Link to={"/products/" + props.product.id + "/edit"} 
-                        className="button is-primary is-large productOperationsButton editButton">
+                        className="button is-primary is-large productOperationsButton editButtonDetails">
                         EDIT</Link>
-                <Link to="/shopping-cart" className="button is-info is-large productOperationsButton addButton" 
+                <Link to="/shopping-cart" className="button is-info is-large productOperationsButton addButtonDetails" 
                         onClick={(e) => props.addOnClick(props.product)}>ADD</Link>
-                <div className="button is-danger is-large productOperationsButton deleteButton" onClick={(e) => {
+                <button className="button is-danger is-large productOperationsButton deleteButtonDetails" onClick={(e) => {
                         props.deleteOnClick(props.product);
-                }}>DELETE</div>
+                }}>DELETE</button>
             </div>
 
             <div className="box productDetails">

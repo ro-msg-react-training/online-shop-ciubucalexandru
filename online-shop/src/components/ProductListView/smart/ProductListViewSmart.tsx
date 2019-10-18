@@ -1,58 +1,57 @@
 import React from 'react';
 import { ProductDTOArray } from '../../../model/model';
-import { API_PRODUCTS } from '../../../util/API';
 import { connect } from 'react-redux'
-import { setProductsList, setLoadingList } from '../../../actions/ProductListActions';
+import { setLoadingList, getProductsRequest } from '../../../actions/ProductListActions';
 import { AppState } from '../../../store/store';
 import { ProductListViewDumb } from '../dumb/ProductListViewDumb';
 import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicator';
 import { Dispatch } from 'redux';
+import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
 
 interface ListViewProps {
     isLoading: boolean;
+    hasError: boolean;
     productDTOArray: ProductDTOArray;
-    setProductsList: (products: ProductDTOArray) => void;
+    getProductsRequest: () => void;
     setLoadingStatus: (loadingStatus: boolean) => void;
 }
 
 class ProductListViewSmart extends React.Component<ListViewProps> {
 
-    public async componentDidMount() {
-        await this.retrieveProductsList();
-    }
-
-    private async retrieveProductsList(): Promise<void> {
-        const response = await fetch(API_PRODUCTS);
-        const data = await response.json();
-    
-        const productArray: ProductDTOArray = new ProductDTOArray(data);
-        this.props.setProductsList(productArray);
-        this.props.setLoadingStatus(false);
+    public componentDidMount() {
+        this.props.getProductsRequest();
     }
 
     public render () {
         if (this.props.isLoading) {
             return (
                 <LoadingIndicator />
-            )
+            );
+        } else if (this.props.hasError) {
+            return (
+                <ErrrorMessageLabel errorMessage={RETRIEVE_PRODUCTS_ERROR} />
+            );
         }
 
         return (
-            <ProductListViewDumb products={this.props.productDTOArray.products}/>
+            <ProductListViewDumb {...this.props.productDTOArray}/>
         );
     }
 };
+
+const RETRIEVE_PRODUCTS_ERROR = "An error occured while retrieving the products!";
 
 const mapStateToProps = (state: AppState) => {
     return {
         productDTOArray: state.productsList.productArray,
         isLoading: state.productsList.isLoading,
+        hasError: state.productsList.hasError,
     }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        setProductsList: (productArray: ProductDTOArray) =>  dispatch(setProductsList(productArray)),
+        getProductsRequest: () => dispatch(getProductsRequest()),
         setLoadingStatus: (loadingStatus: boolean) => dispatch(setLoadingList(loadingStatus)),
     }
 }

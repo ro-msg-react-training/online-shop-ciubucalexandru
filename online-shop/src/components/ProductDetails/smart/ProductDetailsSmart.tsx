@@ -1,15 +1,19 @@
 import React from 'react';
 import { Product, ProductArray } from '../../../model/model';
-import { API_PRODUCTS } from '../../../util/API';
 import { ProductDetailsDumb } from '../dumb/ProductDetailsDumb';
 import { AppState } from '../../../store/store';
-import { addProductToCart, deleteProductShoppingCart } from '../../../actions/ShoppingCartActions';
+import { addProductToCart } from '../../../actions/ShoppingCartActions';
 import { connect } from 'react-redux';
-import { setProduct, setLoadingDetails, openModalDetails, 
-        closeModalDetails } from '../../../actions/ProductDetailsActions';
-import { deleteProductList } from '../../../actions/ProductListActions';
+import { setLoadingDetails, openModalDetails, 
+        closeModalDetails, 
+        getProductRequest,
+        deleteProductRequest,
+        clearDeleteStatus} from '../../../actions/ProductDetailsActions';
 import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicator';
 import { Dispatch } from 'redux';
+import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
+import { STATUS_FAIL, STATUS_SUCCESS } from '../../../util/util';
+import { Redirect } from 'react-router';
 
 interface IProductDetailsPropsSmart {
     productId: number;
@@ -17,9 +21,12 @@ interface IProductDetailsPropsSmart {
     shoppingCart: ProductArray;
     loadingStatus: boolean;
     showModal: boolean;
-    setProduct: (product: Product) => void;
+    hasFetchError: boolean;
+    deleteStatus: string;
+    getProductRequest: (productId: number) => void;
+    deleteProductRequest: (productId: number) => void;
+    clearDeleteStatus: () => void;
     setLoadingStatus: (loadingState: boolean) => void;
-    deleteItem: (product: Product) => void;
     addItemToCart: (product: Product) => void;
     openModal: () => void;
     closeModal: () => void;
@@ -27,14 +34,9 @@ interface IProductDetailsPropsSmart {
 
 class ProductDetailsSmart extends React.Component<IProductDetailsPropsSmart> {
 
-    public async componentDidMount() {
-        const response = await fetch(API_PRODUCTS + "/" + this.props.productId);
-        const data = await response.json();
-
-        this.props.setProduct(data);
-        this.props.setLoadingStatus(false);
-        
-        this.deleteOnClick = this.deleteOnClick.bind(this);
+    public componentDidMount() {
+        this.props.clearDeleteStatus();
+        this.props.getProductRequest(this.props.productId);
     }
 
     private deleteOnClick(): void {
@@ -42,11 +44,9 @@ class ProductDetailsSmart extends React.Component<IProductDetailsPropsSmart> {
     }
 
     private async confirmModal(): Promise<void> {
-        await fetch(API_PRODUCTS + "/" + this.props.productId, {
-            method: 'delete'});
-
-        this.props.deleteItem(this.props.product);
         this.props.closeModal();
+        this.props.setLoadingStatus(true);
+        this.props.deleteProductRequest(this.props.productId);
     }
 
     private closeModal(): void {
@@ -59,7 +59,20 @@ class ProductDetailsSmart extends React.Component<IProductDetailsPropsSmart> {
             return (
                 <LoadingIndicator />
             );
-        } 
+        } else if (this.props.hasFetchError) {
+            return (
+                <ErrrorMessageLabel errorMessage={RETRIEVE_PRODUCT_MESSAGE} />
+            );
+        } else if (this.props.deleteStatus === STATUS_FAIL) {
+            return (
+                <ErrrorMessageLabel errorMessage={DELETE_PRODUCT_MESSAGE} />
+            );
+        } else if (this.props.deleteStatus === STATUS_SUCCESS) {
+            this.props.clearDeleteStatus();
+            return (
+                <Redirect to="/products"></Redirect>
+            );
+        }
 
         return (
             <ProductDetailsDumb product={this.props.product} 
@@ -77,6 +90,9 @@ interface IIdProp {
     id: number;
 }
 
+const RETRIEVE_PRODUCT_MESSAGE = "Failed to retrieve product details.";
+const DELETE_PRODUCT_MESSAGE = "Failed to delete product.";
+
 const mapStateToProps = (state: AppState, ownProps: IIdProp) => {
     return {
         productId: ownProps.id,
@@ -84,17 +100,17 @@ const mapStateToProps = (state: AppState, ownProps: IIdProp) => {
         product: state.productDetails.product,
         shoppingCart: state.shoppingCart.productArray,
         showModal: state.productDetails.showModal,
+        hasFetchError: state.productDetails.hasFetchError,
+        deleteStatus: state.productDetails.deleteStatus,
     }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
-        setProduct: (product: Product) => dispatch(setProduct(product)),
+        getProductRequest: (productId: number) => dispatch(getProductRequest(productId)),
         setLoadingStatus: (loadingStatus: boolean) => dispatch(setLoadingDetails(loadingStatus)),
-        deleteItem: (product: Product) => {
-            dispatch(deleteProductList(product));
-            dispatch(deleteProductShoppingCart(product))
-        },
+        deleteProductRequest: (productId: number) => dispatch(deleteProductRequest(productId)),
+        clearDeleteStatus: () => dispatch(clearDeleteStatus()),
         addItemToCart: (product: Product) => dispatch(addProductToCart(product)),
         openModal: () => dispatch(openModalDetails()),
         closeModal: () => dispatch(closeModalDetails()),

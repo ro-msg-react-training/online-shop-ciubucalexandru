@@ -1,16 +1,14 @@
-import { ProductDTOArray, Product, ProductDTO } from "../model/model";
-import { SET_PRODUCT_LIST, DELETE_PRODUCT_FROM_LIST, SET_LOADING_STATUS_LIST,
-     ADD_ITEM_TO_LIST } from "../util/ActionTypes";
+import { ProductDTOArray, ProductDTO } from "../model/model";
+import { DELETE_PRODUCT_FROM_LIST, SET_LOADING_STATUS_LIST,
+     ADD_ITEM_TO_LIST, 
+     GET_PRODUCTS_LIST_REQUEST,
+     GET_PRODUCTS_LIST_SUCCESS,
+     GET_PRODUCTS_LIST_FAILURE} from "../util/ActionTypes";
 import { Action } from "redux";
-
-export interface SetProductListAction extends Action<string> {
-    type: string;
-    products: ProductDTOArray;
-}
 
 export interface DeleteProductFromListAction extends Action<string> {
     type: string;
-    product: Product;
+    productId: number;
 }
 
 export interface SetLoadingListAction extends Action<string> {
@@ -23,20 +21,27 @@ export interface AddItemToListAction extends Action<string> {
     productDTO: ProductDTO;
 }
 
-export type ProductListAction = SetProductListAction | DeleteProductFromListAction | SetLoadingListAction | 
-            AddItemToListAction;
-
-export const setProductsList = (productDTOArray: ProductDTOArray): SetProductListAction => {
-    return { 
-        type: SET_PRODUCT_LIST, 
-        products: productDTOArray,
-    };
+export interface GetProductsRequestAction extends Action<string> {
+    type: string;
 }
 
-export const deleteProductList = (product: Product): DeleteProductFromListAction => {
+export interface GetProductsSuccessAction extends Action<string> {
+    type: string;
+    productArray: ProductDTOArray;
+}
+
+export interface GetProductsFailAction extends Action<string> {
+    type: string;
+}
+
+export type ProductListAction =  | DeleteProductFromListAction | SetLoadingListAction | 
+            AddItemToListAction | GetProductsRequestAction | GetProductsSuccessAction |
+            GetProductsFailAction;
+
+export const deleteProductList = (productId: number): DeleteProductFromListAction => {
     return { 
         type: DELETE_PRODUCT_FROM_LIST, 
-        product: product,
+        productId: productId,
     };
 }
 
@@ -51,5 +56,24 @@ export const addItemToList = (productDTO: ProductDTO): AddItemToListAction => {
     return { 
         type: ADD_ITEM_TO_LIST, 
         productDTO: productDTO,
+    };
+}
+
+export const getProductsRequest = (): GetProductsRequestAction => {
+    return {
+        type: GET_PRODUCTS_LIST_REQUEST,
+    };
+}
+
+export const getProductsSuccess = (productArray: ProductDTOArray) => {
+    return {
+        type: GET_PRODUCTS_LIST_SUCCESS,
+        productArray: productArray,
+    };
+}
+
+export const getProductsFail = () => {
+    return {
+        type: GET_PRODUCTS_LIST_FAILURE,
     };
 }

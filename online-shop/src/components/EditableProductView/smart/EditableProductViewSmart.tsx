@@ -3,7 +3,10 @@ import { Product, ProductDTO } from '../../../model/model';
 import { AppState } from '../../../store/store';
 import { changeProductName, changeProductCategory, setEditableProduct, 
     changeProductPrice, changeProductImage, changeProductDescription, 
-    setLoadingEditable } from '../../../actions/EditableProductActions';
+    setLoadingEditable, 
+    getEditableProductRequest,
+    updateProductRequest,
+    clearUpdateStatus} from '../../../actions/EditableProductActions';
 import { connect } from 'react-redux';
 import { EditableProductViewDumb } from '../dumb/EditableProductViewDumb';
 import { API_PRODUCTS } from '../../../util/API';
@@ -13,15 +16,21 @@ import { updateProductCart } from '../../../actions/ShoppingCartActions';
 import { setProduct } from '../../../actions/ProductDetailsActions';
 import { Dispatch } from 'redux';
 import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
-    DEFAULT_IMAGE, DEFAULT_DESCRIPTION } from '../../../util/util';
+    DEFAULT_IMAGE, DEFAULT_DESCRIPTION, ZERO, STATUS_SUCCESS, STATUS_FAIL } from '../../../util/util';
+import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
+import { Redirect } from 'react-router';
 
 interface IEditableProductViewSmartProps {
     productId: number;
     editableProduct: Product;
     operationName: string;
     operationMethod: string;
-    isLoading: boolean,
+    isLoading: boolean;
+    hasError: boolean;
+    updateStatus: string;
     setEditableProduct: (product: Product) => void;
+    getEditableProduct: (productId: number) => void;
+    updateProductRequest: (product: Product, requestUrl: string, method: string) => void;
     changeName: (name: string) => void;
     changeCategory: (category: string) => void;
     changePrice: (price: number) => void;
@@ -31,26 +40,24 @@ interface IEditableProductViewSmartProps {
     addItemToProductsList: (productDTO: ProductDTO) => void;
     updateItemInCart: (product: Product) => void;
     setDetailsProduct: (product: Product) => void;
+    clearUpdateStatus: () => void;
 }
 
 class EditableProductViewSmart extends React.Component<IEditableProductViewSmartProps> {
 
     public async componentDidMount () {
 
-        if (this.props.operationMethod.toLowerCase() === 'put') {
-            const response = await fetch(API_PRODUCTS + "/" + this.props.productId)
-            const data = await response.json();
+        this.props.clearUpdateStatus();
 
-            this.props.setEditableProduct(data)
+        if (this.props.operationMethod.toLowerCase() === 'put') {
+            this.props.getEditableProduct(this.props.productId);
         } else {
             this.props.setEditableProduct(new Product(DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY,
                     DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION));
         }
-
-        this.props.setLoadingStatus(false);
     }
 
-    private async onSubmitAction(product: Product): Promise<void> {
+    private async onSubmitAction(): Promise<void> {
 
         this.props.setLoadingStatus(true);
         let requestPath: string = API_PRODUCTS;
@@ -59,16 +66,7 @@ class EditableProductViewSmart extends React.Component<IEditableProductViewSmart
             requestPath = requestPath + "/" + this.props.productId;
         }
 
-        await fetch(requestPath, {
-            method: this.props.operationMethod,
-            headers: {'Content-Type':'application/json'},
-            body: JSON.stringify(product),
-        });
-
-        this.props.setLoadingStatus(false);
-        this.props.addItemToProductsList(new ProductDTO(product.id, product.name, product.category, product.price));
-        this.props.updateItemInCart(product);
-        this.props.setDetailsProduct(product);
+        this.props.updateProductRequest(this.props.editableProduct, requestPath, this.props.operationMethod);
     }
 
     private generateFormStatus(): boolean {
@@ -84,16 +82,33 @@ class EditableProductViewSmart extends React.Component<IEditableProductViewSmart
 
     public render() {
 
+        const redirectLink: string = this.props.operationMethod.toLowerCase() === 'put' ? 
+            '/products/' + this.props.productId : '/products';
+
         if (this.props.isLoading) {
             return (
                 <LoadingIndicator />
+            );
+        } else if (this.props.hasError) {
+            return (
+                <ErrrorMessageLabel errorMessage={RETRIEVE_PRODUCT_ERROR}/>
+            );
+        } else if (this.props.updateStatus === STATUS_SUCCESS) {
+            this.props.clearUpdateStatus();
+            return (
+                <Redirect to={redirectLink} ></Redirect>
+            );
+        } else if (this.props.updateStatus === STATUS_FAIL) {
+            return (
+                <ErrrorMessageLabel errorMessage={UPDATE_PRODUCT_ERROR} />
             );
         }
 
         return (
             <EditableProductViewDumb product={this.props.editableProduct}
                                 operationName={this.props.operationName}
-                                onSubmitAction={(e) => this.onSubmitAction(e)}
+                                redirectLink={redirectLink}
+                                onSubmitAction={(e) => this.onSubmitAction()}
                                 changeName={(e) => this.props.changeName(e)}
                                 changeCategory={(e) => this.props.changeCategory(e)}
                                 changePrice={(e) => this.props.changePrice(e)}
@@ -110,20 +125,26 @@ interface IOwnProp {
     operationName: string;
 }
 
-const ZERO = 0;
+const UPDATE_PRODUCT_ERROR = "An error occured while updating the product details.";
+const RETRIEVE_PRODUCT_ERROR = "An error occured while retrieving the product details.";
 
 const mapStateToProps = (state: AppState, ownProps: IOwnProp) => {
-    return ({
+    return {
         initialProduct: ownProps.productId,
         editableProduct: state.editableProduct.product,
         operationName: ownProps.operationName,
         isLoading: state.editableProduct.isLoading,
-    });
+        hasError: state.editableProduct.hasFetchError,
+        updateStatus: state.editableProduct.updateStatus,
+    };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return ({
         setEditableProduct: (product: Product) => dispatch(setEditableProduct(product)),
+        getEditableProduct: (productId: number) => dispatch(getEditableProductRequest(productId)),
+        updateProductRequest: (product: Product, requestUrl: string, method: string) =>
+                                dispatch(updateProductRequest(product, requestUrl, method)),
         changeName: (name: string) => dispatch(changeProductName(name)),
         changeCategory: (category: string) => dispatch(changeProductCategory(category)),
         changePrice: (price: number) => dispatch(changeProductPrice(price)),
@@ -133,6 +154,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
         addItemToProductsList: (productDTO: ProductDTO) => dispatch(addItemToList(productDTO)),
         updateItemInCart: (product: Product) => dispatch(updateProductCart(product)),
         setDetailsProduct: (product: Product) => dispatch(setProduct(product)),
+        clearUpdateStatus: () => dispatch(clearUpdateStatus()),
     });
 }
 
