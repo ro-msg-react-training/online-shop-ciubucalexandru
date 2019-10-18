@@ -1,7 +1,9 @@
 import { CREATE_ORDER_REQUEST } from "../util/ActionTypes";
 import { takeEvery, put } from "@redux-saga/core/effects";
-import { CreateOrderRequestAction, clearShoppingCart, createOrderSuccess, createOrderFail } from "../actions/ShoppingCartActions";
+import { CreateOrderRequestAction, clearShoppingCart, createOrderSuccess, 
+    createOrderFail } from "../actions/ShoppingCartActions";
 import { API_ORDERS } from "../util/API";
+import { MAX_SUCCESS_STATUS_CODE, MIN_SUCCESS_STATUS_CODE } from "../util/util";
 
 function* createOrder(action: CreateOrderRequestAction) {
 
@@ -12,7 +14,7 @@ function* createOrder(action: CreateOrderRequestAction) {
             body: JSON.stringify(action.orderDTO),
         });
 
-        if (response.status >= 200 && response.status < 300) {
+        if (response.status >= MIN_SUCCESS_STATUS_CODE && response.status < MAX_SUCCESS_STATUS_CODE) {
             yield put(clearShoppingCart());
             yield put(createOrderSuccess());
         } else {

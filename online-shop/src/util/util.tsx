@@ -10,3 +10,6 @@ export const STATUS_SUCCESS = "SUCCESS";
 export const STATUS_FAIL = "FAIL";
 
 export const ZERO = 0;
+
+export const MIN_SUCCESS_STATUS_CODE = 200;
+export const MAX_SUCCESS_STATUS_CODE = 300;

@@ -1,6 +1,7 @@
 import { ProductArray, Product } from '../model/model';
 import { DELETE_PRODUCT_FROM_CART, ADD_PRODUCT_TO_CART, MODIFY_PRODUCT_QUANTITY, 
-    CLEAR_CART, SET_LOADING_STATUS_CART, UPDATE_PRODUCT_CART, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS, CREATE_ORDER_FAIL, CLEAR_CREATE_ORDER_STATUTS } from '../util/ActionTypes';
+    CLEAR_CART, SET_LOADING_STATUS_CART, UPDATE_PRODUCT_CART, CREATE_ORDER_REQUEST, 
+    CREATE_ORDER_SUCCESS, CREATE_ORDER_FAIL, CLEAR_CREATE_ORDER_STATUTS } from '../util/ActionTypes';
 import { ShoppingCartAction, AddProductToCartAction, DeleteProductFromCartAction, 
     ModifyProductQuantityAction, SetLoadingCartAction, 
     UpdateProductCartAction } from '../actions/ShoppingCartActions';

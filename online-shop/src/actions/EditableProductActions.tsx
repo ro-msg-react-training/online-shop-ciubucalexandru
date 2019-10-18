@@ -155,7 +155,12 @@ export const setEditableProduct = (product: Product): SetEditableProductAction =
     });
 }
 
-export const updateProductRequest = (product: Product, requestUrl: string, method: string): UpdateProductRequestAction => {
+export const updateProductRequest = (
+    product: Product, 
+    requestUrl: string, 
+    method: string
+    ): UpdateProductRequestAction => {
+        
     return ({
         type: UPDATE_PRODUCT_REQUEST,
         product: product,

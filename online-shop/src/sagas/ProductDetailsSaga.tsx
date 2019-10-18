@@ -5,13 +5,14 @@ import { put, takeEvery, takeLatest } from "@redux-saga/core/effects";
 import { deleteProductList } from "../actions/ProductListActions";
 import { GET_PRODUCT_DETAILS_REQUEST, DELETE_PRODUCT_REQUEST } from "../util/ActionTypes";
 import { deleteProductShoppingCart } from "../actions/ShoppingCartActions";
+import { MAX_SUCCESS_STATUS_CODE, MIN_SUCCESS_STATUS_CODE } from "../util/util";
 
 function* fetchProduct(action: GetProductRequestAction) {
 
     try {
         const response = yield fetch(API_PRODUCTS + "/" + action.productId);
 
-        if (response.status >= 200 && response.status < 300) {
+        if (response.status >= MIN_SUCCESS_STATUS_CODE && response.status < MAX_SUCCESS_STATUS_CODE) {
             const data = yield response.json();
             yield put(getProductSuccess(data));
         } else {
@@ -30,7 +31,7 @@ function* deleteProduct(action: DeleteProductRequestAction) {
             method:"delete",
         });
     
-        if (response.status >= 200 && response.status < 300) {
+        if (response.status >= MIN_SUCCESS_STATUS_CODE && response.status < MAX_SUCCESS_STATUS_CODE) {
             yield put(deleteProductSuccess());
             yield put(deleteProductList(action.productId));
             yield put(deleteProductShoppingCart(action.productId));

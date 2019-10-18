@@ -1,17 +1,20 @@
 import { API_PRODUCTS } from '../util/API';
 import { put, takeEvery, takeLatest } from '@redux-saga/core/effects';
-import { GetEditableProductRequestAction, getEditableProductSuccess, getEditableProductFail, UpdateProductRequestAction, updateProductSuccess, updateProductFail, setLoadingEditable } from '../actions/EditableProductActions';
+import { GetEditableProductRequestAction, getEditableProductSuccess, getEditableProductFail, 
+    UpdateProductRequestAction, updateProductSuccess, updateProductFail, 
+    setLoadingEditable } from '../actions/EditableProductActions';
 import { GET_EDITABLE_PRODUCT_REQUEST, UPDATE_PRODUCT_REQUEST } from '../util/ActionTypes';
 import { addItemToList } from '../actions/ProductListActions';
 import { updateProductCart } from '../actions/ShoppingCartActions';
 import { setProduct } from '../actions/ProductDetailsActions';
+import { MIN_SUCCESS_STATUS_CODE, MAX_SUCCESS_STATUS_CODE } from '../util/util';
 
 function* fetchProduct(action: GetEditableProductRequestAction) {
 
     try {
         const response = yield fetch(API_PRODUCTS + "/" + action.productId);
 
-        if (response.status >= 200 && response.status < 300) {
+        if (response.status >= MIN_SUCCESS_STATUS_CODE && response.status < MAX_SUCCESS_STATUS_CODE) {
             const data = yield response.json();
             yield put(getEditableProductSuccess(data));
         } else {
@@ -34,7 +37,8 @@ function* updateProduct(action: UpdateProductRequestAction) {
                         body: JSON.stringify(action.product),
                     });
                     
-        if (response.status >= 200 && response.status < 300 && action.method.toLowerCase() === "post") {
+        if (response.status >= MIN_SUCCESS_STATUS_CODE && response.status < MAX_SUCCESS_STATUS_CODE 
+            && action.method.toLowerCase() === "post") {
 
             const data = yield response.json();
             yield put(addItemToList(data));

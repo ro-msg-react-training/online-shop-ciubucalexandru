@@ -30,8 +30,9 @@ export const ProductDetailsDumb: React.FC<IProductDetailsProps> = (props: IProdu
                         EDIT</Link>
                 <Link to="/shopping-cart" className="button is-info is-large productOperationsButton addButtonDetails" 
                         onClick={(e) => props.addOnClick(props.product)}>ADD</Link>
-                <button className="button is-danger is-large productOperationsButton deleteButtonDetails" onClick={(e) => {
-                        props.deleteOnClick(props.product);
+                <button className="button is-danger is-large productOperationsButton deleteButtonDetails" 
+                        onClick={(e) => {
+                            props.deleteOnClick(props.product);
                 }}>DELETE</button>
             </div>
 

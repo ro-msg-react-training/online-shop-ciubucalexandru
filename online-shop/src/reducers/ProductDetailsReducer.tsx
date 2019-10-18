@@ -8,7 +8,8 @@ import { SET_PRODUCT, SET_LOADING_STATUS_DETAILS, OPEN_MODAL_DETAILS,
     DELETE_PRODUCT_SUCCESS,
     DELETE_PRODUCT_FAIL,
     CLEAR_DELETE_STATUS} from '../util/ActionTypes';
-import { ProductDetailsAction, SetProductAction, SetLoadingDetailsAction, GetProductSuccessAction } from '../actions/ProductDetailsActions';
+import { ProductDetailsAction, SetProductAction, SetLoadingDetailsAction, 
+    GetProductSuccessAction } from '../actions/ProductDetailsActions';
 import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
     DEFAULT_IMAGE, DEFAULT_DESCRIPTION, STATUS_NONE, STATUS_SUCCESS, STATUS_FAIL } from "../util/util";
 
