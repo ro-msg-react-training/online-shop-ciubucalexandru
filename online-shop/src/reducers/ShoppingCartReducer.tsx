@@ -139,8 +139,6 @@ const deleteProduct = (oldArray: ProductArray, productId: number): ProductArray 
         newProductArray.products.push(filteredProduct)
     });
 
-    console.log(newProductArray);
-
     return newProductArray;
 }
 

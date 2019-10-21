@@ -1,4 +1,3 @@
-import React from 'react';
 import { Product, ProductArray } from '../../../model/model';
 import { ProductDetailsDumb } from '../dumb/ProductDetailsDumb';
 import { AppState } from '../../../store/store';
@@ -9,17 +8,14 @@ import { setLoadingDetails, openModalDetails,
         getProductRequest,
         deleteProductRequest,
         clearDeleteStatus} from '../../../actions/ProductDetailsActions';
-import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicator';
 import { Dispatch } from 'redux';
-import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
-import { STATUS_FAIL, STATUS_SUCCESS } from '../../../util/util';
-import { Redirect } from 'react-router';
+import { compose, withHandlers, lifecycle } from 'recompose';
+import loadingIndicator from '../../../hocs/LoadingIndicatorHoc';
 
-interface IProductDetailsPropsSmart {
-    productId: number;
+export interface IProductDetailsPropsSmart {
     product: Product;
     shoppingCart: ProductArray;
-    loadingStatus: boolean;
+    isLoading: boolean;
     showModal: boolean;
     hasFetchError: boolean;
     deleteStatus: string;
@@ -30,73 +26,16 @@ interface IProductDetailsPropsSmart {
     addItemToCart: (product: Product) => void;
     openModal: () => void;
     closeModal: () => void;
-}
-
-class ProductDetailsSmart extends React.Component<IProductDetailsPropsSmart> {
-
-    public componentDidMount() {
-        this.props.clearDeleteStatus();
-        this.props.getProductRequest(this.props.productId);
-    }
-
-    private deleteOnClick(): void {
-        this.props.openModal();
-    }
-
-    private async confirmModal(): Promise<void> {
-        this.props.closeModal();
-        this.props.setLoadingStatus(true);
-        this.props.deleteProductRequest(this.props.productId);
-    }
-
-    private closeModal(): void {
-        this.props.closeModal();
-    }
-
-    public render() {
-
-        if (this.props.loadingStatus) {
-            return (
-                <LoadingIndicator />
-            );
-        } else if (this.props.hasFetchError) {
-            return (
-                <ErrrorMessageLabel errorMessage={RETRIEVE_PRODUCT_MESSAGE} />
-            );
-        } else if (this.props.deleteStatus === STATUS_FAIL) {
-            return (
-                <ErrrorMessageLabel errorMessage={DELETE_PRODUCT_MESSAGE} />
-            );
-        } else if (this.props.deleteStatus === STATUS_SUCCESS) {
-            this.props.clearDeleteStatus();
-            return (
-                <Redirect to="/products"></Redirect>
-            );
-        }
-
-        return (
-            <ProductDetailsDumb product={this.props.product} 
-                    deleteOnClick={(e) => this.deleteOnClick()}
-                    addOnClick={(e) => this.props.addItemToCart(e)} 
-                    modalStatus={this.props.showModal}
-                    closeModal={() => this.closeModal()}
-                    confirmModal={() => this.confirmModal()}
-                    />
-        );
-    }
+    confirmModal: () => void;
 }
 
 interface IIdProp {
-    id: number;
+    productId: number;
 }
 
-const RETRIEVE_PRODUCT_MESSAGE = "Failed to retrieve product details.";
-const DELETE_PRODUCT_MESSAGE = "Failed to delete product.";
-
-const mapStateToProps = (state: AppState, ownProps: IIdProp) => {
+const mapStateToProps = (state: AppState) => {
     return {
-        productId: ownProps.id,
-        loadingStatus: state.productDetails.isLoading,
+        isLoading: state.productDetails.isLoading,
         product: state.productDetails.product,
         shoppingCart: state.shoppingCart.productArray,
         showModal: state.productDetails.showModal,
@@ -117,9 +56,29 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     }
 }
 
-const ProductDetails = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-) (ProductDetailsSmart);
+const myHandlers = withHandlers({
+    deleteOnClick: (props: IProductDetailsPropsSmart) => (event: any) => {
+        props.openModal();
+    },
+    confirmModal: (props: IProductDetailsPropsSmart & IIdProp) => (event: any) => {
+        props.closeModal();
+        props.setLoadingStatus(true);
+        props.deleteProductRequest(props.productId);
+    },
+});
 
-export default ProductDetails;
+const onComponentDidMount = lifecycle<IProductDetailsPropsSmart & IIdProp, {}, {}>({
+    componentDidMount() {
+        this.props.clearDeleteStatus();
+        this.props.getProductRequest(this.props.productId);
+    }
+})
+
+const ComposedProductDetails = compose<IProductDetailsPropsSmart, { productId: number }>(
+    connect(mapStateToProps, mapDispatchToProps),
+    myHandlers,
+    onComponentDidMount,
+    loadingIndicator,
+) (ProductDetailsDumb);
+
+export default ComposedProductDetails;

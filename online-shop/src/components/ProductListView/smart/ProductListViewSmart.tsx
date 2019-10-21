@@ -1,45 +1,24 @@
-import React from 'react';
 import { ProductDTOArray } from '../../../model/model';
 import { connect } from 'react-redux'
 import { setLoadingList, getProductsRequest } from '../../../actions/ProductListActions';
 import { AppState } from '../../../store/store';
 import { ProductListViewDumb } from '../dumb/ProductListViewDumb';
-import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicator';
 import { Dispatch } from 'redux';
-import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
+import { withHandlers, compose, lifecycle } from 'recompose';
+import loadingIndicatorHoc from '../../../hocs/LoadingIndicatorHoc';
 
-interface ListViewProps {
+export interface ListViewProps {
     isLoading: boolean;
     hasError: boolean;
     productDTOArray: ProductDTOArray;
-    getProductsRequest: () => void;
-    setLoadingStatus: (loadingStatus: boolean) => void;
+    dispatch: Dispatch;
+    getProductsRequest: (props: ListViewProps) => void;
+    setLoadingStatus: (props: ListViewProps) => void;
 }
 
-class ProductListViewSmart extends React.Component<ListViewProps> {
-
-    public componentDidMount() {
-        this.props.getProductsRequest();
-    }
-
-    public render () {
-        if (this.props.isLoading) {
-            return (
-                <LoadingIndicator />
-            );
-        } else if (this.props.hasError) {
-            return (
-                <ErrrorMessageLabel errorMessage={RETRIEVE_PRODUCTS_ERROR} />
-            );
-        }
-
-        return (
-            <ProductListViewDumb {...this.props.productDTOArray}/>
-        );
-    }
-};
-
-const RETRIEVE_PRODUCTS_ERROR = "An error occured while retrieving the products!";
+export interface WithNewLoadingStatus extends ListViewProps {
+    newLoadingStatus: boolean;
+}
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -49,16 +28,26 @@ const mapStateToProps = (state: AppState) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) => {
-    return {
-        getProductsRequest: () => dispatch(getProductsRequest()),
-        setLoadingStatus: (loadingStatus: boolean) => dispatch(setLoadingList(loadingStatus)),
+const myHandlers = withHandlers({
+    getProductsRequest: (props: ListViewProps) => (event: any) => {
+        props.dispatch(getProductsRequest());
+    },
+    setLoadingStatus: (props: WithNewLoadingStatus) => (event: any) => {
+        props.dispatch(setLoadingList(props.newLoadingStatus));
+    },
+})
+
+const onComponentDidMount = lifecycle<ListViewProps, {}, {}>({
+    componentDidMount() {
+        this.props.getProductsRequest(this.props);
     }
-}
+})
 
-const InitializedListView = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-) (ProductListViewSmart);
+const ComposedListView = compose<ListViewProps, {}>(
+    connect(mapStateToProps),
+    myHandlers,
+    onComponentDidMount,
+    loadingIndicatorHoc,
+) (ProductListViewDumb);
 
-export default InitializedListView;
+export default ComposedListView;

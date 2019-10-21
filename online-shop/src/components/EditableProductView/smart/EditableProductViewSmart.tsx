@@ -1,4 +1,3 @@
-import React from 'react';
 import { Product, ProductDTO } from '../../../model/model';
 import { AppState } from '../../../store/store';
 import { changeProductName, changeProductCategory, setEditableProduct, 
@@ -8,23 +7,19 @@ import { changeProductName, changeProductCategory, setEditableProduct,
     updateProductRequest,
     clearUpdateStatus} from '../../../actions/EditableProductActions';
 import { connect } from 'react-redux';
-import { EditableProductViewDumb } from '../dumb/EditableProductViewDumb';
 import { API_PRODUCTS } from '../../../util/API';
-import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicator';
 import { addItemToList } from '../../../actions/ProductListActions';
 import { updateProductCart } from '../../../actions/ShoppingCartActions';
 import { setProduct } from '../../../actions/ProductDetailsActions';
 import { Dispatch } from 'redux';
 import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
-    DEFAULT_IMAGE, DEFAULT_DESCRIPTION, ZERO, STATUS_SUCCESS, STATUS_FAIL } from '../../../util/util';
-import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
-import { Redirect } from 'react-router';
+    DEFAULT_IMAGE, DEFAULT_DESCRIPTION, ZERO } from '../../../util/util';
+import { compose, withHandlers, lifecycle } from 'recompose';
+import loadingIndicator from '../../../hocs/LoadingIndicatorHoc';
+import { EditableProductViewDumb } from '../dumb/EditableProductViewDumb';
 
-interface IEditableProductViewSmartProps {
-    productId: number;
+export interface IEditableProductViewSmartProps {
     editableProduct: Product;
-    operationName: string;
-    operationMethod: string;
     isLoading: boolean;
     hasError: boolean;
     updateStatus: string;
@@ -41,98 +36,22 @@ interface IEditableProductViewSmartProps {
     updateItemInCart: (product: Product) => void;
     setDetailsProduct: (product: Product) => void;
     clearUpdateStatus: () => void;
+    generateFormStatus: (props: IEditableProductViewSmartProps) => boolean;
+    onSubmitAction: (props: IEditableProductViewSmartProps) => void;
+    getOperationName: (props: IEditableProductViewSmartProps) => string;
+    getOperationMethod: (props: IEditableProductViewSmartProps) => string;
+    getProductId: (props: IEditableProductViewSmartProps) => number;
 }
 
-class EditableProductViewSmart extends React.Component<IEditableProductViewSmartProps> {
-
-    public async componentDidMount () {
-
-        this.props.clearUpdateStatus();
-
-        if (this.props.operationMethod.toLowerCase() === 'put') {
-            this.props.getEditableProduct(this.props.productId);
-        } else {
-            this.props.setEditableProduct(new Product(DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY,
-                    DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION));
-        }
-    }
-
-    private async onSubmitAction(): Promise<void> {
-
-        this.props.setLoadingStatus(true);
-        let requestPath: string = API_PRODUCTS;
-
-        if (this.props.operationMethod.toLowerCase() === 'put') {
-            requestPath = requestPath + "/" + this.props.productId;
-        }
-
-        this.props.updateProductRequest(this.props.editableProduct, requestPath, this.props.operationMethod);
-    }
-
-    private generateFormStatus(): boolean {
-        const product: Product = this.props.editableProduct;
-
-        if (product.name === '' || product.price <= ZERO || product.image === '' || product.category === '' ||
-            product.price.toString() === '' || product.description === '') {
-            return false;
-        }
-
-        return true;
-    }
-
-    public render() {
-
-        const redirectLink: string = this.props.operationMethod.toLowerCase() === 'put' ? 
-            '/products/' + this.props.productId : '/products';
-
-        if (this.props.isLoading) {
-            return (
-                <LoadingIndicator />
-            );
-        } else if (this.props.hasError) {
-            return (
-                <ErrrorMessageLabel errorMessage={RETRIEVE_PRODUCT_ERROR}/>
-            );
-        } else if (this.props.updateStatus === STATUS_SUCCESS) {
-            this.props.clearUpdateStatus();
-            return (
-                <Redirect to={redirectLink} ></Redirect>
-            );
-        } else if (this.props.updateStatus === STATUS_FAIL) {
-            return (
-                <ErrrorMessageLabel errorMessage={UPDATE_PRODUCT_ERROR} />
-            );
-        }
-
-        return (
-            <EditableProductViewDumb product={this.props.editableProduct}
-                                operationName={this.props.operationName}
-                                redirectLink={redirectLink}
-                                onSubmitAction={(e) => this.onSubmitAction()}
-                                changeName={(e) => this.props.changeName(e)}
-                                changeCategory={(e) => this.props.changeCategory(e)}
-                                changePrice={(e) => this.props.changePrice(e)}
-                                changeImage={(e) => this.props.changeImage(e)}
-                                changeDescription={(e) => this.props.changeDescription(e)}
-                                formStatus={this.generateFormStatus()}
-            />
-        )
-    }
-}
-
-interface IOwnProp {
+export interface IOwnPropsEditableView {
     productId: number;
     operationName: string;
+    operationMethod: string;
 }
 
-const UPDATE_PRODUCT_ERROR = "An error occured while updating the product details.";
-const RETRIEVE_PRODUCT_ERROR = "An error occured while retrieving the product details.";
-
-const mapStateToProps = (state: AppState, ownProps: IOwnProp) => {
+const mapStateToProps = (state: AppState) => {
     return {
-        initialProduct: ownProps.productId,
         editableProduct: state.editableProduct.product,
-        operationName: ownProps.operationName,
         isLoading: state.editableProduct.isLoading,
         hasError: state.editableProduct.hasFetchError,
         updateStatus: state.editableProduct.updateStatus,
@@ -158,9 +77,57 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     });
 }
 
-const EditableProductView = connect(
-    mapStateToProps,
-    mapDispatchToProps,
-) (EditableProductViewSmart);
+const myHandlers = withHandlers({
+    onSubmitAction: (props: IEditableProductViewSmartProps & IOwnPropsEditableView) => (event: any) => {
+        props.setLoadingStatus(true);
+        let requestPath: string = API_PRODUCTS;
 
-export default EditableProductView;
+        if (props.operationMethod.toLowerCase() === 'put') {
+            requestPath = requestPath + "/" + props.productId;
+        }
+
+        props.updateProductRequest(props.editableProduct, requestPath, props.operationMethod);
+    },
+    generateFormStatus: (props: IEditableProductViewSmartProps & IOwnPropsEditableView) => (event: any) => {
+        const product: Product = props.editableProduct;
+
+        if (product.name === '' || product.price <= ZERO || product.image === '' || product.category === '' ||
+            product.price.toString() === '' || product.description === '') {
+            return false;
+        }
+
+        return true;
+    },
+    getOperationName: (props: IOwnPropsEditableView) => (event: any) => {
+        return props.operationName;
+    },
+    getOperationMethod: (props: IOwnPropsEditableView) => (event: any) => {
+        return props.operationMethod;
+    },
+    getProductId: (props: IEditableProductViewSmartProps & IOwnPropsEditableView) => (event: any) => {
+        return props.productId;
+    }
+});
+
+const onComponentDidMount = lifecycle<IEditableProductViewSmartProps & IOwnPropsEditableView, {}, {}>({
+    componentDidMount() {
+        this.props.clearUpdateStatus();
+
+        if (this.props.operationMethod.toLowerCase() === 'put') {
+            this.props.getEditableProduct(this.props.productId);
+        } else {
+            this.props.setEditableProduct(new Product(DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY,
+                    DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION));
+            this.props.setLoadingStatus(false);
+        }
+    }
+})
+
+const ComposedEditableProductView = compose<IEditableProductViewSmartProps, IOwnPropsEditableView>(
+    connect(mapStateToProps, mapDispatchToProps),
+    myHandlers,
+    onComponentDidMount,
+    loadingIndicator,
+) (EditableProductViewDumb);
+
+export default ComposedEditableProductView;

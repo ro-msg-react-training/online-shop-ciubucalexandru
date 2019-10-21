@@ -1,11 +1,19 @@
 import React from 'react';
-import { ProductDTOArray } from '../../../model/model';
 import { ProductList } from '../ProductList/ProductList';
 import { Link } from 'react-router-dom';
 import ShoppingCart from '../../../images/shopping-cart.png';
 import './ProductListViewDumb.scss';
+import { ListViewProps } from '../smart/ProductListViewSmart';
+import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
 
-export const ProductListViewDumb: React.FC<ProductDTOArray> = (productDTOArray: ProductDTOArray) => {
+export const ProductListViewDumb: React.FC<ListViewProps> = (props: ListViewProps) => {
+
+    if (props.hasError) {
+        return (
+            <ErrrorMessageLabel errorMessage={RETRIEVE_PRODUCTS_ERROR} />
+        );
+    }
+
     return (
         <div>
             <div className="flexContainer">
@@ -20,7 +28,9 @@ export const ProductListViewDumb: React.FC<ProductDTOArray> = (productDTOArray: 
                     ADD
                 </Link>
             </div>
-            <ProductList products={productDTOArray.products}/>
+            <ProductList products={props.productDTOArray.products}/>
         </div>
     );
 }
+
+const RETRIEVE_PRODUCTS_ERROR = "An error occured while retrieving the products!";

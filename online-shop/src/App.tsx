@@ -11,7 +11,7 @@ class App extends React.Component {
 
     private renderProductDetails(props: RouteComponentProps<{id: string}>) {
         const idValue: number = Number(props.match.params.id);
-        return <ProductDetails {... {id: idValue}}/>
+        return <ProductDetails productId={idValue}/>
     }
 
     private renderEditableProduct(
