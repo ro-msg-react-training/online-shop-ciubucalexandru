@@ -71,7 +71,7 @@ const onComponentDidMount = lifecycle<IProductDetailsPropsSmart & IIdProp, {}, {
     componentDidMount() {
         this.props.clearDeleteStatus();
         this.props.getProductRequest(this.props.productId);
-    }
+    },
 })
 
 const ComposedProductDetails = compose<IProductDetailsPropsSmart, { productId: number }>(

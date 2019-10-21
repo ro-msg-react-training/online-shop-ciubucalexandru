@@ -40,7 +40,7 @@ const myHandlers = withHandlers({
 const onComponentDidMount = lifecycle<ListViewProps, {}, {}>({
     componentDidMount() {
         this.props.getProductsRequest(this.props);
-    }
+    },
 })
 
 const ComposedListView = compose<ListViewProps, {}>(

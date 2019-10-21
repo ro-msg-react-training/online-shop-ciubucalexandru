@@ -120,7 +120,7 @@ const onComponentDidMount = lifecycle<IEditableProductViewSmartProps & IOwnProps
                     DEFAULT_PRICE, DEFAULT_IMAGE, DEFAULT_DESCRIPTION));
             this.props.setLoadingStatus(false);
         }
-    }
+    },
 })
 
 const ComposedEditableProductView = compose<IEditableProductViewSmartProps, IOwnPropsEditableView>(
