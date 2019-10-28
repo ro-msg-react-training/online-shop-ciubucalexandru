@@ -43,7 +43,7 @@ function* updateProduct(action: UpdateProductRequestAction) {
             const data = yield response.json();
             yield put(addItemToList(data));
             yield put(updateProductSuccess());
-        } else if(response.ok) {
+        } else if(response.status >= MIN_SUCCESS_STATUS_CODE && response.status < MAX_SUCCESS_STATUS_CODE) {
             
             yield put(setProduct(action.product));
             yield put(updateProductCart(action.product));

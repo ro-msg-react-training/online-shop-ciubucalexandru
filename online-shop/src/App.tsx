@@ -6,6 +6,8 @@ import ShoppingCartView from './components/ShoppingCartView/smart/ShoppingCartVi
 import { NavbarCustom } from './util/NavbarCustom';
 import ProductDetails from './components/ProductDetails/smart/ProductDetailsSmart';
 import EditableProductView from './components/EditableProductView/smart/EditableProductViewSmart';
+import SalesChartsView from './components/SalesChartsView/smart/SalesChartsViewSmart';
+import CarouselView from './components/CarouselView/CarouselView';
 
 class App extends React.Component {
 
@@ -31,6 +33,9 @@ class App extends React.Component {
                     <NavbarCustom />
                     <div>
                         <Switch>
+                            <Route path="/sales">
+                                <SalesChartsView />
+                            </Route>
                             <Route path="/shopping-cart">
                                 <ShoppingCartView />
                             </Route>
@@ -46,8 +51,11 @@ class App extends React.Component {
                             <Route path="/products">
                                 <ProductListView />
                             </Route>
+                            <Route exact path="/home">
+                                <CarouselView ></CarouselView>
+                            </Route>
                             <Route exact path="/">
-                                <Redirect to="/products"/>
+                                <Redirect to="/home" />
                             </Route>
                         </Switch>
                     </div>

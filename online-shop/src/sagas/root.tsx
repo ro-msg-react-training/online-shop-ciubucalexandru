@@ -3,6 +3,7 @@ import { all } from "@redux-saga/core/effects";
 import { updateProductWatcher, fetchEdtiableProductWatcher } from "./EditableProductSaga";
 import { deleteProductWatcher, fetchProductWatcher } from "./ProductDetailsSaga";
 import { createOrderWatcher } from "./ShoppingCartSaga";
+import { getSalesDataWatcher, getAllProductsWatcher } from "./SalesChartsSaga";
 
 export default function* rootSaga() {
     yield all([
@@ -12,5 +13,7 @@ export default function* rootSaga() {
         fetchProductWatcher(),
         deleteProductWatcher(),
         createOrderWatcher(),
+        getSalesDataWatcher(),
+        getAllProductsWatcher(),
     ]);
 }

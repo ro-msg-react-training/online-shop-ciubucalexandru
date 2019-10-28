@@ -40,6 +40,11 @@ export const ShoppingCartViewDumb: React.FC<IShoppingCartViewProps> = (props: IS
         <div className="list shoppingCart">
             {cartList}
         </div>
+        <hr className="divider"></hr>
+        <h4 className="subtitle is-4 totalSum">Total sum: {generateTotalSum(cartItems)} RON</h4>
+        <div>
+            
+        </div>
     </div>
     );
 }
@@ -80,4 +85,14 @@ const generateOrder = (cartItems: CartItem[]): OrderDTO => {
     });
 
     return new OrderDTO("doej", orderItems);
+}
+
+const generateTotalSum = (cartItems: CartItem[]): number => {
+    let sum = 0;
+
+    cartItems.forEach((item) => {
+        sum += item.quantity * item.product.price
+    });
+
+    return sum;
 }

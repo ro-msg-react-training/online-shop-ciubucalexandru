@@ -5,11 +5,13 @@ import { ShoppingCartState, ShoppingCartReducer } from '../reducers/ShoppingCart
 import { EditableProductState, EditableProductReducer } from '../reducers/EditableProductReducer';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas/root';
+import { SalesChartsState, SalesChartsReducer } from '../reducers/SalesChartsReducers';
 
 const rootReducer = combineReducers({
     editableProduct: EditableProductReducer,
     productDetails: ProductDetailsReducer,
     productsList: ProductsListReducer,
+    salesCharts: SalesChartsReducer,
     shoppingCart: ShoppingCartReducer,  
 });
 
@@ -26,5 +28,6 @@ export interface AppState {
     editableProduct: EditableProductState;
     productDetails: ProductDetailsState;
     productsList: ProductsListState;
+    salesCharts: SalesChartsState;
     shoppingCart: ShoppingCartState;
 }

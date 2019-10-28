@@ -83,3 +83,18 @@ export class OrderDTO {
         this.products = orderItems;
     }
 }
+
+export class SalesData {
+    category: string;
+    sales: number;
+
+    constructor(category: string, sales: number) {
+        this.category = category;
+        this.sales = sales;
+    }
+}
+
+export interface ChartTab {
+    name: string;
+    active: boolean;
+}

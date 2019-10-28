@@ -13,3 +13,10 @@ export const ZERO = 0;
 
 export const MIN_SUCCESS_STATUS_CODE = 200;
 export const MAX_SUCCESS_STATUS_CODE = 300;
+
+export const BAR_CHART = "Bars";
+export const PIE_CHART = "Pie";
+export const LINE_CHART = "Line";
+export const COLUMN_CHART = "Column";
+export const DRILLDOWN_CHART = "Drilldown";
+export const MAP_CHART = "Map";

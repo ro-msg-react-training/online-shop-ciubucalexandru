@@ -76,7 +76,7 @@ const deleteProduct = (oldArray: ProductDTOArray, productId: number): ProductDTO
     const newProductArray: ProductDTOArray = new ProductDTOArray([]);
 
     oldArray.products
-        .filter((item: ProductDTO) => item.id !== productId)
+        .filter((item: ProductDTO) => item.id != productId)
             .forEach((filteredProduct: ProductDTO) => {
                 newProductArray.products.push(filteredProduct)
     });
@@ -89,7 +89,7 @@ const putProduct = (productArray: ProductDTOArray, productDTO: ProductDTO): Prod
     let found = false;
 
     productArray.products.forEach((item) => {
-        if (item.id === productDTO.id) {
+        if (item.id == productDTO.id) {
             newArray.products.push(productDTO);
             found = true;
         } else {
