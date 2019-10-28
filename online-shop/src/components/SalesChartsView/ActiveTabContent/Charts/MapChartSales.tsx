@@ -6,7 +6,7 @@ import HighchartsMaps from 'highcharts/modules/map';
 const MapChart: React.FC = () => {
 
     HighchartsMaps(Highcharts);
-    let shownMap = require('@highcharts/map-collection/custom/world-continents.geo.json');
+    const shownMap = require('@highcharts/map-collection/custom/world-continents.geo.json');
 
     const chartOptions: Highcharts.Options = {
         chart: {
@@ -14,13 +14,13 @@ const MapChart: React.FC = () => {
             height: "50%",
         },
         title: {
-            text: 'Highmaps basic demo'
+            text: 'Highmaps basic demo',
         },
         mapNavigation: {
             enabled: true,
             buttonOptions: {
-                verticalAlign: 'bottom'
-            }
+                verticalAlign: 'bottom',
+            },
         },
         colorAxis: {
             min: 0,
@@ -39,12 +39,12 @@ const MapChart: React.FC = () => {
             name: "Not so random data",
             states: {
                 hover: {
-                    color: '#A01441'
-                }
+                    color: '#A01441',
+                },
             },
             dataLabels: {
                 enabled: false,
-                format: '{point.name}'
+                format: '{point.name}',
             },
         }],
     }

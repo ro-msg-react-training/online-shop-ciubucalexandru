@@ -4,9 +4,9 @@ import { DELETE_PRODUCT_FROM_CART, ADD_PRODUCT_TO_CART, MODIFY_PRODUCT_QUANTITY,
     CREATE_ORDER_SUCCESS, CREATE_ORDER_FAIL, CLEAR_CREATE_ORDER_STATUTS } from '../util/ActionTypes';
 import { ShoppingCartAction, AddProductToCartAction, DeleteProductFromCartAction, 
     ModifyProductQuantityAction, SetLoadingCartAction, 
-    UpdateProductCartAction
+    UpdateProductCartAction,
     } from '../actions/ShoppingCartActions';
-import { STATUS_NONE, STATUS_SUCCESS, STATUS_FAIL } from '../util/util';
+import { STATUS_NONE, STATUS_SUCCESS, STATUS_FAIL, ZERO } from '../util/util';
 
 export interface ShoppingCartState {
     productArray: ProductArray;
@@ -179,7 +179,7 @@ const addProductToCart = (array: ProductArray, product: Product): ProductArray =
     
     const quantity: number = getProductQuantity(array, product);
     
-    if (quantity > 0) {
+    if (quantity > ZERO) {
         return updateQuantity(array, product, quantity + 1);
     } else {
         const newProductArray: ProductArray = new ProductArray([]);

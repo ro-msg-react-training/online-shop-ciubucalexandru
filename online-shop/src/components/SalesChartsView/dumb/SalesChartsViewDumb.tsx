@@ -14,7 +14,7 @@ interface ISalesViewDumbProps {
 const SalesChartsViewDumb: React.FC<ISalesViewDumbProps> = (props: ISalesViewDumbProps) => {
 
     const mappedTabs = props.tabs.map((tab) => 
-        <ChartTabView key={tab.name} chartTab={tab} activateTab={(e) => props.activateTab(e)}/>
+        <ChartTabView key={tab.name} chartTab={tab} activateTab={(e) => props.activateTab(e)}/>,
     );
 
     return (

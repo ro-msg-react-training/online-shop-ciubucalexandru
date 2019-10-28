@@ -51,7 +51,7 @@ const initialState: SalesChartsState = {
 
 export const SalesChartsReducer = (
         state: SalesChartsState = initialState, 
-        action: SalesChartsAction
+        action: SalesChartsAction,
     ): SalesChartsState => {
 
     switch (action.type) {

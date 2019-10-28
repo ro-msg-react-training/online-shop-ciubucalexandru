@@ -23,7 +23,7 @@ const LineChart: React.FC<ILineChartSalesProps> = (props: ILineChartSalesProps) 
                 color: "#A01441",
                 type: 'line',
                 data: props.values,
-            }
+            },
         ],
     };
 

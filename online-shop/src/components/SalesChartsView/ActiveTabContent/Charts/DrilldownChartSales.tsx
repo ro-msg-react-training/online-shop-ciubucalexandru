@@ -22,7 +22,7 @@ const Drilldown: React.FC<IDrilldownProps> = (props: IDrilldownProps) => {
     HighchartsData(Highcharts);
     HighchartDrilldown(Highcharts);
 
-    let chartOptions: Highcharts.Options = {
+    const chartOptions: Highcharts.Options = {
         chart: {
             height: "35%",
         },

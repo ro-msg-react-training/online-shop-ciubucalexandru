@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChartTab, ProductDTOArray, SalesData } from '../../../model/model';
-import { BAR_CHART, PIE_CHART, LINE_CHART, COLUMN_CHART, DRILLDOWN_CHART, MAP_CHART } from '../../../util/util';
+import { BAR_CHART, PIE_CHART, LINE_CHART, COLUMN_CHART, DRILLDOWN_CHART, MAP_CHART, ZERO, ONE_HUNDRED } from '../../../util/util';
 import BarsChart from './Charts/BarsChartSales';
 import PieChart from './Charts/PieChartSales';
 import LineChart from './Charts/LineChartSales';
@@ -73,8 +73,8 @@ const generateLineData = (salesData: SalesData[]): number[] => {
     salesData.forEach((saleData) => sum += saleData.sales);
 
     newData.push(parseFloat(sum.toFixed(2)));
-    newData.push(parseFloat((sum + 10/100 * sum).toFixed(2)));
-    newData.push(parseFloat((sum + 30/100 * sum).toFixed(2)));
+    newData.push(parseFloat((sum + 10/ONE_HUNDRED * sum).toFixed(2)));
+    newData.push(parseFloat((sum + 30/ONE_HUNDRED * sum).toFixed(2)));
     newData.push(parseFloat((2 * sum).toFixed(2)));
     newData.push(parseFloat((sum / 2).toFixed(2)));
 
@@ -90,7 +90,7 @@ const mapDataToValues = (salesData: SalesData[]): number[] => {
 }
 
 const getActiveTab = (tabs: ChartTab[]): string => {
-    let activeTab: string = tabs[0].name;
+    let activeTab: string = tabs[ZERO].name;
     
     tabs.forEach((tab) => {
         if (tab.active) {
@@ -116,7 +116,7 @@ const getProductsOfCategory = (categoryName: string, allProducts: ProductDTOArra
 
 const getCategoryTotalSales = (categoryName: string, salesData: SalesData[]): number => {
     
-    let totalSales: number = 0;
+    let totalSales = 0;
     salesData.forEach((data) => {
         if (data.category === categoryName) {
             totalSales = data.sales;
@@ -144,7 +144,7 @@ const generateDrilldownCategory = (
         if (i === productsLength - 1) {
             chartData.push(new SalesData(
                 productsOfCategory.products[i].name,
-                (currentPercentage/100) * totalCategorySales));
+                (currentPercentage/ONE_HUNDRED) * totalCategorySales));
             break;
         }
 
@@ -152,7 +152,7 @@ const generateDrilldownCategory = (
         
         chartData.push(new SalesData(
             productsOfCategory.products[i].name,
-            (generatedPercentage/100) * totalCategorySales)
+            (generatedPercentage/ONE_HUNDRED) * totalCategorySales),
         );
         currentPercentage = currentPercentage - generatedPercentage;
     }

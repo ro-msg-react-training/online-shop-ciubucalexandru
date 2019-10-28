@@ -158,7 +158,7 @@ export const setEditableProduct = (product: Product): SetEditableProductAction =
 export const updateProductRequest = (
     product: Product, 
     requestUrl: string, 
-    method: string
+    method: string,
     ): UpdateProductRequestAction => {
         
     return ({

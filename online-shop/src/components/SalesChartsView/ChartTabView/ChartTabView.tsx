@@ -8,7 +8,7 @@ interface IChartTabViewProps {
 
 export const ChartTabView: React.FC<IChartTabViewProps> = (props: IChartTabViewProps) => {
 
-    let activeClass = props.chartTab.active ? "is-active" : "";
+    const activeClass = props.chartTab.active ? "is-active" : "";
 
     return (
         <li className={activeClass} onClick={() => props.activateTab(props.chartTab.name)}>

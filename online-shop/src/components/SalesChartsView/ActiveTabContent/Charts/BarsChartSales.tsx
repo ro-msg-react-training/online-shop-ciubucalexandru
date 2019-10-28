@@ -22,7 +22,7 @@ const BarsChart: React.FC<IBarsChartProps> = (props: IBarsChartProps) => {
                 color: "#A01441",
                 type: "bar",
                 data: props.values,
-            }
+            },
         ],
     };
 

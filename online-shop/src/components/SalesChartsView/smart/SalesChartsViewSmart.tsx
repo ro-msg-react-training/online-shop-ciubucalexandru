@@ -4,7 +4,8 @@ import { LoadingIndicator } from '../../../util/LoadingIndicator/LoadingIndicato
 import { ErrrorMessageLabel } from '../../../util/ErrorMessageLabel/ErrorMessageLabel';
 import { AppState } from '../../../store/store';
 import { Dispatch } from 'redux';
-import { setLoadingCharts, getSalesRequest, changeActiveTab, getAllProductsRequest } from '../../../actions/SalesChartsActions';
+import { setLoadingCharts, getSalesRequest, changeActiveTab, 
+    getAllProductsRequest } from '../../../actions/SalesChartsActions';
 import { connect } from 'react-redux';
 import SalesChartsViewDumb from '../dumb/SalesChartsViewDumb';
 

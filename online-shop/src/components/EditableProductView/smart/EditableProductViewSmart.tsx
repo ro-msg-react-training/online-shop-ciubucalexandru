@@ -106,7 +106,7 @@ const myHandlers = withHandlers({
     },
     getProductId: (props: IEditableProductViewSmartProps & IOwnPropsEditableView) => (event: any) => {
         return props.productId;
-    }
+    },
 });
 
 const onComponentDidMount = lifecycle<IEditableProductViewSmartProps & IOwnPropsEditableView, {}, {}>({

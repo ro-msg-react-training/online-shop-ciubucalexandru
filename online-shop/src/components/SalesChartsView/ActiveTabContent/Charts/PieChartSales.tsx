@@ -1,6 +1,7 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
+import { TEN, ZERO } from '../../../../util/util';
 
 interface IPieChartProps {
     yAxisLabels: string[];
@@ -21,12 +22,12 @@ const PieChart: React.FC<IPieChartProps> = (props: IPieChartProps) => {
         };
     })
 
-    let chartOptions: Highcharts.Options = {
+    const chartOptions: Highcharts.Options = {
         
         tooltip: {
-            formatter: function() {
+            formatter: function(): string {
                 let roundedPercentage: number;
-                roundedPercentage = this.percentage === undefined ? 0 : Math.round(this.percentage * 10) / 10;
+                roundedPercentage = this.percentage === undefined ? ZERO : Math.round(this.percentage * TEN) / TEN;
                 return this.series.name + 
                         "<br>" + this.point.name + ": <b>" + this.y + " - " + roundedPercentage + "%</b>";
             }
@@ -47,7 +48,7 @@ const PieChart: React.FC<IPieChartProps> = (props: IPieChartProps) => {
                 name: "Categories sales",
                 type: "pie",
                 data: pieItems,
-            }
+            },
         ],
     };
 

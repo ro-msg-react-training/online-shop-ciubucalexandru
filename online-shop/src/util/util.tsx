@@ -10,6 +10,8 @@ export const STATUS_SUCCESS = "SUCCESS";
 export const STATUS_FAIL = "FAIL";
 
 export const ZERO = 0;
+export const ONE_HUNDRED = 100;
+export const TEN = 10;
 
 export const MIN_SUCCESS_STATUS_CODE = 200;
 export const MAX_SUCCESS_STATUS_CODE = 300;
@@ -20,3 +22,6 @@ export const LINE_CHART = "Line";
 export const COLUMN_CHART = "Column";
 export const DRILLDOWN_CHART = "Drilldown";
 export const MAP_CHART = "Map";
+
+export const CAROUSEL_INTERVAL_CHANGE = 3000;
+export const INDEX_NOT_NEEDED = -1;

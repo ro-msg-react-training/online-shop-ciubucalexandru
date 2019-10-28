@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './CarouselView.scss';
 import RoundedButton from './RoundedButton/RoundedButton';
+import { ZERO, CAROUSEL_INTERVAL_CHANGE, INDEX_NOT_NEEDED } from '../../util/util';
 
 const CarouselView: React.FC = () => {
 
-    const imageIndexes: number[] = [0, 1, 2, 3, 4];
     const images: string[] = [
         "https://image.ceneostatic.pl/data/products/55424289/i-apple-iphone-x-64gb-srebrny.jpg",
         "https://computermania.com.bd/wp-content/uploads/2018/07/asus_rog_strix_scar__dY7RE-720x720.jpg",
@@ -16,23 +16,20 @@ const CarouselView: React.FC = () => {
             "?fit=bounds&width=640&height=480",
     ];
 
-    const [ currentIndex, setCurrentIndex ] = useState(0);
+    const imageIndexes: number[] = initializeImageIndexes(images.length);
+    const [ currentIndex, setCurrentIndex ] = useState(ZERO);
         
     useEffect(() => {
-        const interval = setInterval(() => handleNextPhoto(), 3000);
+        const interval = setInterval(() => handleNextPhoto(), CAROUSEL_INTERVAL_CHANGE);
         return () => clearInterval(interval);
     });
 
-    function handleNextPhoto() {
-        currentIndex >= 4 ? setCurrentIndex(0) : setCurrentIndex(currentIndex + 1);
+    const handleNextPhoto = (): void => {
+        currentIndex >= images.length - 1 ? setCurrentIndex(ZERO) : setCurrentIndex(currentIndex + 1);
     }
 
-    function handlePreviousPhoto() {
-        if (currentIndex <= 0) {
-            setCurrentIndex(4);
-        } else {
-            setCurrentIndex(currentIndex - 1);
-        }
+    const handlePreviousPhoto = (): void => {
+        currentIndex <= ZERO ? setCurrentIndex(images.length - 1) : setCurrentIndex(currentIndex - 1);
     }
 
     const imageButtons = imageIndexes.map((value) => {
@@ -42,7 +39,7 @@ const CarouselView: React.FC = () => {
 
     return (
         <div className="rowFlex">
-            <RoundedButton imageIndex={0} currentIndex={-1}
+            <RoundedButton imageIndex={ZERO} currentIndex={INDEX_NOT_NEEDED}
                 onClickEvent={() => handlePreviousPhoto()}  text={"Prev"}/>
             <div className="centeredFlex">
                 <div className="box imageContainer">
@@ -54,10 +51,18 @@ const CarouselView: React.FC = () => {
                     {imageButtons}
                 </div>
             </div>
-            <RoundedButton imageIndex={0} currentIndex={-1}
+            <RoundedButton imageIndex={ZERO} currentIndex={INDEX_NOT_NEEDED}
                 onClickEvent={() => handleNextPhoto()}  text={"Next"}/>
         </div>
     );
+}
+
+const initializeImageIndexes = (imagesSize: number) => {
+    let indexesArray: number[] = [];
+    for (let i = 0; i < imagesSize; i++) {
+        indexesArray.push(i);
+    }
+    return indexesArray;
 }
 
 export default CarouselView;
