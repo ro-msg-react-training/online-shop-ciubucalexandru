@@ -10,7 +10,8 @@ export const DetailsItems: React.FC<Product> = (props: Product) => {
                         disabledStatus={true} onChange={(e) => e} />
             <FormBasicItem labelName="Category" value={props.category} type="text" 
                         disabledStatus={true} onChange={(e) => e} />
-            <FormBasicItem labelName="Price" value={String(props.price)} type="number" 
+            <FormBasicItem labelName="Price" 
+                        value={props.price.toLocaleString('en-US', {minimumFractionDigits: 2})} type="text"
                         disabledStatus={true} onChange={(e) => e} />
 
             <FormTextAreaItem text={props.description} onChange={(e) => e} disabledStatus={true} />

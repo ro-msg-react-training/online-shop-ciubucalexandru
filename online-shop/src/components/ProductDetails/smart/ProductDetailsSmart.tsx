@@ -57,9 +57,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
 }
 
 const myHandlers = withHandlers({
-    deleteOnClick: (props: IProductDetailsPropsSmart) => (event: any) => {
-        props.openModal();
-    },
+    // deleteOnClick: (props: IProductDetailsPropsSmart) => (event: any) => {
+    //     props.openModal();
+    // },
     confirmModal: (props: IProductDetailsPropsSmart & IIdProp) => (event: any) => {
         props.closeModal();
         props.setLoadingStatus(true);

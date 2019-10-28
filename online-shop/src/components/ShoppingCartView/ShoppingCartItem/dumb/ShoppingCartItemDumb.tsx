@@ -25,8 +25,13 @@ export const ShoppingCartItemDumb: React.FC<IShoppingCartItemDumb> = (props: ISh
             </div>
             <div className="column columns is-one-fifth is-vcentered">
                 <div className="column">
-                    <p>{props.quantity * props.product.price} RON</p>
-                    <p>({props.quantity} * {props.product.price})</p>
+                    <p>
+                        {(props.quantity * props.product.price).toLocaleString('en-US', {minimumFractionDigits: 2})}
+                         RON
+                        </p>
+                    <p>
+                        ({props.quantity} * {props.product.price.toLocaleString('en-US', {minimumFractionDigits: 2})})
+                    </p>
                     <br></br>
                     <div className="field control">
                         <div className="select is-info">

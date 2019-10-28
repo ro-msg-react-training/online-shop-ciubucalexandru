@@ -13,7 +13,9 @@ const ProductItem: React.FC<ProductDTO> = (product: ProductDTO) => {
         <div className="list-item box columns is-vcentered">
             <div className="column listItem">{product.category}</div>
             <div className="column listItem">{product.name}</div>
-            <div className="column listItem">{product.price} RON</div>
+            <div className="column listItem">
+                {product.price.toLocaleString('en-US', {minimumFractionDigits: 2})} RON
+            </div>
             <div className="column listItem">
                 <Link to={url} className="button is-large is-info detailsButton">
                     
