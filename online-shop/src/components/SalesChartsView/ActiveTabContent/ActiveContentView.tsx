@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChartTab, ProductDTOArray, SalesData } from '../../../model/model';
-import { BAR_CHART, PIE_CHART, LINE_CHART, COLUMN_CHART, DRILLDOWN_CHART, MAP_CHART, ZERO, ONE_HUNDRED } from '../../../util/util';
+import { BAR_CHART, PIE_CHART, LINE_CHART, COLUMN_CHART, DRILLDOWN_CHART, MAP_CHART, 
+    ZERO, ONE_HUNDRED, TEN } from '../../../util/util';
 import BarsChart from './Charts/BarsChartSales';
 import PieChart from './Charts/PieChartSales';
 import LineChart from './Charts/LineChartSales';
@@ -73,8 +74,8 @@ const generateLineData = (salesData: SalesData[]): number[] => {
     salesData.forEach((saleData) => sum += saleData.sales);
 
     newData.push(parseFloat(sum.toFixed(2)));
-    newData.push(parseFloat((sum + 10/ONE_HUNDRED * sum).toFixed(2)));
-    newData.push(parseFloat((sum + 30/ONE_HUNDRED * sum).toFixed(2)));
+    newData.push(parseFloat((sum + TEN/ONE_HUNDRED * sum).toFixed(2)));
+    newData.push(parseFloat((sum + (3 * TEN)/ONE_HUNDRED * sum).toFixed(2)));
     newData.push(parseFloat((2 * sum).toFixed(2)));
     newData.push(parseFloat((sum / 2).toFixed(2)));
 

@@ -85,8 +85,8 @@ export class OrderDTO {
 }
 
 export class SalesData {
-    category: string;
-    sales: number;
+    public category: string;
+    public sales: number;
 
     constructor(category: string, sales: number) {
         this.category = category;

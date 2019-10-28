@@ -58,7 +58,7 @@ const CarouselView: React.FC = () => {
 }
 
 const initializeImageIndexes = (imagesSize: number) => {
-    let indexesArray: number[] = [];
+    const indexesArray: number[] = [];
     for (let i = 0; i < imagesSize; i++) {
         indexesArray.push(i);
     }

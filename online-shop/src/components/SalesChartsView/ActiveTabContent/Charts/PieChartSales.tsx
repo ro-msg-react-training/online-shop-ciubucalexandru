@@ -30,7 +30,7 @@ const PieChart: React.FC<IPieChartProps> = (props: IPieChartProps) => {
                 roundedPercentage = this.percentage === undefined ? ZERO : Math.round(this.percentage * TEN) / TEN;
                 return this.series.name + 
                         "<br>" + this.point.name + ": <b>" + this.y + " - " + roundedPercentage + "%</b>";
-            }
+            },
         },
         plotOptions: {
             pie: {
