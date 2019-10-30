@@ -3,17 +3,7 @@ import { EditableProductAction, ChangeProductNameAction,
     ChangeProductCategoryAction, ChangeProductPriceAction, ChangeProductImageAction, 
     ChangeProductDescriptionAction, SetLoadingStatusEditableAction, GetEditableProductSuccessAction,
     SetEditableProductAction } from "../actions/EditableProductActions";
-import { CHANGE_PRODUCT_NAME, CHANGE_PRODUCT_CATEGORY, 
-    CHANGE_PRODUCT_PRICE, CHANGE_PRODUCT_IMAGE, CHANGE_PRODUCT_DESCRIPTION, 
-    SET_LOADING_STATUS_EDITABLE, 
-    GET_EDITABLE_PRODUCT_REQUEST,
-    GET_EDITABLE_PRODUCT_SUCCESS,
-    GET_EDITABLE_PRODUCT_FAIL,
-    SET_EDITABLE_PRODUCT,
-    UPDATE_PRODUCT_REQUEST,
-    UPDATE_PRODUCT_SUCCESS,
-    UPDATE_PRODUCT_FAIL,
-    CLEAR_UPDATE_STATUS} from "../util/ActionTypes";
+import { EditableProductActions } from "../util/ActionTypes";
 import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
     DEFAULT_IMAGE, DEFAULT_DESCRIPTION, STATUS_NONE, STATUS_SUCCESS, STATUS_FAIL } from "../util/util";
 
@@ -38,28 +28,26 @@ export const EditableProductReducer = (
         ): EditableProductState => {
 
     switch(action.type) {
-        case SET_EDITABLE_PRODUCT: {
-            const actualAction: SetEditableProductAction = action as SetEditableProductAction;
+        case EditableProductActions.SET_EDITABLE_PRODUCT: {
             return ({
-                product: actualAction.product,
+                product: action.product,
                 isLoading: state.isLoading,
                 hasFetchError: state.hasFetchError,
                 updateStatus: state.updateStatus,
             });
         }
-        case GET_EDITABLE_PRODUCT_REQUEST: {
+        case EditableProductActions.GET_EDITABLE_PRODUCT_REQUEST: {
             return state;
         }
-        case GET_EDITABLE_PRODUCT_SUCCESS: {
-            const actualAction: GetEditableProductSuccessAction = action as GetEditableProductSuccessAction;
+        case EditableProductActions.GET_EDITABLE_PRODUCT_SUCCESS: {
             return ({
-                product: actualAction.product,
+                product: action.product,
                 isLoading: false,
                 hasFetchError: false,
                 updateStatus: state.updateStatus,
             });
         }
-        case GET_EDITABLE_PRODUCT_FAIL: {
+        case EditableProductActions.GET_EDITABLE_PRODUCT_FAIL: {
             return ({
                 product: state.product,
                 isLoading: false,
@@ -67,10 +55,9 @@ export const EditableProductReducer = (
                 updateStatus: state.updateStatus,
             })
         }
-        case CHANGE_PRODUCT_NAME: {
-            const actualAction: ChangeProductNameAction = action as ChangeProductNameAction;
+        case EditableProductActions.CHANGE_PRODUCT_NAME: {
             const newProduct: Product = generateNewProduct(state.product);
-            newProduct.name = actualAction.name;
+            newProduct.name = action.name;
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
@@ -78,10 +65,9 @@ export const EditableProductReducer = (
                 updateStatus: state.updateStatus,
             })
         }
-        case CHANGE_PRODUCT_CATEGORY: {
-            const actualAction: ChangeProductCategoryAction = action as ChangeProductCategoryAction;
+        case EditableProductActions.CHANGE_PRODUCT_CATEGORY: {
             const newProduct: Product = generateNewProduct(state.product);
-            newProduct.category = actualAction.category;
+            newProduct.category = action.category;
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
@@ -89,10 +75,9 @@ export const EditableProductReducer = (
                 updateStatus: state.updateStatus,
             })
         }
-        case CHANGE_PRODUCT_PRICE: {
-            const actualAction: ChangeProductPriceAction = action as ChangeProductPriceAction;
+        case EditableProductActions.CHANGE_PRODUCT_PRICE: {
             const newProduct: Product = generateNewProduct(state.product);
-            newProduct.price = actualAction.price;
+            newProduct.price = Number(action.price);
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
@@ -100,10 +85,9 @@ export const EditableProductReducer = (
                 updateStatus: state.updateStatus,
             })
         }
-        case CHANGE_PRODUCT_IMAGE: {
-            const actualAction: ChangeProductImageAction = action as ChangeProductImageAction;
+        case EditableProductActions.CHANGE_PRODUCT_IMAGE: {
             const newProduct: Product = generateNewProduct(state.product);
-            newProduct.image = actualAction.image;
+            newProduct.image = action.image;
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
@@ -111,10 +95,9 @@ export const EditableProductReducer = (
                 updateStatus: state.updateStatus,
             })
         }
-        case CHANGE_PRODUCT_DESCRIPTION: {
-            const actualAction: ChangeProductDescriptionAction = action as ChangeProductDescriptionAction;
+        case EditableProductActions.CHANGE_PRODUCT_DESCRIPTION: {
             const newProduct: Product = generateNewProduct(state.product);
-            newProduct.description = actualAction.description;
+            newProduct.description = action.description;
             return ({
                 product: newProduct,
                 isLoading: state.isLoading,
@@ -122,19 +105,18 @@ export const EditableProductReducer = (
                 updateStatus: state.updateStatus,
             })
         }
-        case SET_LOADING_STATUS_EDITABLE: {
-            const actualAction: SetLoadingStatusEditableAction = action as SetLoadingStatusEditableAction;
+        case EditableProductActions.SET_LOADING_STATUS_EDITABLE: {
             return ({
                 product: state.product,
-                isLoading: actualAction.loadingStatus,
+                isLoading: action.loadingStatus,
                 hasFetchError: state.hasFetchError,
                 updateStatus: state.updateStatus,
             });
         }
-        case UPDATE_PRODUCT_REQUEST: {
+        case EditableProductActions.UPDATE_PRODUCT_REQUEST: {
             return state;
         }
-        case UPDATE_PRODUCT_SUCCESS: {
+        case EditableProductActions.UPDATE_PRODUCT_SUCCESS: {
             return ({
                 product: state.product,
                 isLoading: false,
@@ -142,7 +124,7 @@ export const EditableProductReducer = (
                 updateStatus: STATUS_SUCCESS,
             });
         }
-        case UPDATE_PRODUCT_FAIL: {
+        case EditableProductActions.UPDATE_PRODUCT_FAIL: {
             return ({
                 product: state.product,
                 isLoading: false,
@@ -150,7 +132,7 @@ export const EditableProductReducer = (
                 updateStatus: STATUS_FAIL,
             });
         }
-        case CLEAR_UPDATE_STATUS: {
+        case EditableProductActions.CLEAR_UPDATE_STATUS: {
             return ({
                 product: state.product,
                 isLoading: state.isLoading,

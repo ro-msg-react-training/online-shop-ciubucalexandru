@@ -1,9 +1,7 @@
 import { SalesData, ChartTab, ProductDTOArray } from "../model/model";
 import { SalesChartsAction, SetLoadingChartsAction, GetSalesDataSuccessAction, 
     ChangeActiveTabAction, GetAllProductsSuccessAction } from "../actions/SalesChartsActions";
-import { SET_LOADING_STATUS_CHARTS, GET_SALES_DATA_REQUEST, GET_SALES_DATA_SUCCESS, 
-    GET_SALES_DATA_FAIL, CHANGE_ACTIVE_TAB, GET_ALL_PRODUCTS_REQUEST, GET_ALL_PRODUCTS_SUCCESS, 
-    GET_ALL_PRODUCTS_FAIL } from "../util/ActionTypes";
+import { SalesChartsActions } from "../util/ActionTypes";
 import { BAR_CHART, PIE_CHART, LINE_CHART, COLUMN_CHART, DRILLDOWN_CHART, MAP_CHART } from "../util/util";
 
 export interface SalesChartsState {
@@ -55,30 +53,28 @@ export const SalesChartsReducer = (
     ): SalesChartsState => {
 
     switch (action.type) {
-        case SET_LOADING_STATUS_CHARTS: {
-            const actualAction: SetLoadingChartsAction = action as SetLoadingChartsAction;
+        case SalesChartsActions.SET_LOADING_STATUS_CHARTS: {
             return {
                 salesData: state.salesData,
-                isLoading: actualAction.loadingStatus,
+                isLoading: action.loadingStatus,
                 hasError: state.hasError,
                 tabs: state.tabs,
                 productDTOArray: state.productDTOArray,
             };
         }
-        case GET_SALES_DATA_REQUEST: {
+        case SalesChartsActions.GET_SALES_DATA_REQUEST: {
             return state;
         }
-        case GET_SALES_DATA_SUCCESS: {
-            const actualAction: GetSalesDataSuccessAction = action as GetSalesDataSuccessAction;
+        case SalesChartsActions.GET_SALES_DATA_SUCCESS: {
             return {
-                salesData: actualAction.sales,
+                salesData: action.sales,
                 isLoading: false,
                 hasError: false,
                 tabs: state.tabs,
                 productDTOArray: state.productDTOArray,
             };
         }
-        case GET_SALES_DATA_FAIL: {
+        case SalesChartsActions.GET_SALES_DATA_FAIL: {
             return {
                 salesData: state.salesData,
                 isLoading: false,
@@ -87,30 +83,28 @@ export const SalesChartsReducer = (
                 productDTOArray: state.productDTOArray,
             };
         }
-        case CHANGE_ACTIVE_TAB: {
-            const actualAction: ChangeActiveTabAction = action as ChangeActiveTabAction;
+        case SalesChartsActions.CHANGE_ACTIVE_TAB: {
             return {
                 salesData: state.salesData,
                 isLoading: state.isLoading,
                 hasError: state.hasError,
-                tabs: changeActive(state.tabs, actualAction.activeTab),
+                tabs: changeActive(state.tabs, action.activeTab),
                 productDTOArray: state.productDTOArray,
             }
         }
-        case GET_ALL_PRODUCTS_REQUEST: {
+        case SalesChartsActions.GET_ALL_PRODUCTS_REQUEST: {
             return state;
         }
-        case GET_ALL_PRODUCTS_SUCCESS: {
-            const actualAction: GetAllProductsSuccessAction = action as GetAllProductsSuccessAction;
+        case SalesChartsActions.GET_ALL_PRODUCTS_SUCCESS: {
             return {
                 salesData: state.salesData,
                 isLoading: false,
                 hasError: false,
                 tabs: state.tabs,
-                productDTOArray: actualAction.products,
+                productDTOArray: action.products,
             };
         }
-        case GET_ALL_PRODUCTS_FAIL: {
+        case SalesChartsActions.GET_ALL_PRODUCTS_FAIL: {
             return {
                 salesData: state.salesData,
                 isLoading: false,

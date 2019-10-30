@@ -2,7 +2,7 @@ import { API_PRODUCTS } from '../util/API';
 import { ProductDTOArray } from '../model/model';
 import { getProductsSuccess, getProductsFail } from '../actions/ProductListActions';
 import { put, takeEvery } from '@redux-saga/core/effects';
-import { GET_PRODUCTS_LIST_REQUEST } from '../util/ActionTypes';
+import { ProductListActions } from '../util/ActionTypes';
 import { MIN_SUCCESS_STATUS_CODE, MAX_SUCCESS_STATUS_CODE } from '../util/util';
 
 function* fetchProducts() {
@@ -24,5 +24,5 @@ function* fetchProducts() {
 }
 
 export default function* productsWatcher() {
-    yield takeEvery(GET_PRODUCTS_LIST_REQUEST, fetchProducts);
+    yield takeEvery(ProductListActions.GET_PRODUCTS_LIST_REQUEST, fetchProducts);
 }

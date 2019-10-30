@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DropdownOptions from './DropdownOptions/smart/DropdownOptionsSmart';
 
 export { NavbarCustom };
 
@@ -22,6 +23,7 @@ const NavbarCustom: React.FC = () => {
                     Sales Charts
                 </Link>
             </div>
+            <DropdownOptions />
         </div>
     </nav>
     );

@@ -18,14 +18,14 @@ const SalesChartsViewDumb: React.FC<ISalesViewDumbProps> = (props: ISalesViewDum
     );
 
     return (
-        <div>
+        <>
             <div className="tabs is-boxed is-centered tabsOptions">
                 <ul>
                     {mappedTabs}
                 </ul>
             </div>
             <ActiveContentView salesData={props.salesData} tabs={props.tabs} productDTOArray={props.productDTOArray}/>
-        </div>
+        </>
     );
 }
 

@@ -1,8 +1,6 @@
 import { ProductDTOArray, ProductDTO } from '../model/model';
-import { DELETE_PRODUCT_FROM_LIST, SET_LOADING_STATUS_LIST, GET_PRODUCTS_LIST_FAILURE,
-     GET_PRODUCTS_LIST_REQUEST, GET_PRODUCTS_LIST_SUCCESS, ADD_ITEM_TO_LIST } from '../util/ActionTypes';
-import { ProductListAction, DeleteProductFromListAction, 
-    SetLoadingListAction, AddItemToListAction, GetProductsSuccessAction } from '../actions/ProductListActions';
+import { ProductListActions } from '../util/ActionTypes';
+import { ProductListAction } from '../actions/ProductListActions';
 
 export interface ProductsListState {
     productArray: ProductDTOArray;
@@ -20,48 +18,40 @@ export const ProductsListReducer = (
             state: ProductsListState = initialState, 
             action: ProductListAction,
         ): ProductsListState => {
-
+    
     switch(action.type) {
-        case GET_PRODUCTS_LIST_REQUEST: {
-            return state;
-        }
-        case GET_PRODUCTS_LIST_SUCCESS: {
-            const actualAction: GetProductsSuccessAction = action as GetProductsSuccessAction;
+        case ProductListActions.GET_PRODUCTS_LIST_SUCCESS: {
             return ({
-                productArray: actualAction.productArray,
+                productArray: action.productArray,
                 isLoading: false,
                 hasError: false,
             });
         }
-        case GET_PRODUCTS_LIST_FAILURE: {
+        case ProductListActions.GET_PRODUCTS_LIST_FAILURE: {
             return ({
                 productArray: state.productArray,
                 isLoading: false,
                 hasError: true,
             });
         }
-        case DELETE_PRODUCT_FROM_LIST: {
-            const actualAction: DeleteProductFromListAction = action as DeleteProductFromListAction;
-            const newArray: ProductDTOArray = deleteProduct(state.productArray, actualAction.productId);
+        case ProductListActions.DELETE_PRODUCT_FROM_LIST: {
+            const newArray: ProductDTOArray = deleteProduct(state.productArray, action.productId);
             return ({
                 productArray: newArray,
                 isLoading: state.isLoading,
                 hasError: state.hasError,
             });
         }
-        case SET_LOADING_STATUS_LIST: {
-            const actualAction: SetLoadingListAction = action as SetLoadingListAction;
-            console.log(actualAction);
+        case ProductListActions.SET_LOADING_STATUS_LIST: {
             return ({
                 productArray: state.productArray,
-                isLoading: actualAction.loadingStatus,
+                isLoading: action.loadingStatus,
                 hasError: state.hasError,
             })
         }
-        case ADD_ITEM_TO_LIST: {
-            const actualAction: AddItemToListAction = action as AddItemToListAction;
+        case ProductListActions.ADD_ITEM_TO_LIST: {
             return ({
-                productArray: putProduct(state.productArray, actualAction.productDTO),
+                productArray: putProduct(state.productArray, action.productDTO),
                 isLoading: state.isLoading,
                 hasError: state.hasError,
             })

@@ -3,7 +3,7 @@ import { GetProductRequestAction, getProductSuccess, DeleteProductRequestAction,
 import { API_PRODUCTS } from "../util/API";
 import { put, takeEvery, takeLatest } from "@redux-saga/core/effects";
 import { deleteProductList } from "../actions/ProductListActions";
-import { GET_PRODUCT_DETAILS_REQUEST, DELETE_PRODUCT_REQUEST } from "../util/ActionTypes";
+import { ProductDetailsActions } from "../util/ActionTypes";
 import { deleteProductShoppingCart } from "../actions/ShoppingCartActions";
 import { MAX_SUCCESS_STATUS_CODE, MIN_SUCCESS_STATUS_CODE } from "../util/util";
 
@@ -45,9 +45,9 @@ function* deleteProduct(action: DeleteProductRequestAction) {
 }
 
 export function* fetchProductWatcher() {
-    yield takeEvery(GET_PRODUCT_DETAILS_REQUEST, fetchProduct);
+    yield takeEvery(ProductDetailsActions.GET_PRODUCT_DETAILS_REQUEST, fetchProduct);
 }
 
 export function* deleteProductWatcher() {
-    yield takeLatest(DELETE_PRODUCT_REQUEST, deleteProduct);
+    yield takeLatest(ProductDetailsActions.DELETE_PRODUCT_REQUEST, deleteProduct);
 }

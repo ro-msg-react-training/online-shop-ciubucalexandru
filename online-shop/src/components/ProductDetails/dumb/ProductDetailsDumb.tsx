@@ -29,7 +29,7 @@ export const ProductDetailsDumb: React.FC<IProductDetailsPropsSmart> = (props: I
     }
 
     return (
-        <div>
+        <>
             <CustomModal title={title} status={props.showModal} 
                         closeModal={() => props.closeModal()} confirmModal={() => props.confirmModal()} />
                         
@@ -56,6 +56,6 @@ export const ProductDetailsDumb: React.FC<IProductDetailsPropsSmart> = (props: I
                     <DetailsItems {...props.product} />
                 </div>
             </div>
-        </div>
+        </>
     )
 }

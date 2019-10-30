@@ -9,14 +9,8 @@ interface IModalProps {
 
 export const CustomModal: React.FC<IModalProps> = (props: IModalProps) => {
 
-    let classes = "modal";
-
-    if (props.status) {
-        classes += " is-active";
-    }
-
     return (
-        <div className={classes}>
+        <div className={"modal" + (props.status ? " is-active" : "")} >
             <div className="modal-background"></div>
             <div className="modal-card">
                 <header className="modal-card-head">

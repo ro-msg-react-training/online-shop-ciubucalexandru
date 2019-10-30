@@ -4,6 +4,7 @@ import { updateProductWatcher, fetchEdtiableProductWatcher } from "./EditablePro
 import { deleteProductWatcher, fetchProductWatcher } from "./ProductDetailsSaga";
 import { createOrderWatcher } from "./ShoppingCartSaga";
 import { getSalesDataWatcher, getAllProductsWatcher } from "./SalesChartsSaga";
+import { loginRequestWatcher } from "./LoginSaga";
 
 export default function* rootSaga() {
     yield all([
@@ -15,5 +16,6 @@ export default function* rootSaga() {
         createOrderWatcher(),
         getSalesDataWatcher(),
         getAllProductsWatcher(),
+        loginRequestWatcher(),
     ]);
 }

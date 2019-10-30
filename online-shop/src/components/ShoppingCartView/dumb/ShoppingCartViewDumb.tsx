@@ -27,7 +27,8 @@ export const ShoppingCartViewDumb: React.FC<IShoppingCartViewProps> = (props: IS
         );
     }
 
-    return (<div>
+    return (
+    <>
         <div className="flexContainer">
             <h1 className="title is-3 shoppingCartTitle">
                 Shopping Cart
@@ -45,7 +46,7 @@ export const ShoppingCartViewDumb: React.FC<IShoppingCartViewProps> = (props: IS
         <div>
             
         </div>
-    </div>
+    </>
     );
 }
 

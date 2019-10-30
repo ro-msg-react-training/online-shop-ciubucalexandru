@@ -3,7 +3,7 @@ import { put, takeEvery, takeLatest } from '@redux-saga/core/effects';
 import { GetEditableProductRequestAction, getEditableProductSuccess, getEditableProductFail, 
     UpdateProductRequestAction, updateProductSuccess, updateProductFail, 
     setLoadingEditable } from '../actions/EditableProductActions';
-import { GET_EDITABLE_PRODUCT_REQUEST, UPDATE_PRODUCT_REQUEST } from '../util/ActionTypes';
+import { EditableProductActions } from '../util/ActionTypes';
 import { addItemToList } from '../actions/ProductListActions';
 import { updateProductCart } from '../actions/ShoppingCartActions';
 import { setProduct } from '../actions/ProductDetailsActions';
@@ -59,9 +59,9 @@ function* updateProduct(action: UpdateProductRequestAction) {
 }
 
 export function* fetchEdtiableProductWatcher() {
-    yield takeEvery(GET_EDITABLE_PRODUCT_REQUEST, fetchProduct);
+    yield takeEvery(EditableProductActions.GET_EDITABLE_PRODUCT_REQUEST, fetchProduct);
 }
 
 export function* updateProductWatcher() {
-    yield takeLatest(UPDATE_PRODUCT_REQUEST, updateProduct);
+    yield takeLatest(EditableProductActions.UPDATE_PRODUCT_REQUEST, updateProduct);
 }

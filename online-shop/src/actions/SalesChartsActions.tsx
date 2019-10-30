@@ -1,97 +1,112 @@
 import { Action } from "redux";
 import { SalesData, ProductDTOArray } from "../model/model";
-import { SET_LOADING_STATUS_CHARTS, GET_SALES_DATA_REQUEST, GET_SALES_DATA_SUCCESS, 
-    GET_SALES_DATA_FAIL, CHANGE_ACTIVE_TAB, GET_ALL_PRODUCTS_REQUEST, 
-    GET_ALL_PRODUCTS_SUCCESS, GET_ALL_PRODUCTS_FAIL } from "../util/ActionTypes";
+import { SalesChartsActions } from "../util/ActionTypes";
 
-export interface SetLoadingChartsAction extends Action<string> {
-    type: string;
-    loadingStatus: boolean;
+export class SetLoadingChartsAction {
+    readonly type = SalesChartsActions.SET_LOADING_STATUS_CHARTS;
+    public loadingStatus: boolean;
+
+    constructor(loadingStatus: boolean) {
+        this.loadingStatus = loadingStatus;
+    }
 }
 
-export interface GetSalesDataRequestAction extends Action<string> {
-    type: string;
+export class GetSalesDataRequestAction {
+    readonly type = SalesChartsActions.GET_SALES_DATA_REQUEST;
 }
 
-export interface GetSalesDataSuccessAction extends Action<string> {
-    type: string;
-    sales: SalesData[];
+export class GetSalesDataSuccessAction {
+    readonly type = SalesChartsActions.GET_SALES_DATA_SUCCESS;
+    public sales: SalesData[];
+
+    constructor(sales: SalesData[]) {
+        this.sales = sales;
+    }
 }
 
-export interface GetSalesDataFailAction extends Action<string> {
-    type: string;
+export class GetSalesDataFailAction {
+    readonly type = SalesChartsActions.GET_SALES_DATA_FAIL;
 }
 
-export interface ChangeActiveTabAction extends Action<string> {
-    type: string;
-    activeTab: string;
+export class ChangeActiveTabAction {
+    readonly type = SalesChartsActions.CHANGE_ACTIVE_TAB;
+    public activeTab: string;
+    
+    constructor(activeTab: string) {
+        this.activeTab = activeTab;
+    }
 }
 
-export interface GetAllProductsRequestAction extends Action<string> {
-    type: string;
+export class GetAllProductsRequestAction {
+    readonly type = SalesChartsActions.GET_ALL_PRODUCTS_REQUEST;
 }
 
-export interface GetAllProductsSuccessAction extends Action<string> {
-    type: string;
-    products: ProductDTOArray;
+export class GetAllProductsSuccessAction {
+    readonly type = SalesChartsActions.GET_ALL_PRODUCTS_SUCCESS;
+    public products: ProductDTOArray;
+
+    constructor(products: ProductDTOArray) {
+        this.products = products;
+    }
 }
 
-export interface GetAllProductsFailAction extends Action<string> {
-    type: string;
+export class GetAllProductsFailAction {
+    readonly type = SalesChartsActions.GET_ALL_PRODUCTS_FAIL;
 }
 
 export type SalesChartsAction = SetLoadingChartsAction | GetSalesDataRequestAction |
     GetSalesDataRequestAction | GetSalesDataFailAction | ChangeActiveTabAction | 
-    GetAllProductsRequestAction | GetAllProductsSuccessAction | GetAllProductsFailAction;
+    GetAllProductsRequestAction | GetAllProductsSuccessAction | GetAllProductsFailAction |
+    GetSalesDataSuccessAction;
 
 export const setLoadingCharts = (loadingStatus: boolean): SetLoadingChartsAction => {
     return {
-        type: SET_LOADING_STATUS_CHARTS,
+        type: SalesChartsActions.SET_LOADING_STATUS_CHARTS,
         loadingStatus: loadingStatus,
     };
 }
 
 export const getSalesRequest = (): GetSalesDataRequestAction => {
     return {
-        type: GET_SALES_DATA_REQUEST,
+        type: SalesChartsActions.GET_SALES_DATA_REQUEST,
     };
 }
 
 export const getSalesSuccess = (salesData: SalesData[]): GetSalesDataSuccessAction => {
     return {
-        type: GET_SALES_DATA_SUCCESS,
+        type: SalesChartsActions.GET_SALES_DATA_SUCCESS,
         sales: salesData,
     };
 }
 
 export const getSalesFail = (): GetSalesDataFailAction => {
     return {
-        type: GET_SALES_DATA_FAIL,
+        type: SalesChartsActions.GET_SALES_DATA_FAIL,
     };
 }
 
 export const changeActiveTab = (newActiveTab: string): ChangeActiveTabAction => {
     return {
-        type: CHANGE_ACTIVE_TAB,
+        type: SalesChartsActions.CHANGE_ACTIVE_TAB,
         activeTab: newActiveTab,
     };
 }
 
 export const getAllProductsRequest = (): GetAllProductsRequestAction => {
     return {
-        type: GET_ALL_PRODUCTS_REQUEST,
+        type: SalesChartsActions.GET_ALL_PRODUCTS_REQUEST,
     };
 }
 
 export const getAllProductsSuccess = (products: ProductDTOArray): GetAllProductsSuccessAction => {
     return {
-        type: GET_ALL_PRODUCTS_SUCCESS,
+        type: SalesChartsActions.GET_ALL_PRODUCTS_SUCCESS,
         products: products,
     };
 }
 
 export const getAllProductsFail = (): GetAllProductsFailAction => {
     return {
-        type: GET_ALL_PRODUCTS_FAIL,
+        type: SalesChartsActions.GET_ALL_PRODUCTS_FAIL,
     }
 }

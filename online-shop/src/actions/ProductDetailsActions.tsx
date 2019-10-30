@@ -1,62 +1,73 @@
 import { Product } from '../model/model';
-import { SET_PRODUCT, SET_LOADING_STATUS_DETAILS, OPEN_MODAL_DETAILS,
-        CLOSE_MODAL_DETAILS, 
-        GET_PRODUCT_DETAILS_REQUEST,
-        GET_PRODUCT_DETAILS_SUCCESS,
-        GET_PRODUCT_DETAILS_FAIL,
-        DELETE_PRODUCT_REQUEST,
-        DELETE_PRODUCT_SUCCESS,
-        DELETE_PRODUCT_FAIL,
-        CLEAR_DELETE_STATUS} from '../util/ActionTypes';
-import { Action } from 'redux';
+import { ProductDetailsActions } from '../util/ActionTypes';
 
-export interface SetProductAction extends Action<string> {
-    type: string;
-    product: Product;
+export class SetProductAction {
+    readonly type = ProductDetailsActions.SET_PRODUCT;
+    public product: Product;
+
+    constructor(product: Product) {
+        this.product = product;
+    }
 }
 
-export interface SetLoadingDetailsAction extends Action<string> {
-    type: string;
-    loadingStatus: boolean;
+export class SetLoadingDetailsAction {
+    readonly type = ProductDetailsActions.SET_LOADING_STATUS_DETAILS;
+    public loadingStatus: boolean;
+
+    constructor(loadingStatus: boolean) {
+        this.loadingStatus = loadingStatus;
+    }
 }
 
-export interface OpenModalDetailsAction extends Action<string> {
-    type: string;
+export class OpenModalDetailsAction {
+    readonly type = ProductDetailsActions.OPEN_MODAL_DETAILS;
 }
 
-export interface CloseModalDetailsAction extends Action<string> {
-    type: string;
+export class CloseModalDetailsAction {
+    readonly type = ProductDetailsActions.CLOSE_MODAL_DETAILS;
 }
 
-export interface GetProductRequestAction extends Action<string> {
-    type: string;
-    productId: number;
+export class GetProductRequestAction {
+    readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_REQUEST;
+    public productId: number;
+
+    constructor(productId: number) {
+        this.productId = productId;
+    }
 }
 
-export interface GetProductSuccessAction extends Action<string> {
-    type: string;
-    product: Product;
+export class GetProductSuccessAction {
+    readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_SUCCESS;
+    public product: Product;
+
+    constructor(product: Product) {
+        this.product = product;
+    }
 }
 
-export interface GetProductFailAction extends Action<string> {
-    type: string;
+export class GetProductFailAction {
+    readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_FAIL;
 }
 
-export interface DeleteProductRequestAction extends Action<string> {
-    type: string;
-    productId: number;
+export class DeleteProductRequestAction {
+    readonly type = ProductDetailsActions.DELETE_PRODUCT_REQUEST;
+    public productId: number;
+
+    constructor(productId: number) {
+        this.productId = productId;
+    }
 }
 
-export interface DeleteProductSuccessAction extends Action<string> {
-    type: string;
+export class DeleteProductSuccessAction {
+    readonly type = ProductDetailsActions.DELETE_PRODUCT_SUCCESS;
 }
 
-export interface DeleteProductFailAction extends Action<string> {
-    type: string;
+export class DeleteProductFailAction {
+    readonly type = ProductDetailsActions.DELETE_PRODUCT_FAIL;
 }
 
-export interface ClearDeleteStatusAction extends Action<string> {
-    type: string;
+export class ClearDeleteStatusAction {
+    readonly type = ProductDetailsActions.CLEAR_DELETE_STATUS;
 }
 
 export type ProductDetailsAction = SetProductAction | SetLoadingDetailsAction | 
@@ -66,70 +77,70 @@ export type ProductDetailsAction = SetProductAction | SetLoadingDetailsAction |
 
 export const setProduct = (product: Product): SetProductAction => {
     return { 
-        type: SET_PRODUCT,
+        type: ProductDetailsActions.SET_PRODUCT,
         product: product, 
     };
 }
 
 export const setLoadingDetails = (loadingStatus: boolean): SetLoadingDetailsAction => {
     return { 
-        type: SET_LOADING_STATUS_DETAILS,
+        type: ProductDetailsActions.SET_LOADING_STATUS_DETAILS,
         loadingStatus: loadingStatus,
     };
 }
 
 export const openModalDetails = (): OpenModalDetailsAction => {
     return { 
-        type: OPEN_MODAL_DETAILS,
+        type: ProductDetailsActions.OPEN_MODAL_DETAILS,
     };
 }
 
 export const closeModalDetails = (): CloseModalDetailsAction => {
     return {
-        type: CLOSE_MODAL_DETAILS,
+        type: ProductDetailsActions.CLOSE_MODAL_DETAILS,
     };
 }
 
 export const getProductRequest = (productId: number): GetProductRequestAction => {
     return {
-        type: GET_PRODUCT_DETAILS_REQUEST,
+        type: ProductDetailsActions.GET_PRODUCT_DETAILS_REQUEST,
         productId: productId,
     };
 }
 
 export const getProductSuccess = (product: Product): GetProductSuccessAction => {
     return {
-        type: GET_PRODUCT_DETAILS_SUCCESS,
+        type: ProductDetailsActions.GET_PRODUCT_DETAILS_SUCCESS,
         product: product,
     };
 }
 
 export const getProductFail = (): GetProductFailAction => {
     return {
-        type: GET_PRODUCT_DETAILS_FAIL,
+        type: ProductDetailsActions.GET_PRODUCT_DETAILS_FAIL,
     };
 }
 
 export const deleteProductRequest = (productId: number): DeleteProductRequestAction => {
     return {
-        type: DELETE_PRODUCT_REQUEST,
+        type: ProductDetailsActions.DELETE_PRODUCT_REQUEST,
         productId: productId,
     };
 }
 
 export const deleteProductSuccess = (): DeleteProductSuccessAction => {
     return {
-        type: DELETE_PRODUCT_SUCCESS,
+        type: ProductDetailsActions.DELETE_PRODUCT_SUCCESS,
     };
 }
 export const deleteProductFail = (): DeleteProductFailAction => {
     return {
-        type: DELETE_PRODUCT_FAIL,
+        type: ProductDetailsActions.DELETE_PRODUCT_FAIL,
     };
 }
 
 export const clearDeleteStatus = (): ClearDeleteStatusAction => {
     return {
-        type: CLEAR_DELETE_STATUS,
+        type: ProductDetailsActions.CLEAR_DELETE_STATUS,
     };
 }

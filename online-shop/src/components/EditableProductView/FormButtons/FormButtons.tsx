@@ -16,7 +16,7 @@ export const FormButtons: React.FC<IFormButtonsProps> = (props: IFormButtonsProp
                 ' ' : 'Please don\'t leave any empty fields and make the price higher than 0!';
 
     return (
-        <div>
+        <>
             <div className="field is-grouped is-grouped-centered">
                 <p className="control formStatusColor">
                     {formStatusText}
@@ -36,6 +36,6 @@ export const FormButtons: React.FC<IFormButtonsProps> = (props: IFormButtonsProp
                     </Link>
                 </p>
             </div>
-        </div>
+        </>
     )
 }

@@ -7,10 +7,15 @@ interface IRoundedButton {
     onClickEvent: (index: number) => void;
 }
 
-const RoundedButton: React.FC<IRoundedButton> = (props: IRoundedButton) => {
+const RoundedButton: React.FC<IRoundedButton> = ({
+    currentIndex,
+    imageIndex,
+    text,
+    onClickEvent,
+}) => {
 
     let classNameButton = "button is-rounded";
-    if (props.currentIndex === props.imageIndex) {
+    if (currentIndex === imageIndex) {
         classNameButton += " is-info";
     } else {
         classNameButton += " is-primary";
@@ -19,8 +24,8 @@ const RoundedButton: React.FC<IRoundedButton> = (props: IRoundedButton) => {
     return (
         <p className="control">
             <button className={classNameButton}
-                onClick={() => props.onClickEvent(props.imageIndex)} >
-                {props.text}
+                onClick={() => onClickEvent(imageIndex)} >
+                {text}
             </button>
         </p>
     );

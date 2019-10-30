@@ -1,4 +1,4 @@
-import { CREATE_ORDER_REQUEST } from "../util/ActionTypes";
+import { ShoppingCartActions } from "../util/ActionTypes";
 import { takeEvery, put } from "@redux-saga/core/effects";
 import { CreateOrderRequestAction, clearShoppingCart, createOrderSuccess, 
     createOrderFail } from "../actions/ShoppingCartActions";
@@ -27,5 +27,5 @@ function* createOrder(action: CreateOrderRequestAction) {
 }
 
 export function* createOrderWatcher() {
-    yield takeEvery(CREATE_ORDER_REQUEST, createOrder);
+    yield takeEvery(ShoppingCartActions.CREATE_ORDER_REQUEST, createOrder);
 }

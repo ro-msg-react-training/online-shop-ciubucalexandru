@@ -1,13 +1,5 @@
 import { Product } from '../model/model';
-import { SET_PRODUCT, SET_LOADING_STATUS_DETAILS, OPEN_MODAL_DETAILS, 
-    CLOSE_MODAL_DETAILS, 
-    GET_PRODUCT_DETAILS_REQUEST,
-    GET_PRODUCT_DETAILS_SUCCESS,
-    GET_PRODUCT_DETAILS_FAIL,
-    DELETE_PRODUCT_REQUEST,
-    DELETE_PRODUCT_SUCCESS,
-    DELETE_PRODUCT_FAIL,
-    CLEAR_DELETE_STATUS} from '../util/ActionTypes';
+import { ProductDetailsActions } from '../util/ActionTypes';
 import { ProductDetailsAction, SetProductAction, SetLoadingDetailsAction, 
     GetProductSuccessAction } from '../actions/ProductDetailsActions';
 import { DEFAULT_ID, DEFAULT_NAME, DEFAULT_CATEGORY, DEFAULT_PRICE, 
@@ -36,27 +28,25 @@ export const ProductDetailsReducer = (
         ): ProductDetailsState => {
             
     switch (action.type) {
-        case SET_PRODUCT: {
-            const actualAction: SetProductAction = action as SetProductAction;
+        case ProductDetailsActions.SET_PRODUCT: {
             return {
-                product: actualAction.product,
+                product: action.product,
                 isLoading: state.isLoading,
                 showModal: state.showModal,
                 hasFetchError: state.hasFetchError,
                 deleteStatus: state.deleteStatus,
             }
         }
-        case SET_LOADING_STATUS_DETAILS: {
-            const actualAction: SetLoadingDetailsAction = action as SetLoadingDetailsAction;
+        case ProductDetailsActions.SET_LOADING_STATUS_DETAILS: {
             return {
                 product: state.product,
-                isLoading: actualAction.loadingStatus,
+                isLoading: action.loadingStatus,
                 showModal: state.showModal,
                 hasFetchError: state.hasFetchError,
                 deleteStatus: state.deleteStatus,
             }
         }
-        case OPEN_MODAL_DETAILS: {
+        case ProductDetailsActions.OPEN_MODAL_DETAILS: {
             const newState = true;
             return {
                 product: state.product,
@@ -66,7 +56,7 @@ export const ProductDetailsReducer = (
                 deleteStatus: state.deleteStatus,
             }
         }
-        case CLOSE_MODAL_DETAILS: {
+        case ProductDetailsActions.CLOSE_MODAL_DETAILS: {
             const newState = false;
             return {
                 product: state.product,
@@ -76,20 +66,19 @@ export const ProductDetailsReducer = (
                 deleteStatus: state.deleteStatus,
             }
         }
-        case GET_PRODUCT_DETAILS_REQUEST: {
+        case ProductDetailsActions.GET_PRODUCT_DETAILS_REQUEST: {
             return state;
         }
-        case GET_PRODUCT_DETAILS_SUCCESS: {
-            const actualAction: GetProductSuccessAction = action as GetProductSuccessAction;
+        case ProductDetailsActions.GET_PRODUCT_DETAILS_SUCCESS: {
             return {
-                product: actualAction.product,
+                product: action.product,
                 isLoading: false,
                 showModal: state.showModal,
                 hasFetchError: false,
                 deleteStatus: state.deleteStatus,
             }
         }
-        case GET_PRODUCT_DETAILS_FAIL: {
+        case ProductDetailsActions.GET_PRODUCT_DETAILS_FAIL: {
             return {
                 product: state.product,
                 isLoading: false,
@@ -98,10 +87,10 @@ export const ProductDetailsReducer = (
                 deleteStatus: state.deleteStatus,
             }
         }
-        case DELETE_PRODUCT_REQUEST: {
+        case ProductDetailsActions.DELETE_PRODUCT_REQUEST: {
             return state;
         }
-        case DELETE_PRODUCT_SUCCESS: {
+        case ProductDetailsActions.DELETE_PRODUCT_SUCCESS: {
             return {
                 product: state.product,
                 isLoading: false,
@@ -110,7 +99,7 @@ export const ProductDetailsReducer = (
                 deleteStatus: STATUS_SUCCESS,
             }
         }
-        case DELETE_PRODUCT_FAIL: {
+        case ProductDetailsActions.DELETE_PRODUCT_FAIL: {
             return {
                 product: state.product,
                 isLoading: false,
@@ -119,7 +108,7 @@ export const ProductDetailsReducer = (
                 deleteStatus: STATUS_FAIL,
             }
         }
-        case CLEAR_DELETE_STATUS: {
+        case ProductDetailsActions.CLEAR_DELETE_STATUS: {
             return {
                 product: state.product,
                 isLoading: state.isLoading,

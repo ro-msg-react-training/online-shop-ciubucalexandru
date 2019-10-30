@@ -15,7 +15,7 @@ export const ProductListViewDumb: React.FC<ListViewProps> = (props: ListViewProp
     }
 
     return (
-        <div>
+        <>
             <div className="flexContainer">
                 <h1 className="title is-1 h1List">Products</h1>
                 <Link to="/shopping-cart" 
@@ -29,7 +29,7 @@ export const ProductListViewDumb: React.FC<ListViewProps> = (props: ListViewProp
                 </Link>
             </div>
             <ProductList products={props.productDTOArray.products}/>
-        </div>
+        </>
     );
 }
 

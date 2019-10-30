@@ -6,9 +6,11 @@ import { EditableProductState, EditableProductReducer } from '../reducers/Editab
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from '../sagas/root';
 import { SalesChartsState, SalesChartsReducer } from '../reducers/SalesChartsReducers';
+import { LoginReducer, LoginState } from '../reducers/LoginReducer';
 
 const rootReducer = combineReducers({
     editableProduct: EditableProductReducer,
+    login: LoginReducer,
     productDetails: ProductDetailsReducer,
     productsList: ProductsListReducer,
     salesCharts: SalesChartsReducer,
@@ -26,6 +28,7 @@ sagaMiddleware.run(rootSaga);
 
 export interface AppState {
     editableProduct: EditableProductState;
+    login: LoginState;
     productDetails: ProductDetailsState;
     productsList: ProductsListState;
     salesCharts: SalesChartsState;

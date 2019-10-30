@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './CarouselView.scss';
-import RoundedButton from './RoundedButton/RoundedButton';
-import { ZERO, CAROUSEL_INTERVAL_CHANGE, INDEX_NOT_NEEDED } from '../../util/util';
+import RoundedButton from '../RoundedButton/RoundedButton';
+import { ZERO, CAROUSEL_INTERVAL_CHANGE } from '../../../util/util';
+import CarouselViewDumb from '../dumb/CarouselViewDumb';
 
-const CarouselView: React.FC = () => {
+const CarouselViewSmart: React.FC = () => {
 
     const images: string[] = [
         "https://image.ceneostatic.pl/data/products/55424289/i-apple-iphone-x-64gb-srebrny.jpg",
@@ -38,22 +38,13 @@ const CarouselView: React.FC = () => {
     });
 
     return (
-        <div className="rowFlex">
-            <RoundedButton imageIndex={ZERO} currentIndex={INDEX_NOT_NEEDED}
-                onClickEvent={() => handlePreviousPhoto()}  text={"Prev"}/>
-            <div className="centeredFlex">
-                <div className="box imageContainer">
-                    <figure className="image">
-                        <img src={images[currentIndex]} alt={"Image " + currentIndex}/>
-                    </figure>
-                </div>
-                <div className="field is-grouped is-grouped-centered">
-                    {imageButtons}
-                </div>
-            </div>
-            <RoundedButton imageIndex={ZERO} currentIndex={INDEX_NOT_NEEDED}
-                onClickEvent={() => handleNextPhoto()}  text={"Next"}/>
-        </div>
+        <CarouselViewDumb
+            currentIndex={currentIndex}
+            images={images}
+            imageButtons={imageButtons}
+            handleNextPhoto={() => handleNextPhoto()}
+            handlePreviousPhoto={() => handlePreviousPhoto()}
+        />
     );
 }
 
@@ -65,4 +56,4 @@ const initializeImageIndexes = (imagesSize: number) => {
     return indexesArray;
 }
 
-export default CarouselView;
+export default CarouselViewSmart;

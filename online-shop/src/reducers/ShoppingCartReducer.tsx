@@ -1,7 +1,5 @@
 import { ProductArray, Product } from '../model/model';
-import { DELETE_PRODUCT_FROM_CART, ADD_PRODUCT_TO_CART, MODIFY_PRODUCT_QUANTITY, 
-    CLEAR_CART, SET_LOADING_STATUS_CART, UPDATE_PRODUCT_CART, CREATE_ORDER_REQUEST, 
-    CREATE_ORDER_SUCCESS, CREATE_ORDER_FAIL, CLEAR_CREATE_ORDER_STATUTS } from '../util/ActionTypes';
+import { ShoppingCartActions } from '../util/ActionTypes';
 import { ShoppingCartAction, AddProductToCartAction, DeleteProductFromCartAction, 
     ModifyProductQuantityAction, SetLoadingCartAction, 
     UpdateProductCartAction,
@@ -26,27 +24,24 @@ export const ShoppingCartReducer = (
         ): ShoppingCartState => {
 
     switch(action.type) {
-        case ADD_PRODUCT_TO_CART: {
-            const actualAction: AddProductToCartAction = action as AddProductToCartAction;
-            const newProductArray: ProductArray = addProductToCart(state.productArray, actualAction.product);
+        case ShoppingCartActions.ADD_PRODUCT_TO_CART: {
+            const newProductArray: ProductArray = addProductToCart(state.productArray, action.product);
             return ({
                 productArray: newProductArray,
                 isLoading: state.isLoading,
                 createOrderStatus: state.createOrderStatus,
             });
         }
-        case DELETE_PRODUCT_FROM_CART: {
-            const actualAction: DeleteProductFromCartAction = action as DeleteProductFromCartAction;
+        case ShoppingCartActions.DELETE_PRODUCT_FROM_CART: {
             return ({
-                productArray: deleteProduct(state.productArray, actualAction.productId),
+                productArray: deleteProduct(state.productArray, action.productId),
                 isLoading: state.isLoading,
                 createOrderStatus: state.createOrderStatus,
             });
         }
-        case MODIFY_PRODUCT_QUANTITY: {
-            const actualAction: ModifyProductQuantityAction = action as ModifyProductQuantityAction;
-            
-            if (actualAction.newQuantity === actualAction.oldQuantity) {
+        case ShoppingCartActions.MODIFY_PRODUCT_QUANTITY: {
+        
+            if (action.newQuantity === action.oldQuantity) {
                 return ({
                     productArray: state.productArray,
                     isLoading: state.isLoading,
@@ -54,33 +49,31 @@ export const ShoppingCartReducer = (
                 });
             } else {
                 return ({
-                    productArray: updateQuantity(state.productArray, actualAction.product, actualAction.newQuantity),
+                    productArray: updateQuantity(state.productArray, action.product, action.newQuantity),
                     isLoading: state.isLoading,
                     createOrderStatus: state.createOrderStatus,
                 });
             }    
         }
-        case SET_LOADING_STATUS_CART: {
-            const actualAction: SetLoadingCartAction = action as SetLoadingCartAction;
+        case ShoppingCartActions.SET_LOADING_STATUS_CART: {
             return ({
                 productArray: state.productArray,
-                isLoading: actualAction.loadingStatus,
+                isLoading: action.loadingStatus,
                 createOrderStatus: state.createOrderStatus,
             });
         }
-        case CLEAR_CART: {
+        case ShoppingCartActions.CLEAR_CART: {
             return ({
                 productArray: new ProductArray([]),
                 isLoading: state.isLoading,
                 createOrderStatus: state.createOrderStatus,
             });
         }
-        case UPDATE_PRODUCT_CART: {
-            const actualAction: UpdateProductCartAction = action as UpdateProductCartAction;
+        case ShoppingCartActions.UPDATE_PRODUCT_CART: {
 
-            if (containsProduct(state.productArray, actualAction.product)) {
+            if (containsProduct(state.productArray, action.product)) {
                 return ({
-                    productArray: updateProduct(state.productArray, actualAction.product),
+                    productArray: updateProduct(state.productArray, action.product),
                     isLoading: state.isLoading,
                     createOrderStatus: state.createOrderStatus,
                 });
@@ -92,24 +85,24 @@ export const ShoppingCartReducer = (
                 });
             }
         }
-        case CREATE_ORDER_REQUEST: {
+        case ShoppingCartActions.CREATE_ORDER_REQUEST: {
             return state;
         }
-        case CREATE_ORDER_SUCCESS: {
+        case ShoppingCartActions.CREATE_ORDER_SUCCESS: {
             return ({
                 productArray: state.productArray,
                 isLoading: state.isLoading,
                 createOrderStatus: STATUS_SUCCESS,
             });
         }
-        case CREATE_ORDER_FAIL: {
+        case ShoppingCartActions.CREATE_ORDER_FAIL: {
             return ({
                 productArray: state.productArray,
                 isLoading: state.isLoading,
                 createOrderStatus: STATUS_FAIL,
             });
         }
-        case CLEAR_CREATE_ORDER_STATUTS: {
+        case ShoppingCartActions.CLEAR_CREATE_ORDER_STATUTS: {
             return ({
                 productArray: state.productArray,
                 isLoading: state.isLoading,

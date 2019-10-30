@@ -98,3 +98,14 @@ export interface ChartTab {
     name: string;
     active: boolean;
 }
+
+export interface LoginDTO {
+    username: string;
+    password: string;
+}
+
+export interface LoggedUser {
+    username: string;
+    fullName: string;
+    roles: string[];
+}

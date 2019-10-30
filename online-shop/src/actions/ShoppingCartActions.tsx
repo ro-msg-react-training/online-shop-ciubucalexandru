@@ -1,72 +1,96 @@
 import { Product, OrderDTO } from "../model/model";
-import { ADD_PRODUCT_TO_CART, DELETE_PRODUCT_FROM_CART, MODIFY_PRODUCT_QUANTITY, 
-    CLEAR_CART, SET_LOADING_STATUS_CART, UPDATE_PRODUCT_CART, CREATE_ORDER_REQUEST, 
-    CREATE_ORDER_SUCCESS, CREATE_ORDER_FAIL, CLEAR_CREATE_ORDER_STATUTS } from "../util/ActionTypes";
+import { ShoppingCartActions } from "../util/ActionTypes";
 import { Action } from "redux";
 
-export interface DeleteProductFromCartAction extends Action<string> {
-    type: string;
+export class DeleteProductFromCartAction {
+    readonly type = ShoppingCartActions.DELETE_PRODUCT_FROM_CART;
     productId: number;
+
+    constructor(productId: number) {
+        this.productId = productId;
+    }
 }
 
-export interface AddProductToCartAction extends Action<string> {
-    type: string;
+export class AddProductToCartAction {
+    readonly type = ShoppingCartActions.ADD_PRODUCT_TO_CART;
     product: Product;
+
+    constructor(product: Product) {
+        this.product = product;
+    }
 }
 
-export interface ModifyProductQuantityAction extends Action<string> {
-    type: string;
+export class ModifyProductQuantityAction {
+    readonly type = ShoppingCartActions.MODIFY_PRODUCT_QUANTITY;
     product: Product;
     newQuantity: number;
     oldQuantity: number;
+
+    constructor(product: Product, newQuantity: number, oldQuantity: number) {
+        this.product = product;
+        this.newQuantity = newQuantity;
+        this.oldQuantity = oldQuantity;
+    }
 }
 
-export interface ClearCartAction extends Action<string> {
-    type: string;
+export class ClearCartAction {
+    readonly type = ShoppingCartActions.CLEAR_CART;
 }
 
-export interface SetLoadingCartAction extends Action<string> {
-    type: string;
+export class SetLoadingCartAction {
+    readonly type = ShoppingCartActions.SET_LOADING_STATUS_CART;
     loadingStatus: boolean;
+
+    constructor(loadingStatus: boolean) {
+        this.loadingStatus = loadingStatus;
+    }
 }
 
-export interface UpdateProductCartAction extends Action<string> {
-    type: string;
+export class UpdateProductCartAction {
+    readonly type = ShoppingCartActions.UPDATE_PRODUCT_CART;
     product: Product;
+
+    constructor(product: Product) {
+        this.product = product;
+    }
 }
 
-export interface CreateOrderRequestAction extends Action<string> {
-    type: string;
+export class CreateOrderRequestAction {
+    readonly type = ShoppingCartActions.CREATE_ORDER_REQUEST;
     orderDTO: OrderDTO;
+
+    constructor(orderDTO: OrderDTO) {
+        this.orderDTO = orderDTO;
+    }
 }
 
-export interface CreateOrderSuccessAction extends Action<string> {
-    type: string;
+export class CreateOrderSuccessAction {
+    readonly type = ShoppingCartActions.CREATE_ORDER_SUCCESS;
 }
 
-export interface CreateOrderFailAction extends Action<string> {
-    type: string;
+export class CreateOrderFailAction {
+    readonly type = ShoppingCartActions.CREATE_ORDER_FAIL;
 }
 
-export interface ClearCreateOrderStatusAction extends Action<string> {
-    type: string;
+export class ClearCreateOrderStatusAction {
+    readonly type = ShoppingCartActions.CLEAR_CREATE_ORDER_STATUTS;
 }
 
 export type ShoppingCartAction = AddProductToCartAction | DeleteProductFromCartAction | 
     ModifyProductQuantityAction | SetLoadingCartAction | UpdateProductCartAction |
     CreateOrderRequestAction | CreateOrderSuccessAction | CreateOrderFailAction |
-    ClearCreateOrderStatusAction;
+    ClearCreateOrderStatusAction | ClearCartAction;
 
 export const addProductToCart = (product: Product): AddProductToCartAction => {
     return { 
-        type: ADD_PRODUCT_TO_CART, 
+        type: ShoppingCartActions.ADD_PRODUCT_TO_CART, 
         product: product,
     };
 }
 
 export const deleteProductShoppingCart = (productId: number): DeleteProductFromCartAction => {
     return { 
-        type: DELETE_PRODUCT_FROM_CART, 
+        type: ShoppingCartActions.DELETE_PRODUCT_FROM_CART, 
         productId: productId,
     };
 }
@@ -78,7 +102,7 @@ export const modifyProductQuantiy = (
     ): ModifyProductQuantityAction => {
         
     return { 
-        type: MODIFY_PRODUCT_QUANTITY, 
+        type: ShoppingCartActions.MODIFY_PRODUCT_QUANTITY, 
         product: product, 
         newQuantity: newQuantity, 
         oldQuantity: oldQuantity,
@@ -87,45 +111,45 @@ export const modifyProductQuantiy = (
 
 export const clearShoppingCart = (): ClearCartAction => {
     return { 
-        type: CLEAR_CART,
+        type: ShoppingCartActions.CLEAR_CART,
     };
 }
 
 export const setLoadingCart = (loadingStatus: boolean): SetLoadingCartAction => {
     return { 
-        type: SET_LOADING_STATUS_CART, 
+        type: ShoppingCartActions.SET_LOADING_STATUS_CART, 
         loadingStatus: loadingStatus,
     };
 }
 
 export const updateProductCart = (product: Product): UpdateProductCartAction => {
     return { 
-        type: UPDATE_PRODUCT_CART,
+        type: ShoppingCartActions.UPDATE_PRODUCT_CART,
         product: product,
     };
 }
 
 export const createOrderRequest = (orderDTO: OrderDTO): CreateOrderRequestAction => {
     return {
-        type: CREATE_ORDER_REQUEST,
+        type: ShoppingCartActions.CREATE_ORDER_REQUEST,
         orderDTO: orderDTO,
     };
 }
 
 export const createOrderSuccess = (): CreateOrderSuccessAction => {
     return {
-        type: CREATE_ORDER_SUCCESS,
+        type: ShoppingCartActions.CREATE_ORDER_SUCCESS,
     };
 }
 
 export const createOrderFail = (): CreateOrderFailAction => {
     return {
-        type: CREATE_ORDER_FAIL,
+        type: ShoppingCartActions.CREATE_ORDER_FAIL,
     };
 }
 
 export const clearCreateOrderStatus = (): ClearCreateOrderStatusAction => {
     return {
-        type: CLEAR_CREATE_ORDER_STATUTS,
+        type: ShoppingCartActions.CLEAR_CREATE_ORDER_STATUTS,
     };
 }
