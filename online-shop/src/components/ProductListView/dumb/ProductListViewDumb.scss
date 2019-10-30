@@ -1,0 +1,23 @@
+$margin-top: 7%;
+
+.flexContainer {
+    display: flex;
+}
+
+.h1List {
+    margin-left: 22%;
+    margin-top: $margin-top;
+}
+
+.listOperationsButton {
+    margin-top: $margin-top;
+}
+
+.shoppingCartButton {
+    margin-left: 27%;
+}
+
+.addButton {
+    margin-left: 2%;
+    margin-right: 15%;
+}

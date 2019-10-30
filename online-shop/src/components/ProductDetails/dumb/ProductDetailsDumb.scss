@@ -1,0 +1,43 @@
+$fifteen-percent: 15%;
+$margin-top: 3%;
+
+@import '../../../../node_modules/bulma/bulma.sass';
+
+.titleDetails {
+    margin-top: $margin-top;
+    margin-left: 17%;
+}
+
+.flexContainer {
+    display: flex;
+}
+
+.productDetails {
+    margin-left: $fifteen-percent;
+    border: solid;
+    width: 70%;
+    overflow: auto;
+}
+
+.productImage {
+    width: 20%;
+}
+
+.productOperationsButton {
+    margin-top: $margin-top + 2;
+    display: flex;
+    width: 90pt;
+}
+
+.editButtonDetails {
+    margin-left: 30%;
+}
+
+.addButtonDetails {
+    margin-left: 3%;
+}
+
+.deleteButtonDetails {
+    margin-left: 3%;
+    margin-right: $fifteen-percent;
+}
