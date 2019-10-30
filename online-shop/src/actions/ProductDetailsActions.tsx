@@ -2,7 +2,7 @@ import { Product } from '../model/model';
 import { ProductDetailsActions } from '../util/ActionTypes';
 
 export class SetProductAction {
-    readonly type = ProductDetailsActions.SET_PRODUCT;
+    public readonly type = ProductDetailsActions.SET_PRODUCT;
     public product: Product;
 
     constructor(product: Product) {
@@ -11,7 +11,7 @@ export class SetProductAction {
 }
 
 export class SetLoadingDetailsAction {
-    readonly type = ProductDetailsActions.SET_LOADING_STATUS_DETAILS;
+    public readonly type = ProductDetailsActions.SET_LOADING_STATUS_DETAILS;
     public loadingStatus: boolean;
 
     constructor(loadingStatus: boolean) {
@@ -20,15 +20,15 @@ export class SetLoadingDetailsAction {
 }
 
 export class OpenModalDetailsAction {
-    readonly type = ProductDetailsActions.OPEN_MODAL_DETAILS;
+    public readonly type = ProductDetailsActions.OPEN_MODAL_DETAILS;
 }
 
 export class CloseModalDetailsAction {
-    readonly type = ProductDetailsActions.CLOSE_MODAL_DETAILS;
+    public readonly type = ProductDetailsActions.CLOSE_MODAL_DETAILS;
 }
 
 export class GetProductRequestAction {
-    readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_REQUEST;
+    public readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_REQUEST;
     public productId: number;
 
     constructor(productId: number) {
@@ -37,7 +37,7 @@ export class GetProductRequestAction {
 }
 
 export class GetProductSuccessAction {
-    readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_SUCCESS;
+    public readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_SUCCESS;
     public product: Product;
 
     constructor(product: Product) {
@@ -46,11 +46,11 @@ export class GetProductSuccessAction {
 }
 
 export class GetProductFailAction {
-    readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_FAIL;
+    public readonly type = ProductDetailsActions.GET_PRODUCT_DETAILS_FAIL;
 }
 
 export class DeleteProductRequestAction {
-    readonly type = ProductDetailsActions.DELETE_PRODUCT_REQUEST;
+    public readonly type = ProductDetailsActions.DELETE_PRODUCT_REQUEST;
     public productId: number;
 
     constructor(productId: number) {
@@ -59,15 +59,15 @@ export class DeleteProductRequestAction {
 }
 
 export class DeleteProductSuccessAction {
-    readonly type = ProductDetailsActions.DELETE_PRODUCT_SUCCESS;
+    public readonly type = ProductDetailsActions.DELETE_PRODUCT_SUCCESS;
 }
 
 export class DeleteProductFailAction {
-    readonly type = ProductDetailsActions.DELETE_PRODUCT_FAIL;
+    public readonly type = ProductDetailsActions.DELETE_PRODUCT_FAIL;
 }
 
 export class ClearDeleteStatusAction {
-    readonly type = ProductDetailsActions.CLEAR_DELETE_STATUS;
+    public readonly type = ProductDetailsActions.CLEAR_DELETE_STATUS;
 }
 
 export type ProductDetailsAction = SetProductAction | SetLoadingDetailsAction | 

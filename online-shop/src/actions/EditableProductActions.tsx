@@ -2,7 +2,7 @@ import { Product } from '../model/model';
 import { EditableProductActions } from '../util/ActionTypes';
 
 export class SetEditableProductAction {
-    readonly type = EditableProductActions.SET_EDITABLE_PRODUCT;
+    public readonly type = EditableProductActions.SET_EDITABLE_PRODUCT;
     public product: Product;
 
     constructor(product: Product) {
@@ -11,7 +11,7 @@ export class SetEditableProductAction {
 }
 
 export class ChangeProductNameAction {
-    readonly type = EditableProductActions.CHANGE_PRODUCT_NAME;
+    public readonly type = EditableProductActions.CHANGE_PRODUCT_NAME;
     public name: string;
 
     constructor(name: string) {
@@ -20,7 +20,7 @@ export class ChangeProductNameAction {
 }
 
 export class ChangeProductCategoryAction {
-    readonly type = EditableProductActions.CHANGE_PRODUCT_CATEGORY;
+    public readonly type = EditableProductActions.CHANGE_PRODUCT_CATEGORY;
     public category: string;
 
     constructor(category: string) {
@@ -29,7 +29,7 @@ export class ChangeProductCategoryAction {
 }
 
 export class ChangeProductPriceAction {
-    readonly type = EditableProductActions.CHANGE_PRODUCT_PRICE;
+    public readonly type = EditableProductActions.CHANGE_PRODUCT_PRICE;
     public price: number;
 
     constructor(price: number) {
@@ -38,7 +38,7 @@ export class ChangeProductPriceAction {
 }
 
 export class ChangeProductImageAction {
-    readonly type = EditableProductActions.CHANGE_PRODUCT_IMAGE;
+    public readonly type = EditableProductActions.CHANGE_PRODUCT_IMAGE;
     public image: string;
 
     constructor(image: string) {
@@ -47,7 +47,7 @@ export class ChangeProductImageAction {
 }
 
 export class ChangeProductDescriptionAction {
-    readonly type = EditableProductActions.CHANGE_PRODUCT_DESCRIPTION;
+    public readonly type = EditableProductActions.CHANGE_PRODUCT_DESCRIPTION;
     public description: string;
 
     constructor(description: string) {
@@ -56,7 +56,7 @@ export class ChangeProductDescriptionAction {
 }
 
 export class SetLoadingStatusEditableAction {
-    readonly type = EditableProductActions.SET_LOADING_STATUS_EDITABLE;
+    public readonly type = EditableProductActions.SET_LOADING_STATUS_EDITABLE;
     public loadingStatus: boolean;
 
     constructor(loadingStatus: boolean) {
@@ -65,7 +65,7 @@ export class SetLoadingStatusEditableAction {
 }
 
 export class GetEditableProductRequestAction {
-    readonly type = EditableProductActions.GET_EDITABLE_PRODUCT_REQUEST;
+    public readonly type = EditableProductActions.GET_EDITABLE_PRODUCT_REQUEST;
     public productId: number;
 
     constructor(productId: number) {
@@ -74,7 +74,7 @@ export class GetEditableProductRequestAction {
 }
 
 export class GetEditableProductSuccessAction {
-    readonly type = EditableProductActions.GET_EDITABLE_PRODUCT_SUCCESS;
+    public readonly type = EditableProductActions.GET_EDITABLE_PRODUCT_SUCCESS;
     public product: Product;
 
     constructor(product: Product) {
@@ -83,11 +83,11 @@ export class GetEditableProductSuccessAction {
 }
 
 export class GetEditableProductFailAction {
-    readonly type = EditableProductActions.GET_EDITABLE_PRODUCT_FAIL;
+    public readonly type = EditableProductActions.GET_EDITABLE_PRODUCT_FAIL;
 }
 
 export class UpdateProductRequestAction {
-    readonly type = EditableProductActions.UPDATE_PRODUCT_REQUEST;
+    public readonly type = EditableProductActions.UPDATE_PRODUCT_REQUEST;
     public product: Product;
     public requestUrl: string;
     public method: string;
@@ -100,15 +100,15 @@ export class UpdateProductRequestAction {
 }
 
 export class UpdateProductSuccessAction {
-    readonly type = EditableProductActions.UPDATE_PRODUCT_SUCCESS;
+    public readonly type = EditableProductActions.UPDATE_PRODUCT_SUCCESS;
 }
 
 export class UpdateProductFailAction {
-    readonly type = EditableProductActions.UPDATE_PRODUCT_FAIL;
+    public readonly type = EditableProductActions.UPDATE_PRODUCT_FAIL;
 }
 
 export class ClearUpdateStatusAction {
-    readonly type = EditableProductActions.CLEAR_UPDATE_STATUS;
+    public readonly type = EditableProductActions.CLEAR_UPDATE_STATUS;
 }
 
 export type EditableProductAction =  | ChangeProductNameAction | ChangeProductCategoryAction |

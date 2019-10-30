@@ -34,7 +34,7 @@ const Drilldown: React.FC<IDrilldownProps> = (props: IDrilldownProps) => {
                 name: "Categories sales",
                 type: "pie",
                 data: mapPropsToSeries(props.yAxisLabels, props.categoriesData),
-            }
+            },
         ],
         drilldown: {
             series: mapPropsToDrilldownData(props.drilldownData),

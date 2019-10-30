@@ -1,10 +1,9 @@
 import { Product, OrderDTO } from "../model/model";
 import { ShoppingCartActions } from "../util/ActionTypes";
-import { Action } from "redux";
 
 export class DeleteProductFromCartAction {
-    readonly type = ShoppingCartActions.DELETE_PRODUCT_FROM_CART;
-    productId: number;
+    public readonly type = ShoppingCartActions.DELETE_PRODUCT_FROM_CART;
+    public productId: number;
 
     constructor(productId: number) {
         this.productId = productId;
@@ -12,8 +11,8 @@ export class DeleteProductFromCartAction {
 }
 
 export class AddProductToCartAction {
-    readonly type = ShoppingCartActions.ADD_PRODUCT_TO_CART;
-    product: Product;
+    public readonly type = ShoppingCartActions.ADD_PRODUCT_TO_CART;
+    public product: Product;
 
     constructor(product: Product) {
         this.product = product;
@@ -21,10 +20,10 @@ export class AddProductToCartAction {
 }
 
 export class ModifyProductQuantityAction {
-    readonly type = ShoppingCartActions.MODIFY_PRODUCT_QUANTITY;
-    product: Product;
-    newQuantity: number;
-    oldQuantity: number;
+    public readonly type = ShoppingCartActions.MODIFY_PRODUCT_QUANTITY;
+    public product: Product;
+    public newQuantity: number;
+    public oldQuantity: number;
 
     constructor(product: Product, newQuantity: number, oldQuantity: number) {
         this.product = product;
@@ -34,12 +33,12 @@ export class ModifyProductQuantityAction {
 }
 
 export class ClearCartAction {
-    readonly type = ShoppingCartActions.CLEAR_CART;
+    public readonly type = ShoppingCartActions.CLEAR_CART;
 }
 
 export class SetLoadingCartAction {
-    readonly type = ShoppingCartActions.SET_LOADING_STATUS_CART;
-    loadingStatus: boolean;
+    public readonly type = ShoppingCartActions.SET_LOADING_STATUS_CART;
+    public loadingStatus: boolean;
 
     constructor(loadingStatus: boolean) {
         this.loadingStatus = loadingStatus;
@@ -47,8 +46,8 @@ export class SetLoadingCartAction {
 }
 
 export class UpdateProductCartAction {
-    readonly type = ShoppingCartActions.UPDATE_PRODUCT_CART;
-    product: Product;
+    public readonly type = ShoppingCartActions.UPDATE_PRODUCT_CART;
+    public product: Product;
 
     constructor(product: Product) {
         this.product = product;
@@ -56,8 +55,8 @@ export class UpdateProductCartAction {
 }
 
 export class CreateOrderRequestAction {
-    readonly type = ShoppingCartActions.CREATE_ORDER_REQUEST;
-    orderDTO: OrderDTO;
+    public readonly type = ShoppingCartActions.CREATE_ORDER_REQUEST;
+    public orderDTO: OrderDTO;
 
     constructor(orderDTO: OrderDTO) {
         this.orderDTO = orderDTO;
@@ -65,15 +64,15 @@ export class CreateOrderRequestAction {
 }
 
 export class CreateOrderSuccessAction {
-    readonly type = ShoppingCartActions.CREATE_ORDER_SUCCESS;
+    public readonly type = ShoppingCartActions.CREATE_ORDER_SUCCESS;
 }
 
 export class CreateOrderFailAction {
-    readonly type = ShoppingCartActions.CREATE_ORDER_FAIL;
+    public readonly type = ShoppingCartActions.CREATE_ORDER_FAIL;
 }
 
 export class ClearCreateOrderStatusAction {
-    readonly type = ShoppingCartActions.CLEAR_CREATE_ORDER_STATUTS;
+    public readonly type = ShoppingCartActions.CLEAR_CREATE_ORDER_STATUTS;
 }
 
 export type ShoppingCartAction = AddProductToCartAction | DeleteProductFromCartAction | 

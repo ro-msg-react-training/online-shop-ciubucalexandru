@@ -3,7 +3,7 @@ import { SalesData, ProductDTOArray } from "../model/model";
 import { SalesChartsActions } from "../util/ActionTypes";
 
 export class SetLoadingChartsAction {
-    readonly type = SalesChartsActions.SET_LOADING_STATUS_CHARTS;
+    public readonly type = SalesChartsActions.SET_LOADING_STATUS_CHARTS;
     public loadingStatus: boolean;
 
     constructor(loadingStatus: boolean) {
@@ -12,11 +12,11 @@ export class SetLoadingChartsAction {
 }
 
 export class GetSalesDataRequestAction {
-    readonly type = SalesChartsActions.GET_SALES_DATA_REQUEST;
+    public readonly type = SalesChartsActions.GET_SALES_DATA_REQUEST;
 }
 
 export class GetSalesDataSuccessAction {
-    readonly type = SalesChartsActions.GET_SALES_DATA_SUCCESS;
+    public readonly type = SalesChartsActions.GET_SALES_DATA_SUCCESS;
     public sales: SalesData[];
 
     constructor(sales: SalesData[]) {
@@ -25,11 +25,11 @@ export class GetSalesDataSuccessAction {
 }
 
 export class GetSalesDataFailAction {
-    readonly type = SalesChartsActions.GET_SALES_DATA_FAIL;
+    public readonly type = SalesChartsActions.GET_SALES_DATA_FAIL;
 }
 
 export class ChangeActiveTabAction {
-    readonly type = SalesChartsActions.CHANGE_ACTIVE_TAB;
+    public readonly type = SalesChartsActions.CHANGE_ACTIVE_TAB;
     public activeTab: string;
     
     constructor(activeTab: string) {
@@ -38,11 +38,11 @@ export class ChangeActiveTabAction {
 }
 
 export class GetAllProductsRequestAction {
-    readonly type = SalesChartsActions.GET_ALL_PRODUCTS_REQUEST;
+    public readonly type = SalesChartsActions.GET_ALL_PRODUCTS_REQUEST;
 }
 
 export class GetAllProductsSuccessAction {
-    readonly type = SalesChartsActions.GET_ALL_PRODUCTS_SUCCESS;
+    public readonly type = SalesChartsActions.GET_ALL_PRODUCTS_SUCCESS;
     public products: ProductDTOArray;
 
     constructor(products: ProductDTOArray) {
@@ -51,7 +51,7 @@ export class GetAllProductsSuccessAction {
 }
 
 export class GetAllProductsFailAction {
-    readonly type = SalesChartsActions.GET_ALL_PRODUCTS_FAIL;
+    public readonly type = SalesChartsActions.GET_ALL_PRODUCTS_FAIL;
 }
 
 export type SalesChartsAction = SetLoadingChartsAction | GetSalesDataRequestAction |

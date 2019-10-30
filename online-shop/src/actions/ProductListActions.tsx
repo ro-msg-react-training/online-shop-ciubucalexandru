@@ -2,7 +2,7 @@ import { ProductDTOArray, ProductDTO } from "../model/model";
 import { ProductListActions } from "../util/ActionTypes";
 
 export class DeleteProductFromListAction {
-    readonly type = ProductListActions.DELETE_PRODUCT_FROM_LIST;
+    public readonly type = ProductListActions.DELETE_PRODUCT_FROM_LIST;
     public productId: number;
 
     constructor(productId: number) {
@@ -11,7 +11,7 @@ export class DeleteProductFromListAction {
 }
 
 export class SetLoadingListAction {
-    readonly type = ProductListActions.SET_LOADING_STATUS_LIST;
+    public readonly type = ProductListActions.SET_LOADING_STATUS_LIST;
     public loadingStatus: boolean;
 
     constructor(loadingStatus: boolean) {
@@ -20,7 +20,7 @@ export class SetLoadingListAction {
 }
 
 export class AddItemToListAction {
-    readonly type = ProductListActions.ADD_ITEM_TO_LIST;
+    public readonly type = ProductListActions.ADD_ITEM_TO_LIST;
     public productDTO: ProductDTO;
 
     constructor(productDTO: ProductDTO) {
@@ -29,11 +29,11 @@ export class AddItemToListAction {
 }
 
 export class GetProductsRequestAction {
-    readonly type = ProductListActions.GET_PRODUCTS_LIST_REQUEST;
+    public readonly type = ProductListActions.GET_PRODUCTS_LIST_REQUEST;
 }
 
 export class GetProductsSuccessAction {
-    readonly type = ProductListActions.GET_PRODUCTS_LIST_SUCCESS;
+    public readonly type = ProductListActions.GET_PRODUCTS_LIST_SUCCESS;
     public productArray: ProductDTOArray;
 
     constructor(productArray: ProductDTOArray) {
@@ -42,7 +42,7 @@ export class GetProductsSuccessAction {
 }
 
 export class GetProductsFailAction {
-    readonly type = ProductListActions.GET_PRODUCTS_LIST_FAILURE;
+    public readonly type = ProductListActions.GET_PRODUCTS_LIST_FAILURE;
 }
 
  export type ProductListAction =  DeleteProductFromListAction | SetLoadingListAction | 

@@ -2,8 +2,8 @@ import { LoginDTO, LoggedUser } from "../model/model";
 import { LoginActions } from "../util/ActionTypes";
 
 export class LoginRequestAction {
-    readonly type = LoginActions.LOGIN_REQUEST;
-    readonly loginDTO: LoginDTO;
+    public readonly type = LoginActions.LOGIN_REQUEST;
+    public loginDTO: LoginDTO;
 
     constructor(loginDTO: LoginDTO) {
         this.loginDTO = loginDTO;
@@ -11,8 +11,8 @@ export class LoginRequestAction {
 }
 
 export class LoginSuccessAction {
-    readonly type = LoginActions.LOGIN_SUCCESS;
-    readonly loggedUser: LoggedUser;
+    public readonly type = LoginActions.LOGIN_SUCCESS;
+    public loggedUser: LoggedUser;
 
     constructor(loggedUser: LoggedUser) {
         this.loggedUser = loggedUser;
@@ -20,7 +20,7 @@ export class LoginSuccessAction {
 }
 
 export class LoginFailAction {
-    readonly type = LoginActions.LOGIN_FAIL;
+    public readonly type = LoginActions.LOGIN_FAIL;
     public errorType: string;
 
     constructor(errorType: string) {
@@ -29,7 +29,7 @@ export class LoginFailAction {
 }
 
 export class ChangeUsernameAction {
-    readonly type = LoginActions.CHANGE_USERNAME;
+    public readonly type = LoginActions.CHANGE_USERNAME;
     public username: string;
 
     constructor(username: string) {
@@ -38,7 +38,7 @@ export class ChangeUsernameAction {
 }
 
 export class ChangePasswordAction {
-    readonly type = LoginActions.CHANGE_PASSWORD;
+    public readonly type = LoginActions.CHANGE_PASSWORD;
     public password: string;
 
     constructor(password: string) {
@@ -47,11 +47,11 @@ export class ChangePasswordAction {
 }
 
 export class ClearLoginStatusLabelAction {
-    readonly type = LoginActions.CLEAR_LOGIN_STATUS_LABEL;
+    public readonly type = LoginActions.CLEAR_LOGIN_STATUS_LABEL;
 }
 
 export class LogoutAction {
-    readonly type = LoginActions.LOGOUT;
+    public readonly type = LoginActions.LOGOUT;
 }
 
 export type LoginAction = LoginRequestAction | LoginSuccessAction | LoginFailAction |

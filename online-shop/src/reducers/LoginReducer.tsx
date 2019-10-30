@@ -1,5 +1,5 @@
 import { LoggedUser } from '../model/model';
-import { LoginAction, LoginSuccessAction, LoginFailAction, ChangePasswordAction, ChangeUsernameAction } from '../actions/LoginActions';
+import { LoginAction } from '../actions/LoginActions';
 import { STATUS_NONE, STATUS_SUCCESS, NO_USER } from '../util/util';
 import { LoginActions } from '../util/ActionTypes';
 

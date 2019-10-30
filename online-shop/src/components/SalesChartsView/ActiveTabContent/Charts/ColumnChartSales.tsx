@@ -22,7 +22,7 @@ const ColumnChart: React.FC<IColumnChartProps> = (props: IColumnChartProps) => {
                 color: "#A01441",
                 type: "column",
                 data: props.values,
-            }
+            },
         ],
     }
 
